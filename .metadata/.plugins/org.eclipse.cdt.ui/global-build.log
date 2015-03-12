@@ -1,0 +1,130 @@
+22:08:43 **** Build of configuration Debug for project HelloWorldTest ****
+make all 
+Building file: ../src/HelloWorldTest.cpp
+Invoking: GCC C++ Compiler
+arm-linux-gnueabi-g++ -I/usr/arm-linux-gnueabi/include/c++/4.7.3 -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/HelloWorldTest.d" -MT"src/HelloWorldTest.d" -o "src/HelloWorldTest.o" "../src/HelloWorldTest.cpp"
+Finished building: ../src/HelloWorldTest.cpp
+ 
+Building target: HelloWorldTest
+Invoking: GCC C++ Linker
+arm-linux-gnueabi-g++ -L/usr/arm-linux-gnueabi/lib -o "HelloWorldTest"  ./src/HelloWorldTest.o   
+Finished building target: HelloWorldTest
+ 
+22:59:48 **** Incremental Build of configuration Debug for project HelloWorldTest ****
+make all 
+Building target: HelloWorldTest
+Invoking: GCC C++ Linker
+arm-linux-gnueabi-g++ -L/usr/arm-linux-gnueabi/lib -o "HelloWorldTest"  ./src/HelloWorldTest.o   
+Finished building target: HelloWorldTest
+ 
+23:07:44 **** Incremental Build of configuration Debug for project HelloWorldTest ****
+make all 
+Building file: ../src/HelloWorldTest.cpp
+Invoking: GCC C++ Compiler
+arm-linux-gnueabihf-g++ -I/usr/arm-linux-gnueabihf/include/c++/4.8.2 -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/HelloWorldTest.d" -MT"src/HelloWorldTest.d" -o "src/HelloWorldTest.o" "../src/HelloWorldTest.cpp"
+Finished building: ../src/HelloWorldTest.cpp
+ 
+Building target: HelloWorldTest
+Invoking: GCC C++ Linker
+arm-linux-gnueabihf-g++ -L/usr/arm-linux-gnueabihf/lib -o "HelloWorldTest"  ./src/HelloWorldTest.o   
+Finished building target: HelloWorldTest
+ 
+23:46:08 **** Incremental Build of configuration Debug for project HelloWorldTest ****
+make all 
+make: Nothing to be done for `all'.
+23:46:17 **** Incremental Build of configuration Debug for project HelloWorldTest ****
+make all 
+make: Nothing to be done for `all'.
+23:47:29 **** Incremental Build of configuration Debug for project HelloWorldTest ****
+make all 
+Building file: ../src/HelloWorldTest.cpp
+Invoking: GCC C++ Compiler
+arm-linux-gnueabihf-g++ -I/usr/arm-linux-gnueabihf/include/c++/4.8.2 -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/HelloWorldTest.d" -MT"src/HelloWorldTest.d" -o "src/HelloWorldTest.o" "../src/HelloWorldTest.cpp"
+../src/HelloWorldTest.cpp: In function ‘int main()’:
+../src/HelloWorldTest.cpp:17:24: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+  char *LEDBrightness = "/sys/class/leds/beaglebone::usr3/brightness";
+                        ^
+../src/HelloWorldTest.cpp:25:10: error: ‘sleep’ was not declared in this scope
+   sleep(1);
+          ^
+make: *** [src/HelloWorldTest.o] Error 1
+23:50:16 **** Incremental Build of configuration Debug for project HelloWorldTest ****
+make all 
+Building file: ../src/HelloWorldTest.cpp
+Invoking: GCC C++ Compiler
+arm-linux-gnueabihf-g++ -I/usr/arm-linux-gnueabihf/include/c++/4.8.2 -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/HelloWorldTest.d" -MT"src/HelloWorldTest.d" -o "src/HelloWorldTest.o" "../src/HelloWorldTest.cpp"
+../src/HelloWorldTest.cpp: In function ‘int main()’:
+../src/HelloWorldTest.cpp:17:24: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+  char *LEDBrightness = "/sys/class/leds/beaglebone::usr3/brightness";
+                        ^
+../src/HelloWorldTest.cpp:25:10: error: ‘sleep’ was not declared in this scope
+   sleep(1);
+          ^
+make: *** [src/HelloWorldTest.o] Error 1
+23:54:47 **** Incremental Build of configuration Debug for project HelloWorldTest ****
+make all 
+Building file: ../src/HelloWorldTest.cpp
+Invoking: GCC C++ Compiler
+arm-linux-gnueabihf-g++ -I/usr/arm-linux-gnueabihf/include/c++/4.8.2 -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/HelloWorldTest.d" -MT"src/HelloWorldTest.d" -o "src/HelloWorldTest.o" "../src/HelloWorldTest.cpp"
+../src/HelloWorldTest.cpp: In function ‘int main()’:
+../src/HelloWorldTest.cpp:18:24: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+  char *LEDBrightness = "/sys/class/leds/beaglebone::usr3/brightness";
+                        ^
+Finished building: ../src/HelloWorldTest.cpp
+ 
+Building target: HelloWorldTest
+Invoking: GCC C++ Linker
+arm-linux-gnueabihf-g++ -L/usr/arm-linux-gnueabihf/lib -o "HelloWorldTest"  ./src/HelloWorldTest.o   
+Finished building target: HelloWorldTest
+ 
+23:56:55 **** Incremental Build of configuration Debug for project HelloWorldTest ****
+make all 
+Building file: ../src/HelloWorldTest.cpp
+Invoking: GCC C++ Compiler
+arm-linux-gnueabihf-g++ -I/usr/arm-linux-gnueabihf/include/c++/4.8.2 -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/HelloWorldTest.d" -MT"src/HelloWorldTest.d" -o "src/HelloWorldTest.o" "../src/HelloWorldTest.cpp"
+../src/HelloWorldTest.cpp: In function ‘int main()’:
+../src/HelloWorldTest.cpp:18:24: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+  char *LEDBrightness = "/sys/class/leds/beaglebone::usr3/brightness";
+                        ^
+Finished building: ../src/HelloWorldTest.cpp
+ 
+Building target: HelloWorldTest
+Invoking: GCC C++ Linker
+arm-linux-gnueabihf-g++ -L/usr/arm-linux-gnueabihf/lib -o "HelloWorldTest"  ./src/HelloWorldTest.o   
+Finished building target: HelloWorldTest
+ 
+00:01:41 **** Incremental Build of configuration Debug for project HelloWorldTest ****
+make all 
+Building file: ../src/HelloWorldTest.cpp
+Invoking: GCC C++ Compiler
+arm-linux-gnueabihf-g++ -I/usr/arm-linux-gnueabihf/include/c++/4.8.2 -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/HelloWorldTest.d" -MT"src/HelloWorldTest.d" -o "src/HelloWorldTest.o" "../src/HelloWorldTest.cpp"
+../src/HelloWorldTest.cpp: In function ‘int main()’:
+../src/HelloWorldTest.cpp:18:24: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+  char *LEDBrightness = "/sys/class/leds/beaglebone::usr3/brightness";
+                        ^
+Finished building: ../src/HelloWorldTest.cpp
+ 
+Building target: HelloWorldTest
+Invoking: GCC C++ Linker
+arm-linux-gnueabihf-g++ -L/usr/arm-linux-gnueabihf/lib -o "HelloWorldTest"  ./src/HelloWorldTest.o   
+Finished building target: HelloWorldTest
+ 
+00:04:49 **** Incremental Build of configuration Debug for project HelloWorldTest ****
+make all 
+make: Nothing to be done for `all'.
+00:04:55 **** Incremental Build of configuration Debug for project HelloWorldTest ****
+make all 
+Building file: ../src/HelloWorldTest.cpp
+Invoking: GCC C++ Compiler
+arm-linux-gnueabihf-g++ -I/usr/arm-linux-gnueabihf/include/c++/4.8.2 -O0 -g3 -Wall -c -fmessage-length=0 -MMD -MP -MF"src/HelloWorldTest.d" -MT"src/HelloWorldTest.d" -o "src/HelloWorldTest.o" "../src/HelloWorldTest.cpp"
+../src/HelloWorldTest.cpp: In function ‘int main()’:
+../src/HelloWorldTest.cpp:18:24: warning: deprecated conversion from string constant to ‘char*’ [-Wwrite-strings]
+  char *LEDBrightness = "/sys/class/leds/beaglebone:green:usr3/brightness";
+                        ^
+Finished building: ../src/HelloWorldTest.cpp
+ 
+Building target: HelloWorldTest
+Invoking: GCC C++ Linker
+arm-linux-gnueabihf-g++ -L/usr/arm-linux-gnueabihf/lib -o "HelloWorldTest"  ./src/HelloWorldTest.o   
+Finished building target: HelloWorldTest
+ 
