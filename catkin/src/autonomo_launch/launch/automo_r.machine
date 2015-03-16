@@ -1,0 +1,4 @@
+<launch>
+	<machine name="comp1" address="192.168.7.1" env-loader="/opt/ros/indigo/env.sh" />
+	<machine name="bbb1" address="192.168.7.2" env-loader="/opt/ros/indigo/env.sh" user="ubuntu" password="temppwd" />
+</launch>

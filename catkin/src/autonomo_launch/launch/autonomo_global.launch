@@ -1,0 +1,15 @@
+<launch>
+	<group  ns="auto">
+		<!-- This is a commet, beginning with roslaunch -->
+		<!-- Configure different machines in network -->
+		<include file="$(find autonomo_launch)/launch/automo_r.machine" />
+
+		<node pkg="beginner_tutorials" type="talker.py" name="talker" machine="bbb1" />
+
+
+
+		<!--
+		<include file="$(find teleop_twist_joy)/launch/teleop.launch" />
+		-->
+	</group>
+</launch>
