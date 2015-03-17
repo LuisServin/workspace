@@ -1,4 +1,14 @@
 <launch>
-	<machine name="comp1" address="192.168.7.1" env-loader="/opt/ros/indigo/env.sh" />
-	<machine name="bbb1" address="192.168.7.2" env-loader="/opt/ros/indigo/env.sh" user="ubuntu" password="temppwd" />
+
+	<!--
+		Configuring machines for launching nodes
+	-->
+	<arg name="bbb1_ip" default="192.168.7.2" />
+	<arg name="comp1_ip" default="192.168.7.1" />
+
+	<machine name="comp1_opt" address="$(arg comp1_ip)" env-loader="/opt/ros/indigo/env.sh" />
+	<machine name="comp1_src" address="$(arg comp1_ip)" env-loader="/home/luis/workspace/catkin/devel/env.sh" />
+	
+	<machine name="bbb1_opt" address="$(arg bbb1_ip)" env-loader="/opt/ros/indigo/env.sh" user="ubuntu" password="temppwd" />
+	<machine name="bbb1_src" address="$(arg bbb1_ip)" env-loader="/home/ubuntu/workspace/catkin/devel/env.sh" user="ubuntu" password="temppwd" />
 </launch>

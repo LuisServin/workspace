@@ -1,0 +1,2 @@
+~port: tty/ACM0
+~baud: 115200
