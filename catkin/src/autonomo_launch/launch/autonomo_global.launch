@@ -13,8 +13,10 @@
 		<node pkg="beginner_tutorials" type="listener.py" name="listener" machine="comp1_src" />
 		-->
 
+		<!--
 		<node pkg="beginner_tutorials" type="talker.py" name="talker" machine="bbb1_src" />
 		<node pkg="beginner_tutorials" type="listener.py" name="listener" machine="comp1_src" />
+		-->
 
 		<!-- Example launching file with parameters given manually
 		<node pkg="rosserial_python" type="serial_node.py" name="ard_node" machine="bbb1_opt">
@@ -25,10 +27,12 @@
 		-->	
 
 		<!-- Example launching file with parameters in yaml file -->
+		<!--
 		<node pkg="rosserial_python" type="serial_node.py" name="ard_node" machine="bbb1_opt">
 			<rosparam command="load" file="$(find autonomo_launch)/config/arduino.yaml" />
 			<remap from="chatter" to="ard_msg" />
 		</node>
+		-->
 
 		<node pkg="joy" type="joy_node" name="joy_node" machine="comp1_opt">
     		<param name="dev" value="$(arg joy_dev)" />
@@ -40,6 +44,12 @@
     		<rosparam command="load" file="$(find teleop_twist_joy)/config/$(arg joy_config).config.yaml" />
     		<param name="enable_turbo_button" value="0" />
     		<remap from="cmd_vel" to="turtle1/cmd_vel" />
+  		</node>
+		
+  		<node pkg="turtlesim" type="turtlesim_node" name="turtle1" machine="comp1_opt"/>
+
+  		<node pkg="rosserial_python" type="serial_node.py" name="ard_node" machine="bbb1_opt">
+			<param name="~port" value="/dev/ttyACM0" />
   		</node>
 
 		<!-- Example about lauching from a launch file inside an specific package
