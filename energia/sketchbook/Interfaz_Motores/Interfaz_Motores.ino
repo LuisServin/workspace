@@ -25,6 +25,7 @@
 #include <ros.h>
 #include <std_msgs/Int32.h>
 #include <geometry_msgs/Twist.h>
+#include <geometry_msgs/Vector3.h>
 
 // pins for motor1
 byte pwm1Pin = 36;
@@ -50,33 +51,62 @@ int countsPerRevolution = 3592;
 volatile long encPos1 = 0;
 volatile long encPos2 = 0;
 
+// Kinematic model characteristics
+float lRobot = 2.0;
+
+int pwmM1;
+int pwmM2;
+
 int pwm;
+
 
 void messageCb(const geometry_msgs::Twist& pwm_vel)
 {
-  if(pwm_vel.linear.x > 0) {
+  // calculate speed according to the kinematic model
+  pwmM1 = pwm_vel.linear.x * 255 + (lRobot / 2) * pwm_vel.angular.z * 255;
+  pwmM2 = pwm_vel.linear.x * 255 - (lRobot / 2) * pwm_vel.angular.z * 255;
+
+  // set the direction of rotation
+  if(pwmM1 > 0) {
+    digitalWrite(en1Pin, HIGH);
+    digitalWrite(en2Pin, LOW);
+  } else {
+    digitalWrite(en1Pin, LOW);
+    digitalWrite(en2Pin, HIGH);
+  }
+
+  if(pwmM2 > 0) {
     digitalWrite(en3Pin, HIGH);
     digitalWrite(en4Pin, LOW);
   } else {
     digitalWrite(en3Pin, LOW);
     digitalWrite(en4Pin, HIGH);
   }
-  pwm = abs(pwm_vel.linear.x * 255);
-  if(pwm > 255)
-    pwm = 255;
-  analogWrite(pwm2Pin, pwm);
-  //analogWrite(pwm2Pin, pwm);
+
+  // get the absolute value
+  pwmM1 = abs(pwmM1);
+  pwmM2 = abs(pwmM2);
+
+  // set a upper limit
+  if(pwmM1 > 255)
+    pwmM1 = 255;
+  if(pwmM2 > 255)
+    pwmM2 = 255;
+
+  analogWrite(pwm1Pin, pwmM1);
+  analogWrite(pwm2Pin, pwmM2);
 }
 
 //ros variables
 ros::NodeHandle nh;
-// create a instance for the message type String
+// create a instance for the message type Vector 3
+geometry_msgs::Vector3 encVec;
 std_msgs::Int32 intvel_msg;
 // Create a publisher with the following characteristics:
 // Object name: chatter
 // Topic:       motVel
 // Type:        Int16 (%intvel_msg reference to the message instance to be published)
-ros::Publisher chatter("motVel",&intvel_msg);
+ros::Publisher chatter("encTicks",&encVec);
 // Create a subscriber with the following characteristics
 // Object name: sub
 // Topic:       cmd_vel
@@ -112,8 +142,9 @@ void setup() {
 
 void loop() {
   if(millis() % 200 == 0) {
-    intvel_msg.data = encPos2;
-    chatter.publish(&intvel_msg);
+    encVec.x = encPos1;
+    encVec.y = encPos2;
+    chatter.publish(&encVec);
     delay(1);
   }
   nh.spinOnce();
