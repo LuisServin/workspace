@@ -28,17 +28,17 @@
 #include <geometry_msgs/Vector3.h>
 
 // pins for motor1
-byte pwm1Pin = 36;
-byte en1Pin = 37;
-byte en2Pin = 38;
+byte pwm1Pin = 31;
+byte en1Pin = 33;
+byte en2Pin = 32;
 
-byte encm1pin1 = 39;
-byte encm1pin2 = 40;
+byte encm1pin1 = 9;
+byte encm1pin2 = 10;
 
 
 // pins for motor2
-byte pwm2Pin = 35;
-byte en3Pin = 33;
+byte pwm2Pin = 36;
+byte en3Pin = 35;
 byte en4Pin = 34;
 
 byte encm2pin1 = 11;
