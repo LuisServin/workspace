@@ -7,6 +7,8 @@ project(autonomo_launch)
 find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
+  tf
+  nav_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -95,6 +97,9 @@ catkin_package(
 include_directories(
   ${catkin_INCLUDE_DIRS}
 )
+
+add_executable(Odom src/Odom.cpp)
+target_link_libraries(Odom ${catkin_LIBRARIES})
 
 ## Declare a cpp library
 # add_library(autonomo_launch
