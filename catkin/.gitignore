@@ -1,3 +1,4 @@
 build/
 devel/
 src/robot_setup_tf_example/*
+src/slam_gmapping/*
