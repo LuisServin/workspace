@@ -54,9 +54,11 @@
 		<param name="~port" value="/dev/ttyACM0" />
 	</node>
 
+	<!--
 	<node pkg="depthimage_to_laserscan" name="depthimage_to_laserscan" type="depthimage_to_laserscan" machine="bbb1_src">
 		<remap from="image" to="camera/depth/image_raw"/>
   	</node>
+  -->
 
 	<!-- Example about lauching from a launch file inside an specific package
 	<include file="$(find teleop_twist_joy)/launch/teleop.launch" />
