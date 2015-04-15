@@ -44,12 +44,33 @@ byte en4Pin = 35;
 byte encm2pin1 = 13;
 byte encm2pin2 = 14;
 
+
+// pins for motor3
+byte pwm3Pin = 30;
+byte en5Pin = 29;
+byte en6Pin = 28;
+
+byte encm3pin1 = 9;
+byte encm3pin2 = 10;
+
+// pins for motor4
+byte pwm4Pin = 31;
+byte en7Pin = 33;
+byte en8Pin = 32;
+
+byte encm4pin1 = 11;
+byte encm4pin2 = 12;
+
+
 // encoder caracteristics
 int countsPerRevolution = 3592;
 
 // variable to store the value from the encoder
 volatile long encPos1 = 0;
 volatile long encPos2 = 0;
+volatile long encPos3 = 0;
+volatile long encPos4 = 0;
+
 
 // Kinematic model characteristics
 float lRobot = 2.0;
@@ -70,17 +91,25 @@ void messageCb(const geometry_msgs::Twist& pwm_vel)
   if(pwmM1 > 0) {
     digitalWrite(en1Pin, HIGH);
     digitalWrite(en2Pin, LOW);
+    digitalWrite(en5Pin,HIGH);
+    digitalWrite(en6Pin,LOW);
   } else {
     digitalWrite(en1Pin, LOW);
     digitalWrite(en2Pin, HIGH);
+    digitalWrite(en5Pin,LOW);
+    digitalWrite(en6Pin,,HIGH);
   }
 
   if(pwmM2 > 0) {
     digitalWrite(en3Pin, HIGH);
     digitalWrite(en4Pin, LOW);
+    digitalWrite(en7Pin,HIGH);
+    digitalWrite(en8Pin,LOW);
   } else {
     digitalWrite(en3Pin, LOW);
     digitalWrite(en4Pin, HIGH);
+    digitalWrite(en7Pin,LOW);
+    digitalWrite(en8Pin,HIGH);
   }
 
   // get the absolute value
@@ -95,6 +124,8 @@ void messageCb(const geometry_msgs::Twist& pwm_vel)
 
   analogWrite(pwm1Pin, pwmM1);
   analogWrite(pwm2Pin, pwmM2);
+  analogWrite(pwm3Pin,pwmM1);
+  analogWrite(pwm4Pin,pwmM2);
 }
 
 //ros variables
@@ -134,10 +165,15 @@ void setup() {
   attachInterrupt(encm1pin2, enc2m1change, CHANGE);
   attachInterrupt(encm2pin1, enc1m2change, CHANGE);
   attachInterrupt(encm2pin2, enc2m2change, CHANGE);
+  attachInterrupt(encm3pin1, enc1m3change, CHANGE);
+  attachInterrupt(encm3pin2, enc2m3change, CHANGE);
+  attachInterrupt(encm4pin1, enc1m4change, CHANGE);
+  attachInterrupt(encm4pin2, enc2m4change, CHANGE);
 
   nh.initNode();
   nh.advertise(chatter);
   nh.subscribe(sub);
+
 }
 
 void loop() {
@@ -220,3 +256,75 @@ void enc2m2change()
     }
   }
 }
+
+
+//rutinas de encoders 3 y 4
+
+void enc1m3change()
+{
+  if(digitalRead(encm3pin1) == HIGH) {
+    if(digitalRead(encm3pin2) == LOW) {
+      encPos3 += 1;
+    } else {
+      encPos3 -= 1;
+    }
+  } else {
+    if(digitalRead(encm3pin2) == HIGH) {
+      encPos3 += 1;
+    } else {
+      encPos3 -= 1;
+    }
+  }
+}
+
+void enc2m3change()
+{
+  if(digitalRead(encm3pin2) == HIGH) {
+    if(digitalRead(encm3pin1) == HIGH) {
+      encPos3 += 1;
+    } else {
+      encPos3 -= 1;
+    }
+  } else {
+    if(digitalRead(encm3pin1) == LOW) {
+      encPos3 += 1;
+    } else {
+      encPos3 -= 1;
+    }
+  }
+}
+  
+void enc1m4change()
+{
+  if(digitalRead(encm4pin1) == HIGH) {
+    if(digitalRead(encm4pin2) == LOW) {
+      encPos4 += 1;
+    } else {
+      encPos4 -= 1;
+    }
+  } else {
+    if(digitalRead(encm4pin2) == HIGH) {
+      encPos4 += 1;
+    } else {
+      encPos4 -= 1;
+    }
+  }
+}
+
+void enc2m4change()
+{
+  if(digitalRead(encm4pin2) == HIGH) {
+    if(digitalRead(encm4pin1) == HIGH) {
+      encPos4 += 1;
+    } else {
+      encPos4 -= 1;
+    }
+  } else {
+    if(digitalRead(encm4pin1) == LOW) {
+      encPos4 += 1;
+    } else {
+      encPos4 -= 1;
+    }
+  }
+}
+
