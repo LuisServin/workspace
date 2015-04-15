@@ -28,21 +28,21 @@
 #include <geometry_msgs/Vector3.h>
 
 // pins for motor1
-byte pwm1Pin = 31;
-byte en1Pin = 33;
-byte en2Pin = 32;
+byte pwm1Pin = 25;
+byte en1Pin = 26;
+byte en2Pin = 27;
 
-byte encm1pin1 = 9;
-byte encm1pin2 = 10;
+byte encm1pin1 = 7;
+byte encm1pin2 = 8;
 
 
 // pins for motor2
 byte pwm2Pin = 36;
-byte en3Pin = 35;
-byte en4Pin = 34;
+byte en3Pin = 34;
+byte en4Pin = 35;
 
-byte encm2pin1 = 11;
-byte encm2pin2 = 12;
+byte encm2pin1 = 13;
+byte encm2pin2 = 14;
 
 // encoder caracteristics
 int countsPerRevolution = 3592;
