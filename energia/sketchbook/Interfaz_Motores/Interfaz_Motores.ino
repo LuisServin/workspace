@@ -142,8 +142,8 @@ void setup() {
 
 void loop() {
   if(millis() % 50 == 0) {
-    encWheelTicks.x = encPos1;
-    encWheelTicks.y = encPos2;
+    encWheelTicks.y = encPos1;
+    encWheelTicks.x = encPos2;
     chatter.publish(&encWheelTicks);
     encPos1 = 0;
     encPos2 = 0;
