@@ -100,13 +100,13 @@ void messageCb(const geometry_msgs::Twist& pwm_vel)
 //ros variables
 ros::NodeHandle nh;
 // create a instance for the message type Vector 3
-geometry_msgs::Vector3 encVec;
+geometry_msgs::Vector3 encWheelTicks;
 std_msgs::Int32 intvel_msg;
 // Create a publisher with the following characteristics:
 // Object name: chatter
 // Topic:       motVel
 // Type:        Int16 (%intvel_msg reference to the message instance to be published)
-ros::Publisher chatter("encTicks",&encVec);
+ros::Publisher chatter("encTicks",&encWheelTicks);
 // Create a subscriber with the following characteristics
 // Object name: sub
 // Topic:       cmd_vel
@@ -141,10 +141,12 @@ void setup() {
 }
 
 void loop() {
-  if(millis() % 200 == 0) {
-    encVec.x = encPos1;
-    encVec.y = encPos2;
-    chatter.publish(&encVec);
+  if(millis() % 50 == 0) {
+    encWheelTicks.y = encPos1;
+    encWheelTicks.x = encPos2;
+    chatter.publish(&encWheelTicks);
+    encPos1 = 0;
+    encPos2 = 0;
     delay(1);
   }
   nh.spinOnce();
