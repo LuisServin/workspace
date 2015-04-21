@@ -13,15 +13,15 @@ int main(int argc, char** argv) {
 	double y = 0.0;
 	double th = 0.0;
 
-	double vx = 0.1;
-	double vy = -0.1;
-	double vth = 0.1;
+	double vx = 0.2;
+	double vy = -0.2;
+	double vth = 0.2;
 
 	ros::Time current_time, last_time;
 	current_time = ros::Time::now();
 	last_time = ros::Time::now();
 
-	ros::Rate r(1.0);
+	ros::Rate r(10.0);
 	while(nh.ok()) {
 		ros::spinOnce();	// check for incoming messages
 		current_time = ros::Time::now();
