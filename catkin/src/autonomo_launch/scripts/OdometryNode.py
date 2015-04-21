@@ -34,7 +34,7 @@ class Odometry:
 		# the initial position and orientation
 		self.positionX = 0
 		self.positionY = 0
-		self.angleTheta = pi / 2 
+		self.angleTheta = 0
 
 		# General Radius of curvature, linear and angular velocity
 		self.radiusOfCurvature = 0
@@ -58,7 +58,7 @@ class Odometry:
 
 	def callback(self, data):
 		self.calculateVelocities(data)
-		if self.velocityLeftWheel == self.velocityRigthWheel and self.velocityLeftWheel != 0:		
+		if self.velocityLeftWheel == self.velocityRigthWheel:		
 			rospy.loginfo("Same velocity in both wheel")
 
 			#rospy.loginfo("rWAV = " + str(self.velocityRigthWheel) + " lWAV = " + str(self.velocityLeftWheel))
@@ -79,7 +79,6 @@ class Odometry:
 			rospy.loginfo("Different wheels' velocities")
 			self.computeGeneralRWV()
 			self.computeICC()
-			self.computeVelocities()
 			self.computeNewPositionDifferentVelocites()
 
 		rospy.loginfo("x = " + str(self.positionX) + " y = " + str(self.positionY) \
