@@ -9,16 +9,19 @@ from geometry_msgs.msg import Vector3
 from nav_msgs.msg import Odometry
 from math import *
 
-class Odometry:
+class ComputeOdometry:
 	"""This class is inteded to calculate odometry message from a 
 	    differential robot"""
 	def __init__(self, node_name = 'odometryNode'):
 		rospy.init_node(node_name)
 		self.node_name = rospy.get_name()
-		rospy.Subscriber('encTicks', Vector3, self.callback)
-		self.rate = rospy.get_param("rate", 5)
-		rospy.loginfo("Rate for this node is " + str(self.rate))
 		rospy.loginfo("started node " + self.node_name)
+		self.rate = rospy.get_param("rate", 5)
+
+		self.encoderSub = rospy.Subscriber('encTicks', Vector3, self.callback)
+
+		# odometry message
+		self.odomPub = rospy.Publisher("odom", Odometry)
 
 		# initialize all the variables in class
 
@@ -61,31 +64,25 @@ class Odometry:
 		if self.velocityLeftWheel == self.velocityRigthWheel:		
 			rospy.loginfo("Same velocity in both wheel")
 
-			#rospy.loginfo("rWAV = " + str(self.velocityRigthWheel) + " lWAV = " + str(self.velocityLeftWheel))
 			self.linearBodyVelocity = (1/2) * (self.velocityLeftWheel + self.velocityRigthWheel)
 			self.angularBodyVelocity = 0
 
-			# descompose the linear body velocity into the x and y component
-			# in odom frame
-
-			self.velocityBodyX = self.linearBodyVelocity * cos(self.angleTheta)
-			self.velocityBodyY = self.linearBodyVelocity * sin(self.angleTheta)
-
-			#rospy.loginfo("vx = " + str(self.velocityBodyX) + " vy = " + str(self.velocityBodyY))
+			self.computeVelocitiesXY()
 
 			# calculate the position
 			self.computeNewPositionSameVelocities()
 		else:
 			rospy.loginfo("Different wheels' velocities")
 			self.computeGeneralRWV()
-			self.computeICC()
+			self.computeVelocitiesXY()
+			self.computeICC()			
 			self.computeNewPositionDifferentVelocites()
 
 		rospy.loginfo("x = " + str(self.positionX) + " y = " + str(self.positionY) \
 			+ " theta = " + str(self.angleTheta * 180 / pi))
 		self.lastTime = self.currentTime
 		
-		# 
+	# compute the speed in every wheel based on encoder ticks
 	def calculateVelocities(self, encoderTicks):
 		self.currentTime = rospy.get_time()
 		self.dt = self.currentTime - self.lastTime	
@@ -108,10 +105,18 @@ class Odometry:
 			self.wheelBase
 
 		self.linearBodyVelocity = (self.velocityRigthWheel	+ self.velocityLeftWheel) / 2
+
 	# ICC -> Instantaneous Center of Curvature
 	def computeICC(self):
 		self.ICCx = self.positionX - self.radiusOfCurvature * sin(self.angleTheta)
 		self.ICCy = self.positionY + self.radiusOfCurvature * cos(self.angleTheta)
+
+
+	# descompose the linear body velocity into the x and y component
+	# in odom frame
+	def computeVelocitiesXY(self):
+		self.velocityBodyX = self.linearBodyVelocity * cos(self.angleTheta)
+		self.velocityBodyY = self.linearBodyVelocity * sin(self.angleTheta)
 
 	def computeNewPositionDifferentVelocites(self):
 		self.positionX = cos(self.angularBodyVelocity * self.dt) * (self.positionX - self.ICCx) \
@@ -123,6 +128,13 @@ class Odometry:
 			+ self.ICCy
 
 		self.angleTheta = self.angleTheta + self.angularBodyVelocity * self.dt
+
+		# bound the value of angleTheta from 
+		# - 2*pi < theta < 2*pi
+		while (self.angleTheta > 2 * pi):
+			self.angleTheta -= 2 * pi
+		while (self.angleTheta < -2 * pi):
+			self.angleTheta += 2 * pi
 
 	def computeNewPositionSameVelocities(self):
 		self.dx = self.velocityBodyX * cos(self.angleTheta) \
@@ -140,9 +152,16 @@ class Odometry:
 		self.positionY += self.dy
 		self.angleTheta += self.dtheta
 
-	# def spin(self):
+	def update(self):
+		self.pubc = 0
+
+	def spin(self):
+		r = rospy.Rate(self.rate)
+		while not rospy.is_shutdown():
+			self.update()
+			r.sleep()
 
 
 if __name__ == '__main__':
-	odometry = Odometry()
-	rospy.spin()
+	odometry = ComputeOdometry()
+	odometry.spin()
