@@ -46,20 +46,20 @@ byte encm2pin2 = 14;
 
 
 // pins for motor3
-byte pwm3Pin = 30;
-byte en5Pin = 29;
-byte en6Pin = 28;
+byte pwm3Pin = 30;//ya
+byte en5Pin = 29;//ya
+byte en6Pin = 28;//ya
 
-byte encm3pin1 = 9;
-byte encm3pin2 = 10;
+byte encm3pin1 = 9;//ya
+byte encm3pin2 = 10;//ya
 
 // pins for motor4
-byte pwm4Pin = 31;
-byte en7Pin = 33;
-byte en8Pin = 32;
+byte pwm4Pin = 31;//ya
+byte en7Pin = 33;//ya
+byte en8Pin = 32;//ya
 
-byte encm4pin1 = 11;
-byte encm4pin2 = 12;
+byte encm4pin1 = 11;//ya
+byte encm4pin2 = 12;//ya
 
 
 // encoder caracteristics
@@ -88,28 +88,32 @@ void messageCb(const geometry_msgs::Twist& pwm_vel)
   pwmM2 = pwm_vel.linear.x * 255 - (lRobot / 2) * pwm_vel.angular.z * 255;
 
   // set the direction of rotation
-  if(pwmM1 > 0) {
-    digitalWrite(en1Pin, HIGH);
-    digitalWrite(en2Pin, LOW);
-    digitalWrite(en5Pin,HIGH);
-    digitalWrite(en6Pin,LOW);
-  } else {
-    digitalWrite(en1Pin, LOW);
-    digitalWrite(en2Pin, HIGH);
-    digitalWrite(en5Pin,LOW);
-    digitalWrite(en6Pin,,HIGH);
-  }
-
   if(pwmM2 > 0) {
-    digitalWrite(en3Pin, HIGH);
-    digitalWrite(en4Pin, LOW);
-    digitalWrite(en7Pin,HIGH);
-    digitalWrite(en8Pin,LOW);
+     digitalWrite(en1Pin, HIGH);
+     digitalWrite(en2Pin, LOW);
+     digitalWrite(en5Pin, HIGH);
+     digitalWrite(en6Pin, LOW);
+        
+          } 
+  else {
+      digitalWrite(en1Pin, LOW);
+      digitalWrite(en2Pin, HIGH);
+      digitalWrite(en5Pin, LOW);
+      digitalWrite(en6Pin, HIGH);
+      }
+
+  if(pwmM1 > 0) {
+      digitalWrite(en3Pin, HIGH);
+      digitalWrite(en4Pin, LOW);
+      digitalWrite(en7Pin, HIGH);
+      digitalWrite(en8Pin, LOW);
+    
   } else {
-    digitalWrite(en3Pin, LOW);
-    digitalWrite(en4Pin, HIGH);
-    digitalWrite(en7Pin,LOW);
-    digitalWrite(en8Pin,HIGH);
+      digitalWrite(en3Pin, LOW);
+      digitalWrite(en4Pin, HIGH);
+      digitalWrite(en7Pin, LOW);
+      digitalWrite(en8Pin, HIGH);
+    
   }
 
   // get the absolute value
@@ -122,10 +126,10 @@ void messageCb(const geometry_msgs::Twist& pwm_vel)
   if(pwmM2 > 255)
     pwmM2 = 255;
 
-  analogWrite(pwm1Pin, pwmM1);
-  analogWrite(pwm2Pin, pwmM2);
-  analogWrite(pwm3Pin,pwmM1);
-  analogWrite(pwm4Pin,pwmM2);
+    analogWrite(pwm1Pin, pwmM1);
+    analogWrite(pwm2Pin, pwmM2);
+    analogWrite(pwm3Pin, pwmM1);
+    analogWrite(pwm4Pin, pwmM2);
 }
 
 //ros variables
@@ -153,6 +157,10 @@ void setup() {
   pinMode(en2Pin, OUTPUT);
   pinMode(en3Pin, OUTPUT);
   pinMode(en4Pin, OUTPUT);
+  pinMode(en5Pin,OUTPUT);
+  pinMode(en6Pin,OUTPUT);
+  pinMode(en7Pin,OUTPUT);
+  pinMode(en8Pin,OUTPUT);
 
   // Declare pins for encoder control
   pinMode(encm1pin1, INPUT);
@@ -177,6 +185,7 @@ void setup() {
 }
 
 void loop() {
+  
   if(millis() % 200 == 0) {
     encVec.x = encPos1;
     encVec.y = encPos2;
@@ -184,6 +193,7 @@ void loop() {
     delay(1);
   }
   nh.spinOnce();
+
 }
 
 /*
