@@ -1,13 +1,24 @@
 #!/usr/bin/env python
 
 # Always make a division by integer return a float
-# this a feature in python 3 but not in python 2
+# this is a feature in python 3 but not in python 2
 from __future__ import division
 
 import rospy
 from geometry_msgs.msg import Vector3
+
+# To broadcast transformation between odom -> base_link
+import tf
+from geometry_msgs.msg import TransformStamped
+
 from nav_msgs.msg import Odometry
+
+# for use of functions cos(x), sin(x) and value pi
 from math import *
+
+# function from https://github.com/ros/geometry/blob/indigo-devel/tf/src/tf/transformations.py
+# use to create a quaternion for odometry message a transformation
+from tf.transformations import quaternion_from_euler
 
 class ComputeOdometry:
 	"""This class is inteded to calculate odometry message from a 
@@ -20,9 +31,13 @@ class ComputeOdometry:
 
 		self.encoderSub = rospy.Subscriber('encTicks', Vector3, self.callback)
 
-		# odometry message
+		# odometry publisher and message
 		self.odomPub = rospy.Publisher("odom", Odometry)
+		self.odomMsg = Odometry()
 
+		# odometry transform and message
+		self.odomBroadcaster = tf.TransformBroadcaster()
+		self.odomTransform = TransformStamped()
 		# initialize all the variables in class
 
 		# robot properties
@@ -60,6 +75,9 @@ class ComputeOdometry:
 		self.lastTime = rospy.get_time()
 
 	def callback(self, data):
+		self.currentTime = rospy.get_time()
+		self.dt = self.currentTime - self.lastTime	
+
 		self.calculateVelocities(data)
 		if self.velocityLeftWheel == self.velocityRigthWheel:		
 			rospy.loginfo("Same velocity in both wheel")
@@ -79,14 +97,13 @@ class ComputeOdometry:
 			self.computeNewPositionDifferentVelocites()
 
 		rospy.loginfo("x = " + str(self.positionX) + " y = " + str(self.positionY) \
-			+ " theta = " + str(self.angleTheta * 180 / pi))
+			+ " theta = " + str(self.angleTheta * 180 / pi) \
+			+ " time = " + str(self.currentTime) + " timenow = " \
+			+ str(rospy.Time.now()))
 		self.lastTime = self.currentTime
 		
 	# compute the speed in every wheel based on encoder ticks
 	def calculateVelocities(self, encoderTicks):
-		self.currentTime = rospy.get_time()
-		self.dt = self.currentTime - self.lastTime	
-
 		# calculate velocity 
 		rightWheelAngularVelocity = (encoderTicks.x * ( 2 * pi / 3592 ) ) / self.dt
 		self.velocityRigthWheel = rightWheelAngularVelocity * self.wheelRadius
@@ -153,7 +170,46 @@ class ComputeOdometry:
 		self.angleTheta += self.dtheta
 
 	def update(self):
-		self.pubc = 0
+
+   		# In tf.broadcaster.sendTransform() function for python, every element
+		# need to be declare in the function, can't use a Msg
+		# https://github.com/ros/geometry/blob/indigo-devel/tf/src/tf/broadcaster.py
+		# data for transformation
+		"""
+		self.odomTransform.header.frame_id = "odom"
+		self.odomTransform.header.stamp = rospy.Time.now()
+		self.odomTransform.child_frame_id = "base_link"
+
+		self.odomTransform.transform.translation.x = self.positionX
+		self.odomTransform.transform.translation.y = self.positionY
+		self.odomTransform.transform.translation.z = 0
+		self.odomTransform.transform.rotation = quaternion_from_euler(0, 0, self.angleTheta)
+
+		# broadcaster the transformation
+		self.odomBroadcaster.sendTransformMessage(self.odomTransform)
+		"""
+
+		# broadcaster.sendTransform(position, orientation, time, child, parent)
+		self.odomBroadcaster.sendTransform((self.positionX, self.positionY, 0),
+											quaternion_from_euler(0 ,0 , self.angleTheta),
+											rospy.Time.from_sec(self.currentTime),
+											"base_link",
+											"odom")		
+
+		# data for odometry message
+		self.odomMsg.header.stamp = self.currentTime
+		self.odomMsg.header.frame_id = "odom"
+
+		self.odomMsg.child_frame_id = "base_link"
+
+		self.odomMsg.pose.pose.position.x = self.positionX
+		self.odomMsg.pose.pose.position.y = self.positionY
+		self.odomMsg.pose.pose.position.z = 0.0
+		self.odomMsg.pose.pose.orientation = quaternion_from_euler(0,0,self.angleTheta)
+
+		self.odomMsg.twist.twist.linear.x = self.velocityBodyX
+		self.odomMsg.twist.twist.linear.y = self.velocityBodyY
+		self.odomMsg.twist.twist.angular.z = self.angularBodyVelocity
 
 	def spin(self):
 		r = rospy.Rate(self.rate)
@@ -163,5 +219,5 @@ class ComputeOdometry:
 
 
 if __name__ == '__main__':
-	odometry = ComputeOdometry()
-	odometry.spin()
+	odometryMsg = ComputeOdometry()
+	odometryMsg.spin()
