@@ -27,7 +27,7 @@ class ComputeOdometry:
 		rospy.init_node(node_name)
 		self.node_name = rospy.get_name()
 		rospy.loginfo("started node " + self.node_name)
-		self.rate = rospy.get_param("rate", 5)
+		self.rate = rospy.get_param("rate", 50)
 
 		self.encoderSub = rospy.Subscriber('encTicks', Vector3, self.callback)
 
@@ -170,46 +170,56 @@ class ComputeOdometry:
 		self.angleTheta += self.dtheta
 
 	def update(self):
+		quaternion = quaternion_from_euler(0,0,self.angleTheta)
+		parent_frame = "odom"
+		child_frame = "base_link"
 
    		# In tf.broadcaster.sendTransform() function for python, every element
 		# need to be declare in the function, can't use a Msg
 		# https://github.com/ros/geometry/blob/indigo-devel/tf/src/tf/broadcaster.py
 		# data for transformation
-		"""
-		self.odomTransform.header.frame_id = "odom"
-		self.odomTransform.header.stamp = rospy.Time.now()
-		self.odomTransform.child_frame_id = "base_link"
+		self.odomTransform.header.frame_id = parent_frame
+		self.odomTransform.header.stamp = rospy.Time.from_sec(self.currentTime)
+		self.odomTransform.child_frame_id = child_frame
 
 		self.odomTransform.transform.translation.x = self.positionX
 		self.odomTransform.transform.translation.y = self.positionY
 		self.odomTransform.transform.translation.z = 0
-		self.odomTransform.transform.rotation = quaternion_from_euler(0, 0, self.angleTheta)
+		self.odomTransform.transform.rotation.x = quaternion[0]
+		self.odomTransform.transform.rotation.y = quaternion[1]
+		self.odomTransform.transform.rotation.z = quaternion[2]
+		self.odomTransform.transform.rotation.w = quaternion[3]
 
 		# broadcaster the transformation
 		self.odomBroadcaster.sendTransformMessage(self.odomTransform)
-		"""
 
+		"""
 		# broadcaster.sendTransform(position, orientation, time, child, parent)
 		self.odomBroadcaster.sendTransform((self.positionX, self.positionY, 0),
 											quaternion_from_euler(0 ,0 , self.angleTheta),
 											rospy.Time.from_sec(self.currentTime),
 											"base_link",
 											"odom")		
+		"""
 
-		# data for odometry message
-		self.odomMsg.header.stamp = self.currentTime
-		self.odomMsg.header.frame_id = "odom"
-
-		self.odomMsg.child_frame_id = "base_link"
+		# data for odometry message	
+		self.odomMsg.header.frame_id = parent_frame
+		self.odomMsg.header.stamp = rospy.Time.from_sec(self.currentTime)
+		self.odomMsg.child_frame_id = child_frame
 
 		self.odomMsg.pose.pose.position.x = self.positionX
 		self.odomMsg.pose.pose.position.y = self.positionY
-		self.odomMsg.pose.pose.position.z = 0.0
-		self.odomMsg.pose.pose.orientation = quaternion_from_euler(0,0,self.angleTheta)
+		self.odomMsg.pose.pose.position.z = 0.0		
+		self.odomMsg.pose.pose.orientation.x = quaternion[0]
+		self.odomMsg.pose.pose.orientation.y = quaternion[1]
+		self.odomMsg.pose.pose.orientation.z = quaternion[2]
+		self.odomMsg.pose.pose.orientation.w = quaternion[3]
 
 		self.odomMsg.twist.twist.linear.x = self.velocityBodyX
 		self.odomMsg.twist.twist.linear.y = self.velocityBodyY
 		self.odomMsg.twist.twist.angular.z = self.angularBodyVelocity
+
+		self.odomPub.publish(self.odomMsg)
 
 	def spin(self):
 		r = rospy.Rate(self.rate)
