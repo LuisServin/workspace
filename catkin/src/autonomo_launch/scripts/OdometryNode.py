@@ -82,7 +82,8 @@ class ComputeOdometry:
 		if self.velocityLeftWheel == self.velocityRigthWheel:		
 			rospy.loginfo("Same velocity in both wheel")
 
-			self.linearBodyVelocity = (1/2) * (self.velocityLeftWheel + self.velocityRigthWheel)
+			self.linearBodyVelocity = (1/2) * (self.velocityLeftWheel \
+				+ self.velocityRigthWheel)
 			self.angularBodyVelocity = 0
 
 			self.computeVelocitiesXY()
@@ -170,6 +171,7 @@ class ComputeOdometry:
 		self.angleTheta += self.dtheta
 
 	def update(self):
+		# http://answers.ros.org/question/69754/quaternion-transformations-in-python/
 		quaternion = quaternion_from_euler(0,0,self.angleTheta)
 		parent_frame = "odom"
 		child_frame = "base_link"
@@ -195,11 +197,12 @@ class ComputeOdometry:
 
 		"""
 		# broadcaster.sendTransform(position, orientation, time, child, parent)
-		self.odomBroadcaster.sendTransform((self.positionX, self.positionY, 0),
-											quaternion_from_euler(0 ,0 , self.angleTheta),
-											rospy.Time.from_sec(self.currentTime),
-											"base_link",
-											"odom")		
+		self.odomBroadcaster.sendTransform(
+			(self.positionX, self.positionY, 0),
+			quaternion_from_euler(0 ,0 , self.angleTheta),
+			rospy.Time.from_sec(self.currentTime),
+			"base_link",
+			"odom")		
 		"""
 
 		# data for odometry message	
