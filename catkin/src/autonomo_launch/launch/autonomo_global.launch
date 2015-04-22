@@ -55,16 +55,17 @@
 		<param name="~port" value="$(arg stellaris_port)" />
 	</node>
 
-	<node pkg="depthimage_to_laserscan" name="depthimage_to_laserscan" type="depthimage_to_laserscan" >
-		<remap from="image" to="camera/depth/image_raw"/>
+  	<node pkg="autonomo_launch" type="OdometryNode.py" name="odometryNode">
+		<param name="rate" value="50"/>
   	</node>
 
-  	<!--
-  	<node pkg="autonomo_launch" type="OdometryNode.py" name="odometryNode">
-  		
-  	</node>
-  	-->
+  	<node pkg="robot_setup_tf_example" type="tf_broadcaster" name="cameraToBase"/>
+
 	<!-- Example about lauching from a launch file inside an specific package
 	<include file="$(find teleop_twist_joy)/launch/teleop.launch" />
 	-->
+
+	<include file="$(find openni2_launch)/launch/openni2.launch" />
+	<include file="$(find depthimage_to_laserscan)/launch/depth_to_laser.launch" />
+
 </launch>
