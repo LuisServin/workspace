@@ -65,10 +65,10 @@
 	<include file="$(find teleop_twist_joy)/launch/teleop.launch" />
 	-->
 
-	<node pkg="depthimage_to_laserscan" name="depthimage_to_laserscan" type="depthimage_to_laserscan" machine="comp1_src">
+	<node pkg="depthimage_to_laserscan" name="depthimage_to_laserscan" type="depthimage_to_laserscan" machine="bbb1_src">
 		<remap from="image" to="camera/depth/image_raw"/>
   	</node>
 
-  	<include file="$(find openni2_launch)/launch/openni2.launch" />
+
 
 </launch>

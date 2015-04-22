@@ -3,11 +3,11 @@
 	<!--
 		Configuring machines for launching nodes
 	-->
-	<arg name="bbb1_ip" default="192.168.7.2"/>
+	<arg name="bbb1_ip" default="192.168.0.115"/>
 	<!--
 	<arg name="bbb1_ip" default="192.168.7.2" />
 	-->
-	<arg name="comp1_ip" default="192.168.7.1" />
+	<arg name="comp1_ip" default="192.168.0.117" />
 
 	<machine name="comp1_opt" address="$(arg comp1_ip)" env-loader="/opt/ros/indigo/env.sh" />
 	<machine name="comp1_src" address="$(arg comp1_ip)" env-loader="/home/luis/workspace/catkin/devel/env.sh" />
