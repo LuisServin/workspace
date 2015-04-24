@@ -1,0 +1,25 @@
+<?xml version="1.0"?>
+<package>
+  <name>atwork_launch</name>
+  <version>0.0.0</version>
+  <description>The atwork_launch package</description>
+  <maintainer email="luis.alfredo.sega@gmail.com">Luis Servin</maintainer>
+
+  <license>TODO</license>
+
+  <url type="website">http://dcb.fi-c.unam.mx/TallerRobotica/</url>
+  <author email="luis.alfredo.sega@gmail.com">Luis Servin</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>roscpp</build_depend>
+  <build_depend>rospy</build_depend>
+  <run_depend>roscpp</run_depend>
+  <run_depend>rospy</run_depend>
+
+
+  <!-- The export tag contains other, unspecified, tags -->
+  <export>
+    <!-- Other tools can request additional information be placed here -->
+
+  </export>
+</package>
