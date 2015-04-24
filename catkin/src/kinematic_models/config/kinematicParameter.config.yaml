@@ -1,0 +1,4 @@
+# physical parameter of the robot
+lengthAxisX: 0.05
+lengthAxisY: 0.1
+wheelRadius: 0.1012
