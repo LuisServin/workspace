@@ -43,14 +43,24 @@ struct TeleopTwistJoy::Impl
   ros::Subscriber joy_sub;
   ros::Publisher cmd_vel_pub;
 
+  //* modification to enable omnidireccional movement
+  int enable_omnidireccional;
+  int enable_omnidireccional_button;
+
+  //* 
+  int enable_turbo;
   int enable_button;
   int enable_turbo_button;
-  int axis_linear;
+  int axis_linear_x;
+
+  //* enable an axis_linear_y
+  int axis_linear_y;
+
   int axis_angular;
   double scale_linear;
   double scale_linear_turbo;
   double scale_angular;
-  // Added to have a turn turbo mode
+  //* Added to have a turn turbo mode
   double scale_angular_turbo;
 
   bool sent_disable_msg;
@@ -68,10 +78,18 @@ TeleopTwistJoy::TeleopTwistJoy(ros::NodeHandle* nh, ros::NodeHandle* nh_param)
   pimpl_->cmd_vel_pub = nh->advertise<geometry_msgs::Twist>("cmd_vel", 1, true);
   pimpl_->joy_sub = nh->subscribe<sensor_msgs::Joy>("joy", 1, &TeleopTwistJoy::Impl::joyCallback, pimpl_);
 
+  //* param for omnidireccional movement
+  //* value -1 is the default value, if 1 enable onmidireccional
+  nh_param->param<int>("enable_omnidireccional", pimpl_->enable_omnidireccional, -1);
+  nh_param->param<int>("enable_omnidireccional_button", pimpl_->enable_omnidireccional_button, 5);
+
   nh_param->param<int>("enable_button", pimpl_->enable_button, 0);
+  nh_param->param<int>("enable_turbo", pimpl_->enable_turbo, -1);
   nh_param->param<int>("enable_turbo_button", pimpl_->enable_turbo_button, -1);
 
-  nh_param->param<int>("axis_linear", pimpl_->axis_linear, 1);
+  nh_param->param<int>("axis_linear_x", pimpl_->axis_linear_x, 1);
+  //* get the param for the axis linear y
+  nh_param->param<int>("axis_linear_y", pimpl_->axis_linear_y, 0);
   nh_param->param<double>("scale_linear", pimpl_->scale_linear, 0.5);
   nh_param->param<double>("scale_linear_turbo", pimpl_->scale_linear_turbo, 1.0);
 
@@ -80,7 +98,7 @@ TeleopTwistJoy::TeleopTwistJoy(ros::NodeHandle* nh, ros::NodeHandle* nh_param)
   nh_param->param<double>("scale_angular_turbo", pimpl_->scale_angular_turbo, 2.0);
 
   ROS_INFO_NAMED("TeleopTwistJoy", "Using axis %i for linear and axis %i for angular.",
-      pimpl_->axis_linear, pimpl_->axis_angular);
+      pimpl_->axis_linear_x, pimpl_->axis_angular);
   ROS_INFO_NAMED("TeleopTwistJoy", "Teleop on button %i at scale %f linear, scale %f angular.",
       pimpl_->enable_button, pimpl_->scale_linear, pimpl_->scale_angular);
   ROS_INFO_COND_NAMED(pimpl_->enable_turbo_button >= 0, "TeleopTwistJoy",
@@ -94,16 +112,27 @@ void TeleopTwistJoy::Impl::joyCallback(const sensor_msgs::Joy::ConstPtr& joy_msg
   // Initializes with zeros by default.
   geometry_msgs::Twist cmd_vel_msg;
 
-  if (enable_turbo_button >= 0 && joy_msg->buttons[enable_turbo_button])
+  if (enable_omnidireccional >= 0 && joy_msg->buttons[enable_omnidireccional_button]) 
   {
-    cmd_vel_msg.linear.x = joy_msg->axes[axis_linear] * scale_linear_turbo;
+    cmd_vel_msg.linear.x = joy_msg->axes[axis_linear_x] * scale_linear_turbo;
+    cmd_vel_msg.linear.y = joy_msg->axes[axis_linear_y] * scale_linear_turbo;
+    cmd_vel_msg.linear.z = 3;
+    cmd_vel_msg.angular.z = joy_msg->axes[axis_angular] * scale_angular_turbo;
+    cmd_vel_pub.publish(cmd_vel_msg);
+    sent_disable_msg = false;
+  }
+  else if (enable_turbo >= 0 && joy_msg->buttons[enable_turbo_button])
+  {
+    cmd_vel_msg.linear.x = joy_msg->axes[axis_linear_x] * scale_linear_turbo;
     cmd_vel_msg.angular.z = joy_msg->axes[axis_angular] * scale_angular_turbo ;
+    cmd_vel_msg.linear.z = 4;
     cmd_vel_pub.publish(cmd_vel_msg);
     sent_disable_msg = false;
   }
   else if (joy_msg->buttons[enable_button])
   {
-    cmd_vel_msg.linear.x = joy_msg->axes[axis_linear] * scale_linear;
+    cmd_vel_msg.linear.x = joy_msg->axes[axis_linear_x] * scale_linear;
+    cmd_vel_msg.linear.z = 5;
     cmd_vel_msg.angular.z = joy_msg->axes[axis_angular] * scale_angular;
     cmd_vel_pub.publish(cmd_vel_msg);
     sent_disable_msg = false;
