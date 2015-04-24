@@ -116,7 +116,6 @@ void TeleopTwistJoy::Impl::joyCallback(const sensor_msgs::Joy::ConstPtr& joy_msg
   {
     cmd_vel_msg.linear.x = joy_msg->axes[axis_linear_x] * scale_linear_turbo;
     cmd_vel_msg.linear.y = joy_msg->axes[axis_linear_y] * scale_linear_turbo;
-    cmd_vel_msg.linear.z = 3;
     cmd_vel_msg.angular.z = joy_msg->axes[axis_angular] * scale_angular_turbo;
     cmd_vel_pub.publish(cmd_vel_msg);
     sent_disable_msg = false;
@@ -125,14 +124,12 @@ void TeleopTwistJoy::Impl::joyCallback(const sensor_msgs::Joy::ConstPtr& joy_msg
   {
     cmd_vel_msg.linear.x = joy_msg->axes[axis_linear_x] * scale_linear_turbo;
     cmd_vel_msg.angular.z = joy_msg->axes[axis_angular] * scale_angular_turbo ;
-    cmd_vel_msg.linear.z = 4;
     cmd_vel_pub.publish(cmd_vel_msg);
     sent_disable_msg = false;
   }
   else if (joy_msg->buttons[enable_button])
   {
     cmd_vel_msg.linear.x = joy_msg->axes[axis_linear_x] * scale_linear;
-    cmd_vel_msg.linear.z = 5;
     cmd_vel_msg.angular.z = joy_msg->axes[axis_angular] * scale_angular;
     cmd_vel_pub.publish(cmd_vel_msg);
     sent_disable_msg = false;
