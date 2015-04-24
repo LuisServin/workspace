@@ -5,7 +5,7 @@ scale_linear_turbo: 1.0
 
 axis_angular: 3  # Left thumb stick horizontal
 scale_angular: 0.4
-scale_angular_turbo: 1.0
+scale_angular_turbo: 6.0
 
 enable_omnidireccional: 1
 enable_turbo: -1
