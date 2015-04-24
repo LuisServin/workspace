@@ -21,7 +21,7 @@ class RobotFourMecanumWheels():
 		self.totalRobotVelocitySubs = rospy.Subscriber("cmd_vel", Twist, self.callback)
 
 		# publisher of robot wheels desired speeds
-		self.
+		#self.robotWheelSpeedPub = rospy.Publisher("wheelSpeeds", )
 
 	def spin():
 		r = rospy.Rate(self.rate)
