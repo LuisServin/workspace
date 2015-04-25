@@ -39,36 +39,20 @@
    		<param name="autorepeat_rate" value="20" />
 	</node>
 
-	<node pkg="teleop_twist_joy" name="teleop_twist_joy" type="teleop_node" machine="comp1_src">
+	<node pkg="teleop_twist_joy" type="teleop_node" name="teleop_twist_joy" machine="comp1_src">
    		<rosparam command="load" file="$(find teleop_twist_joy)/config/$(arg joy_config).config.yaml" />
-   		<param name="enable_turbo_button" value="0" />
-   		<!--
-   		<remap from="cmd_vel" to="turtle1/cmd_vel" />
-   		-->
 	</node>
-		
-	<!--
-	<node pkg="turtlesim" type="turtlesim_node" name="turtle1" machine="comp1_opt"/>
-	-->
 
-	<node pkg="rosserial_python" type="serial_node.py" name="ard_node" machine="bbb1_opt">
+	<node pkg="kinematic_models" type="kinematicFourMecanum.py" name="kinematic4Mecanum" machine="comp1_src">
+		<rosparam command="load" file="$(find kinematic_models)/config/kinematicParameter.config.yaml" />
+	</node>
+
+	<node pkg="rosserial_python" type="serial_node.py" name="ard_node" machine="bbb1_src">
 		<param name="~port" value="$(arg stellaris_port)" />
+		<param name="~baud" value="57600" />
 	</node>
-
-  	<node pkg="autonomo_launch" type="OdometryNode.py" name="odometryNode" machine="comp1_src">
-		<param name="rate" value="50"/>
-  	</node>
-
-  	<node pkg="robot_setup_tf_example" type="tf_broadcaster" name="cameraToBase" machine="bbb1_src"/>
 
 	<!-- Example about lauching from a launch file inside an specific package
 	<include file="$(find teleop_twist_joy)/launch/teleop.launch" />
 	-->
-
-	<node pkg="depthimage_to_laserscan" name="depthimage_to_laserscan" type="depthimage_to_laserscan" machine="bbb1_src">
-		<remap from="image" to="camera/depth/image_raw"/>
-  	</node>
-
-
-
 </launch>
