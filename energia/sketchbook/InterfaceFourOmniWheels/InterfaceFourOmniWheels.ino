@@ -136,6 +136,12 @@ void wheelSpeedCb(const atwork_msgs::FourWheels& data)
 //ros variables
 ros::NodeHandle nh;
 
+atwork_msgs::FourWheels encTicks;
+// Create a publisher with the following characteristics:
+// Object name: encTicksPub
+// Topic:       encTicks
+// Type:        FourWheels (Custom message)
+ros::Publisher encTicksPub("encTicks",&encTicks);
 // Create a subscriber with the following characteristics
 // Object name: wheelSpeedSub
 // Topic:       wheelSpeeds
@@ -159,13 +165,181 @@ void setup()
   pinMode(encm1pin2, INPUT);
   pinMode(encm2pin1, INPUT);
   pinMode(encm2pin2, INPUT);
+  pinMode(encm3pin1, INPUT);
+  pinMode(encm3pin2, INPUT);
+  pinMode(encm4pin1, INPUT);
+  pinMode(encm4pin2, INPUT);
+
+  // Set interrupts for every encoder's pin
+  attachInterrupt(encm1pin1, enc1m1change, CHANGE);
+  attachInterrupt(encm1pin2, enc2m1change, CHANGE);
+  attachInterrupt(encm2pin1, enc1m2change, CHANGE);
+  attachInterrupt(encm2pin2, enc2m2change, CHANGE);
+  attachInterrupt(encm3pin1, enc1m3change, CHANGE);
+  attachInterrupt(encm3pin2, enc2m3change, CHANGE);
+  attachInterrupt(encm4pin1, enc1m4change, CHANGE);
+  attachInterrupt(encm4pin2, enc2m4change, CHANGE);
 
   nh.initNode();
-  //nh.advertise(chatter);
+  nh.advertise(encTicksPub);
   nh.subscribe(wheelSpeedSub);
 }
 
 void loop()
 {
+  if(millis() % 50 == 0) {
+    encTicks.wheel1 = encPos1;
+    encTicks.wheel2 = encPos2;
+    encTicks.wheel3 = encPos3;
+    encTicks.wheel4 = encPos4;
+    encTicksPub.publish(&encTicks);
+    encPos1 = 0;
+    encPos2 = 0;
+    encPos3 = 0;
+    encPos4 = 0;
+    delay(1);
+  }
   nh.spinOnce(); 
+}
+
+/*
+ * Functinos to read encoders are based on:
+ * http://playground.arduino.cc/Main/RotaryEncoders
+ */
+
+void enc1m1change()
+{
+  if(digitalRead(encm1pin1) == HIGH) {
+    if(digitalRead(encm1pin2) == LOW) {
+      encPos1 += 1;
+    } else {
+      encPos1 -= 1;
+    }
+  } else {
+    if(digitalRead(encm1pin2) == HIGH) {
+      encPos1 += 1;
+    } else {
+      encPos1 -= 1;
+    }
+  }
+}
+
+void enc2m1change()
+{
+  if(digitalRead(encm1pin2) == HIGH) {
+    if(digitalRead(encm1pin1) == HIGH) {
+      encPos1 += 1;
+    } else {
+      encPos1 -= 1;
+    }
+  } else {
+    if(digitalRead(encm1pin1) == LOW) {
+      encPos1 += 1;
+    } else {
+      encPos1 -= 1;
+    }
+  }
+}
+void enc1m2change()
+{
+  if(digitalRead(encm2pin1) == HIGH) {
+    if(digitalRead(encm2pin2) == LOW) {
+      encPos2 += 1;
+    } else {
+      encPos2 -= 1;
+    }
+  } else {
+    if(digitalRead(encm2pin2) == HIGH) {
+      encPos2 += 1;
+    } else {
+      encPos2 -= 1;
+    }
+  }
+}
+void enc2m2change()
+{
+  if(digitalRead(encm2pin2) == HIGH) {
+    if(digitalRead(encm2pin1) == HIGH) {
+      encPos2 += 1;
+    } else {
+      encPos2 -= 1;
+    }
+  } else {
+    if(digitalRead(encm2pin1) == LOW) {
+      encPos2 += 1;
+    } else {
+      encPos2 -= 1;
+    }
+  }
+}
+
+
+//rutinas de encoders 3 y 4
+
+void enc1m3change()
+{
+  if(digitalRead(encm3pin1) == HIGH) {
+    if(digitalRead(encm3pin2) == LOW) {
+      encPos3 += 1;
+    } else {
+      encPos3 -= 1;
+    }
+  } else {
+    if(digitalRead(encm3pin2) == HIGH) {
+      encPos3 += 1;
+    } else {
+      encPos3 -= 1;
+    }
+  }
+}
+
+void enc2m3change()
+{
+  if(digitalRead(encm3pin2) == HIGH) {
+    if(digitalRead(encm3pin1) == HIGH) {
+      encPos3 += 1;
+    } else {
+      encPos3 -= 1;
+    }
+  } else {
+    if(digitalRead(encm3pin1) == LOW) {
+      encPos3 += 1;
+    } else {
+      encPos3 -= 1;
+    }
+  }
+}
+  
+void enc1m4change()
+{
+  if(digitalRead(encm4pin1) == HIGH) {
+    if(digitalRead(encm4pin2) == LOW) {
+      encPos4 += 1;
+    } else {
+      encPos4 -= 1;
+    }
+  } else {
+    if(digitalRead(encm4pin2) == HIGH) {
+      encPos4 += 1;
+    } else {
+      encPos4 -= 1;
+    }
+  }
+}
+
+void enc2m4change()
+{
+  if(digitalRead(encm4pin2) == HIGH) {
+    if(digitalRead(encm4pin1) == HIGH) {
+      encPos4 += 1;
+    } else {
+      encPos4 -= 1;
+    }
+  } else {
+    if(digitalRead(encm4pin1) == LOW) {
+      encPos4 += 1;
+    } else {
+      encPos4 -= 1;
+    }
+  }
 }
