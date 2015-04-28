@@ -5,8 +5,13 @@ project(kinematic_models)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  dynamic_reconfigure
   roscpp
   rospy
+)
+
+generate_dynamic_reconfigure_options(
+	cfg/pid_vel.cfg
 )
 
 ## System dependencies are found with CMake's conventions
