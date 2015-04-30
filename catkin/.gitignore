@@ -1,4 +1,6 @@
 build/
 devel/
 bagfiles/
-src/slam_gmapping/*
+src/slam_gmapping/
+src/hector_slam/
+src/atwork_launch/maps/
