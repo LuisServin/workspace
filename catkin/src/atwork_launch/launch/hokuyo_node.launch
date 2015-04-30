@@ -29,10 +29,19 @@
     	<param name="odom_frame" value="base_footprint" />
 	</node>
 
+	<node pkg="hector_trajectory_server" type="hector_trajectory_server" name="hector_trajectory_server" output="screen">
+    	<param name="target_frame_name" type="string" value="map" />
+    	<param name="source_frame_name" type="string" value="base_link" />
+    	<param name="trajectory_update_rate" type="double" value="4" />
+    	<param name="trajectory_publish_rate" type="double" value="0.25" />
+  </node>
+
 	<node pkg="hector_geotiff" type="geotiff_node" name="hector_geotiff_node" output="screen">
 		<remap from="map" to="/dynamic_map" />
 		<param name="~map_file_path" type="string" value="$(find atwork_launch)/maps/" />
 		<param name="~map_file_base_name" type="string" value="GeoTiffMap" />
 		<param name="~geotiff_save_period" type="double" value="0.0" />
 	</node>
+
+	<node pkg="rviz" type="rviz" name="rviz" />
 </launch>
