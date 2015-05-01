@@ -26,12 +26,12 @@
 	-->	
 
 	<!-- Example launching file with parameters in yaml file -->
-	
+	<!--
 	<node pkg="rosserial_python" type="serial_node.py" name="ard_node" machine="bbb1_opt">
 		<rosparam command="load" file="$(find autonomo_launch)/config/arduino.yaml" />
 		<remap from="chatter" to="ard_msg" />
 	</node>
-	
+	-->
 
 	<node pkg="joy" type="joy_node" name="joy_node" machine="comp1_opt">
    		<param name="dev" value="$(arg joy_dev)" />
