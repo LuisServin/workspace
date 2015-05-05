@@ -1,6 +1,6 @@
 <launch>
 	<arg name="joy_dev" default="/dev/input/js1" />
-	<arg name="joy_config" default="xbox_omni" />
+	<arg name="joy_config" default="xbox" />
 	<arg name="stellaris_port" default="/dev/ttyACM0" />
 
 	<!-- Beginning with roslaunch -->
@@ -43,6 +43,7 @@
    		<rosparam command="load" file="$(find teleop_twist_joy)/config/$(arg joy_config).config.yaml" />
 	</node>
 
+<!--
 	<node pkg="kinematic_models" type="kinematicFourMecanum.py" name="kinematic4Mecanum">
 		<rosparam command="load" file="$(find kinematic_models)/config/kinematicParameter.config.yaml" />
 	</node>
@@ -51,6 +52,7 @@
 		<param name="~port" value="$(arg stellaris_port)" />
 		<param name="~baud" value="57600" />
 	</node>
+-->
 
 	<!--
   	<node pkg="autonomo_launch" type="OdometryNode.py" name="odometryNode">
