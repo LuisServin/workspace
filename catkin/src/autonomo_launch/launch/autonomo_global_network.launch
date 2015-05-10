@@ -4,9 +4,9 @@
 	<arg name="stellaris_port" default="/dev/ttyACM0" />
 
 	<!-- Beginning with roslaunch -->
-	<!-- Configure different machines in network -->
+	<!-- Configure different machines in network--> 
 	<include file="$(find autonomo_launch)/launch/automo_r.machine" />
-
+	
 	<!-- Example about launching nodes in two different machines 
 	<node pkg="beginner_tutorials" type="talker.py" name="talker" machine="bbb1_src" />
 	<node pkg="beginner_tutorials" type="listener.py" name="listener" machine="comp1_src" />
@@ -50,14 +50,15 @@
 	<!--
 	<node pkg="turtlesim" type="turtlesim_node" name="turtle1" machine="comp1_opt"/>
 	-->
-
+	
 	<node pkg="rosserial_python" type="serial_node.py" name="ard_node" machine="bbb1_opt">
 		<param name="~port" value="$(arg stellaris_port)" />
 	</node>
-
+	
   	<node pkg="autonomo_launch" type="OdometryNode.py" name="odometryNode" machine="comp1_src">
 		<param name="rate" value="50"/>
   	</node>
+	
 	<!--
   	<node pkg="robot_setup_tf_example" type="tf_broadcaster" name="cameraToBase" machine="bbb1_src"/>
 	-->
