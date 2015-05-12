@@ -3,7 +3,9 @@
 	<!--
 		Configuring machines for launching nodes
 	-->
+	<!--
 	<arg name="bbb1_ip" default="192.168.0.115"/>
+	-->
 	<!--
 	<arg name="bbb1_ip" default="192.168.7.2" />
 	-->
@@ -21,6 +23,8 @@
 	<!--Erick
 	-->
 	<machine name="comp1_src" address="$(arg comp1_ip)" env-loader="/home/erick/Documents/Tesis/myworkspace/workspace/catkin/devel/env.sh" />
+	<!--
 	<machine name="bbb1_opt" address="$(arg bbb1_ip)" env-loader="/opt/ros/indigo/env.sh" user="ubuntu" password="temppwd" />
 	<machine name="bbb1_src" address="$(arg bbb1_ip)" env-loader="/home/ubuntu/workspace/catkin/devel/env.sh" user="ubuntu" password="temppwd" />
+	-->
 </launch>
