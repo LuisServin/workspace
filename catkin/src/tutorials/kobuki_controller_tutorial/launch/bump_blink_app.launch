@@ -1,0 +1,5 @@
+<launch>
+	<node pkg="nodelet" type="nodelet" name="bump_blink_controller" args="load">
+		
+	</node>
+</launch>
