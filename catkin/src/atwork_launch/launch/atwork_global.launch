@@ -41,9 +41,7 @@
 
 	<node pkg="teleop_twist_joy" type="teleop_node" name="teleop_twist_joy">
    		<rosparam command="load" file="$(find teleop_twist_joy)/config/$(arg joy_config).config.yaml" />
-   		<!--
-   		<remap from="cmd_vel" to="husky_velocity_controller/odom" />
-   	-->
+   		<remap from="/cmd_vel" to="/robot0/cmd_vel" />
 	</node>
 
 <!--

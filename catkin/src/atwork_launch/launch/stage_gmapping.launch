@@ -15,7 +15,7 @@
    		<rosparam command="load" file="$(find teleop_twist_joy)/config/$(arg joy_config).config.yaml" />
 	</node>
 
-	<node pkg="stage_ros" type="stageros" name="stageros_node" args="-g $(arg wordfile_path)">
+	<node pkg="stage_ros" type="stageros" name="stageros_node" args="$(arg wordfile_path)">
 	<!--
 		<remap from="/move_base/cmd_vel" to="cmd_vel" />
 	-->
