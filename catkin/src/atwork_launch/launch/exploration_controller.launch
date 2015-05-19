@@ -1,0 +1,8 @@
+<launch>
+	<arg name="holonomic" value="true" />
+
+	<node pkg="hector_exploration_controller" type="simple_exploration_controller" name="exploration_controller">
+		<param name="holonomic" value="$(arg holonomic)" />
+	</node>
+
+</launch>
