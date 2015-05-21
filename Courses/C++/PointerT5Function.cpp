@@ -24,7 +24,6 @@ int main()
 	n = operation (20, m, minus);
 	cout << "Result is: ";
 	cout << n << '\n';
-	cout << "\nGracias";
 
 	return 0;
 }
