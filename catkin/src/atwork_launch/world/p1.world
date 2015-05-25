@@ -8,10 +8,10 @@ define topurg ranger
 (
 	sensor(
     # 10 is the maximum range in meters
-    range [ 0.0  10.0 ]
+    range [ 0.0  30.0 ]
     # field of view for the sensor
     # modified by LASG
-    fov 180.0
+    fov 240.0
    samples 1081
   )
 
@@ -19,7 +19,7 @@ define topurg ranger
   color "black"
   size [ 0.05 0.05 0.1 ]
 
-  ctrl "lasernoise"
+  #ctrl "lasernoise"
 )
 
 define erratic position
@@ -28,7 +28,7 @@ define erratic position
   #size [0.35 0.35 0.25]
   origin [-0.05 0 0 0]
   gui_nose 1
-  drive "diff"
+  drive "omni"
   topurg(pose [ 0.050 0.000 0 0.000 ])
 )
 
