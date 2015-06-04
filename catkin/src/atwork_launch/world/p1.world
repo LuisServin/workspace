@@ -8,7 +8,7 @@ define topurg ranger
 (
 	sensor(
     # 10 is the maximum range in meters
-    range [ 0.0  30.0 ]
+    range [ 0.0  20.0 ]
     # field of view for the sensor
     # modified by LASG
     fov 240.0
@@ -68,7 +68,7 @@ floorplan
 ( 
   name "maze"
   bitmap "maze.png"
-  size [20.0 20.0 2.0]
+  size [25.0 25.0 2.0]
   pose [ 5.0 5.0 0.0 0.0 ]
 )
 
@@ -79,4 +79,4 @@ erratic
   name "era" 
   color "blue" 
 )
-#block( pose [ -13.924 25.020 0 0.0 ] color "red")
+#block( pose [ -8.924 20.020 0 0.0 ] color "red")

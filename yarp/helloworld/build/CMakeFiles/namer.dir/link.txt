@@ -1,0 +1,2 @@
+/usr/bin/ar cr libnamer.a  CMakeFiles/namer.dir/namer/world.cpp.o
+/usr/bin/ranlib libnamer.a
