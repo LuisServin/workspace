@@ -1,8 +1,8 @@
 <?xml version="1.0"?>
 <package>
-  <name>beginner_tutorials</name>
+  <name>kobuki_controller_tutorial</name>
   <version>0.0.0</version>
-  <description>The beginner_tutorials package</description>
+  <description>The kobuki_controller_tutorial package</description>
 
   <!-- One maintainer tag required, multiple allowed, one person per tag --> 
   <!-- Example:  -->
@@ -19,7 +19,7 @@
   <!-- Url tags are optional, but mutiple are allowed, one per tag -->
   <!-- Optional attribute type can be: website, bugtracker, or repository -->
   <!-- Example: -->
-  <!-- <url type="website">http://wiki.ros.org/beginner_tutorials</url> -->
+  <!-- <url type="website">http://wiki.ros.org/kobuki_controller_tutorial</url> -->
 
 
   <!-- Author tags are optional, mutiple are allowed, one per tag -->
@@ -40,20 +40,21 @@
   <!-- Use test_depend for packages you need only for testing: -->
   <!--   <test_depend>gtest</test_depend> -->
   <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>kobuki_msgs</build_depend>
+  <build_depend>nodelet</build_depend>
   <build_depend>roscpp</build_depend>
-  <build_depend>rospy</build_depend>
   <build_depend>std_msgs</build_depend>
+  <build_depend>yocs_controllers</build_depend>
+  <run_depend>kobuki_msgs</run_depend>
+  <run_depend>nodelet</run_depend>
   <run_depend>roscpp</run_depend>
-  <run_depend>rospy</run_depend>
   <run_depend>std_msgs</run_depend>
+  <run_depend>yocs_controllers</run_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
   <export>
-    <!-- You can specify that this package is a metapackage here: -->
-    <!-- <metapackage/> -->
-
     <!-- Other tools can request additional information be placed here -->
-
+    <nodelet plugin="{prefix}/plugins/nodelet_plugins.xml" />
   </export>
 </package>

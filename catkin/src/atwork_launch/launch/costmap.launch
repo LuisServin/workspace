@@ -1,0 +1,12 @@
+<launch>
+	<!-- launch file to start the nodes related to the map server and 
+		the previous steps for navigation -->
+
+	<arg name="map_file" value="$(find atwork_launch)/config/realmapConf.yaml" />
+
+	<node pkg="map_server" type="map_server" name="map_server" args="$(arg map_file)" />
+
+	<node pkg="tf" type="static_transform_publisher" name="static_tf0" args="2 0 0 0 0 0 /map /base_link 100"/>
+
+	
+</launch>

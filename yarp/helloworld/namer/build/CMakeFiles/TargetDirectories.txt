@@ -1,0 +1,1 @@
+/home/luis/workspace/yarp/helloworld/namer/build/CMakeFiles/namer.dir

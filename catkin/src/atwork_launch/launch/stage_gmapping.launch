@@ -1,7 +1,9 @@
 <launch>
-	<arg name="wordfile_path" value="$(find stage_ros)/world/willow-erratic.world" />
+	<arg name="wordfile_path" value="$(find atwork_launch)/world/p1.world" />
 	<arg name="joy_dev" default="/dev/input/js1" />
-	<arg name="joy_config" default="xbox" />
+	<arg name="joy_config" default="xbox_omni" />
+
+	<param name="/use_sim_time" value="true" />
 
 	<node pkg="joy" type="joy_node" name="joy_node">
    		<param name="dev" value="$(arg joy_dev)" />
@@ -13,23 +15,39 @@
    		<rosparam command="load" file="$(find teleop_twist_joy)/config/$(arg joy_config).config.yaml" />
 	</node>
 
-	<node pkg="stage_ros" type="stageros" name="stageros_node" args=" $(arg wordfile_path)"/>
+	<node pkg="stage_ros" type="stageros" name="stageros_node" args="-g $(arg wordfile_path)">
+		<remap from="/base_scan" to="/scan" />
+	</node>
 
 	<node pkg="rviz" type="rviz" name="rviz" args="-d $(find atwork_launch)/rviz_cfg/Stage.rviz" />
 
+	<!-- SLAM G-Mapping
+		Parameters for G-Mapping
+		~delta: Map resolution
+		~particles: Number of particles in the filter
+	-->
 	<node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen">
-		<remap from="scan" to="base_scan"/>
 		<param name="~base_frame" value="base_footprint" />
 		<param name="~map_frame" value="map"/>
+		<param name="~delta" value="0.1" />
+		<param name="~particles" value="30" />
+		<param name="~maxUrange" value="25.0" />
 	</node>
 
-	<!--
-	<node pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen">
-		<remap from="scan" to="base_scan" />
+	<node pkg="using_markers" type="basic_shapes" name="basic_shapes" />
+
+	<!-- SLAM Hector-Mapping
+		Parameters for Hector-Mapping
+		~map_frame: Parameter for map resolution
+	-->
+	
+	<!-- <node pkg="hector_mapping" type="hector_mapping" name="hector_mapping" output="screen">
 		<param name="pub_map_odom_transform" value="true"/>
     	<param name="map_frame" value="map" />
     	<param name="base_frame" value="base_footprint" />
     	<param name="odom_frame" value="odom" />
-	</node>
-	-->
+    	<param name="~map_resolution" value="0.1" />
+    	<param name="~laser_max_dist" value="9.9" />
+	</node> -->
+
 </launch>

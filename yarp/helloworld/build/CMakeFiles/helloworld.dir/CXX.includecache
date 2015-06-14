@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*#[ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+../namer/world.h
+string
+-
+
+/home/luis/workspace/yarp/helloworld/main.cpp
+stdio.h
+-
+world.h
+/home/luis/workspace/yarp/helloworld/world.h
+
