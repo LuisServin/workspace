@@ -65,12 +65,14 @@ float dt_2=0;
 float errorVel_Last_1=0;
 float errorVel_Last_2=0;
 const int motor_range_vel=3.0;
+const int vmax=2;//rad/s;
 
 //Constants for control
 float kisum_vel=0.0;
 const int  kp_vel=2.0;
 const int ki_vel=5.0;
 const int kd_vel=5.0;
+const int km_vel=1;
 //const for windup
 const int windup_sup=5;
 const int windup_inf=1;
@@ -92,6 +94,11 @@ void messageCb(const geometry_msgs::Twist& pwm_vel)
   // calculate speed according to the kinematic model
   pwmM1 = pwm_vel.linear.x * 255 + (lRobot / 2) * pwm_vel.angular.z * 255;
   pwmM2 = pwm_vel.linear.x * 255 - (lRobot / 2) * pwm_vel.angular.z * 255;
+
+  //x.linear=-0.7 a 0.7
+//z.angular= -0.4 a 0.4
+  pwmM1=map(pwmM1,-255,255,-vmax,vmax);
+  pwmM2=map(pwmM2,-255,255,-vmax,vmax);//This is going to be radian/s
 
   // set the direction of rotation
   setRotationDirection(pwmM1,pwmM2);
@@ -304,7 +311,7 @@ float PID_vel(float motorVel,float motorVelDes, float dt, float errorVel_Last)
   else
       kisum_vel=0; 
 
-  float motorOut=constrain(kp_vel*errorVel+kisum_vel+kd_vel*((errorVel-errorVel_Last)/(dt)), -motor_range_vel, motor_range_vel);
+  float motorOut=constrain(kp_vel*errorVel+kisum_vel+kd_vel*((errorVel-errorVel_Last)/(dt))+km_vel*motorVelDes, -motor_range_vel, motor_range_vel);
   return motorOut; 
 }
         

@@ -54,11 +54,11 @@
 	<node pkg="rosserial_python" type="serial_node.py" name="ard_node" machine="bbb1_opt">
 		<param name="~port" value="$(arg stellaris_port)" />
 	</node>
-	
+	<!--
   	<node pkg="autonomo_launch" type="OdometryNode.py" name="odometryNode" machine="comp1_src">
 		<param name="rate" value="50"/>
   	</node>
-	
+	-->
 	<!--
   	<node pkg="robot_setup_tf_example" type="tf_broadcaster" name="cameraToBase" machine="bbb1_src"/>
 	-->
