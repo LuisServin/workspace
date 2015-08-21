@@ -45,7 +45,7 @@ byte encm2pin1 = 13;
 byte encm2pin2 = 14;
 
 // encoder caracteristics 
-//int to float
+// int to float
 const float countsPerRevolution = 3592.0;
 
 // variable to store the value from the encoder
@@ -96,7 +96,7 @@ void messageCb(const geometry_msgs::Twist& pwm_vel)
   pwmM2 = pwm_vel.linear.x * 255 - (lRobot / 2) * pwm_vel.angular.z * 255;
 
   //x.linear=-0.7 a 0.7
-//z.angular= -0.4 a 0.4
+  //z.angular= -0.4 a 0.4
   pwmM1=map(pwmM1,-255,255,-vmax,vmax);
   pwmM2=map(pwmM2,-255,255,-vmax,vmax);//This is going to be radian/s
 
@@ -238,7 +238,8 @@ void enc2m2change()
   }
 }
 void setRotationDirection(float pwmM1, float pwmM2)
-{  if(pwmM1 > 0) {
+{  
+  if(pwmM1 > 0) {
     digitalWrite(en1Pin, HIGH);
     digitalWrite(en2Pin, LOW);
   } else {
@@ -260,7 +261,7 @@ int Control_Motor(char mot,long int encPos, float motorAng, float dt, long int t
 {
   //calculate the velocities and angles
     float motorVel=angCalc(mot,encPos,motorAng,time_last); 
-   //WE HAVE TO TRANSLATE DE VELOCITIES
+   //WE HAVE TO TRANSLATE THE VELOCITIES
     float pwmM=PID_vel(motorVel,motorVelDes, dt, errorVel_Last);
 
   // get the absolute value
