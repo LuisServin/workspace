@@ -67,7 +67,7 @@ window
 floorplan
 ( 
   name "maze"
-  bitmap "maze.png"
+  bitmap "maze_1.png"
   size [25.0 25.0 2.0]
   pose [ 5.0 5.0 0.0 0.0 ]
 )
@@ -75,7 +75,7 @@ floorplan
 # throw in a robot
 erratic
 ( 
-  pose [ 1 1 0 0.0 ] 
+  pose [ 9.5 9.5 0 0.0 ] 
   name "era" 
   color "blue" 
 )
