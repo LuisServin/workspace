@@ -1,0 +1,94 @@
+<launch>
+
+	<!-- variables to control  -->
+	<arg name="use_joystick" value="false" />
+	<arg name="use_simulation" value="true" />
+	<arg name="use_gmapping" value="true" />
+
+	<!-- variables for primary lauching and simulation -->
+	<arg name="worldfile_path" value="$(find atwork_launch)/world/p1.world" />
+	<arg name="joy_dev" default="/dev/input/js1" />
+	<arg name="joy_config" default="xbox_omni" />
+	<param name="/use_sim_time" value="true" />
+
+	<!-- variables for move_base control lauching -->
+	<arg name="no_static_map" default="false" />
+	<arg name="base_global_planner" default="navfn/NavfnROS" />
+	<arg name="base_local_planner" default="dwa_local_planner/DWAPlannerROS" />
+
+	<!-- using remote control for the robot -->
+
+	<group if="$(arg use_joystick)">
+		<node pkg="joy" type="joy_node" name="joy_node" >
+			<param name="dev" value="$(arg joy_dev)" />
+			<param name="deadzone" value="0.3" />
+			<param name="autorepeat_rate" value="20" />
+		</node>	
+
+		<node pkg="teleop_twist_joy" type="teleop_node" name="teleop_twist_joy">
+			<rosparam command="load" file="$(find teleop_twist_joy)/config/$(arg joy_config).config.yaml" />
+		</node>
+	</group>
+
+	<!-- start stage for simulation -->
+	<node pkg="stage_ros" type="stageros" name="stageros_node" args="-g $(arg worldfile_path)" if="$(arg use_simulation)" >
+		<remap from="/base_scan" to="/scan" />
+	</node>
+
+
+	<!-- start rviz for data visualization -->
+	<node pkg="rviz" type="rviz" name="rviz" args="-d $(find atwork_launch)/rviz_cfg/Stage.rviz" />
+
+	<!-- choose between g-mapping and hector-mapping -->
+
+	<!-- SLAM G-Mapping
+		Parameters for G-Mapping
+		~delta: Map resolution
+		~particles: Number of particles in the filter
+	-->
+	<node pkg="gmapping" type="slam_gmapping" name="slam_gmapping" output="screen" if="$(arg use_gmapping)">
+		<param name="~base_frame" value="base_footprint" />
+		<param name="~map_frame" value="map" />
+		<param name="~delta" value="0.1" />
+		<param name="~particles" value="30" />
+		<param name="~maxUrange" value="25.0" />
+	</node>
+
+	<node pkg="using_markers" type="basic_shapes" name="basic_shapes" />
+
+	<!-- lauching move_base control -->
+	<node pkg="move_base" type="move_base" name="move_base">
+		<!-- set the  -->
+		<param name="base_global_planner" value="$(arg base_global_planner)" />
+		<param name="base_local_planner" value="$(arg base_local_planner)" />
+
+		<!-- Planner parameters (local and global) -->
+		<rosparam file="$(find atwork_launch)/config/planner.yaml" command="load" ns="" />
+
+		<!-- Observation sources located in costmap_common.yaml -->
+		<rosparam file="$(find atwork_launch)/config/costmap_common.yaml" command="load" ns="global_costmap" />
+		<rosparam file="$(find atwork_launch)/config/costmap_common.yaml" command="load" ns="local_costmap" />
+
+		<!-- Local costmap sizes
+			The parameters in this launch file are
+			global_frame: odom
+			rolling_window: true
+		 -->
+		<rosparam file="$(find atwork_launch)/config/costmap_local.yaml" command="load" ns="local_costmap" />
+		<param name="local_costmap/width" value="5.0" />
+		<param name="local_costmap/height" value="5.0" />
+
+		<!-- static global costmap sizes 
+			The parameters in this launch file are
+			global_frame: map
+			rolling_window: false
+		-->
+		<rosparam file="$(find atwork_launch)/config/costmap_global_static.yaml" command="load" ns="global_costmap" unless="$(arg no_static_map)" />
+	</node>
+
+
+	<!-- wait 10 second for starting up all the process and
+		after that launch exploration process -->
+	<node pkg="atwork_launch" type="timed_roslaunch.sh" name="timed_roslaunch" args="10 atwork_launch exploration.launch" output="screen" />
+
+</launch>
