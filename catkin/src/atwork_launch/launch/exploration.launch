@@ -1,6 +1,5 @@
-<?xml version="1.0" encoding="UTF-8"?>
-
 <launch>
+
 	<node pkg="hector_exploration_node" type="exploration_planner_node" name="hector_exploration_node" output="screen" >
 		<!-- Paramters used -->
 		<rosparam file="$(find atwork_launch)/config/costmap_exploration.yaml" command="load" ns="" />
