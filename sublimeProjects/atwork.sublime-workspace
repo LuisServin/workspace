@@ -7,6 +7,14 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "/home/ubuntu/workspace/catkin/src/simple_layers/src/simple_layer.cpp",
+			"settings":
+			{
+				"buffer_size": 1464,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -40,11 +48,25 @@
 	},
 	"expanded_folders":
 	[
-		"/home/ubuntu/catkin_ws",
-		"/home/ubuntu/workspace"
+		"/home/ubuntu/catkin_ws/src",
+		"/home/ubuntu/catkin_ws/src/using_markers",
+		"/home/ubuntu/catkin_ws/src/using_markers/meshes",
+		"/home/ubuntu/catkin_ws/src/using_markers/src",
+		"/home/ubuntu/workspace/catkin/src",
+		"/home/ubuntu/workspace/catkin/src/simple_layers/include",
+		"/home/ubuntu/workspace/catkin/src/simple_layers/include/simple_layers",
+		"/home/ubuntu/workspace/catkin/src/simple_layers/src",
+		"/home/ubuntu/workspace/catkin/src/atwork_launch",
+		"/home/ubuntu/workspace/catkin/src/atwork_launch/config",
+		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch"
 	],
 	"file_history":
 	[
+		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch/move_base.launch",
+		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch/startup_system.launch",
+		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch/exploration.launch",
+		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch/stage_gmapping.launch",
+		"/home/ubuntu/workspace/sublimeProjects/atwork.sublime-project"
 	],
 	"find":
 	{
@@ -79,8 +101,38 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "/home/ubuntu/workspace/catkin/src/simple_layers/src/simple_layer.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1464,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								27,
+								27
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -165,7 +217,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 150.0,
+	"side_bar_width": 227.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
