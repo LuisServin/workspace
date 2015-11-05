@@ -3,15 +3,63 @@
 	{
 		"selected_items":
 		[
+			[
+				"ROS_",
+				"ROS_ERROR"
+			],
+			[
+				"k",
+				"kdl_parser"
+			],
+			[
+				"run",
+				"run_depend"
+			],
+			[
+				"buil",
+				"build_depend"
+			],
+			[
+				"bu",
+				"build_depend"
+			],
+			[
+				"re",
+				"return"
+			],
+			[
+				"urd",
+				"urdf_file"
+			],
+			[
+				"ur",
+				"urdf_file"
+			],
+			[
+				"ar",
+				"argv"
+			],
+			[
+				"arg",
+				"argc"
+			],
+			[
+				"ma",
+				"main	main()"
+			],
+			[
+				"lin",
+				"link2"
+			]
 		]
 	},
 	"buffers":
 	[
 		{
-			"file": "/home/ubuntu/workspace/catkin/src/simple_layers/src/simple_layer.cpp",
+			"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/myfirst.urdf",
 			"settings":
 			{
-				"buffer_size": 1464,
+				"buffer_size": 532,
 				"line_ending": "Unix"
 			}
 		}
@@ -48,20 +96,27 @@
 	},
 	"expanded_folders":
 	[
-		"/home/ubuntu/catkin_ws/src",
 		"/home/ubuntu/catkin_ws/src/using_markers",
 		"/home/ubuntu/catkin_ws/src/using_markers/meshes",
 		"/home/ubuntu/catkin_ws/src/using_markers/src",
 		"/home/ubuntu/workspace/catkin/src",
-		"/home/ubuntu/workspace/catkin/src/simple_layers/include",
-		"/home/ubuntu/workspace/catkin/src/simple_layers/include/simple_layers",
-		"/home/ubuntu/workspace/catkin/src/simple_layers/src",
-		"/home/ubuntu/workspace/catkin/src/atwork_launch",
 		"/home/ubuntu/workspace/catkin/src/atwork_launch/config",
-		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch"
+		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch",
+		"/home/ubuntu/workspace/catkin/src/robot_model",
+		"/home/ubuntu/workspace/catkin/src/robot_model/kdl_parser",
+		"/home/ubuntu/workspace/catkin/src/robot_model/kdl_parser/src",
+		"/home/ubuntu/workspace/catkin/src/tutorials",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description"
 	],
 	"file_history":
 	[
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/robot.urdf",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/package.xml",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/CMakeLists.txt",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/src/parser.cpp",
+		"/home/ubuntu/workspace/catkin/src/tutorials/my_robot.urdf",
+		"/home/ubuntu/workspace/catkin/src/robot_model/kdl_parser/CMakeLists.txt",
+		"/home/ubuntu/workspace/catkin/src/simple_layers/src/simple_layer.cpp",
 		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch/move_base.launch",
 		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch/startup_system.launch",
 		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch/exploration.launch",
@@ -106,25 +161,24 @@
 			[
 				{
 					"buffer": 0,
-					"file": "/home/ubuntu/workspace/catkin/src/simple_layers/src/simple_layer.cpp",
+					"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/myfirst.urdf",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1464,
+						"buffer_size": 532,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								27,
-								27
+								532,
+								532
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"translate_tabs_to_spaces": false
+							"syntax": "Packages/XML/XML.tmLanguage"
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -216,7 +270,7 @@
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": true,
+	"side_bar_visible": false,
 	"side_bar_width": 227.0,
 	"status_bar_visible": true,
 	"template_settings":
