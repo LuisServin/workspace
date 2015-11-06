@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"mes",
+				"meshes"
+			],
+			[
 				"ROS_",
 				"ROS_ERROR"
 			],
@@ -59,7 +63,34 @@
 			"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/myfirst.urdf",
 			"settings":
 			{
-				"buffer_size": 532,
+				"buffer_size": 6172,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"contents": "",
+			"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/mRobot.urdf",
+			"file_size": 6428,
+			"file_write_time": 130912492990693507,
+			"settings":
+			{
+				"buffer_size": 0,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/oneMesh.urdf",
+			"settings":
+			{
+				"buffer_size": 594,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/ubuntu/workspace/catkin/src/atwork_launch/launch/stage_gmapping.launch",
+			"settings":
+			{
+				"buffer_size": 1885,
 				"line_ending": "Unix"
 			}
 		}
@@ -96,17 +127,12 @@
 	},
 	"expanded_folders":
 	[
-		"/home/ubuntu/catkin_ws/src/using_markers",
-		"/home/ubuntu/catkin_ws/src/using_markers/meshes",
-		"/home/ubuntu/catkin_ws/src/using_markers/src",
 		"/home/ubuntu/workspace/catkin/src",
-		"/home/ubuntu/workspace/catkin/src/atwork_launch/config",
+		"/home/ubuntu/workspace/catkin/src/atwork_launch",
 		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch",
-		"/home/ubuntu/workspace/catkin/src/robot_model",
 		"/home/ubuntu/workspace/catkin/src/robot_model/kdl_parser",
 		"/home/ubuntu/workspace/catkin/src/robot_model/kdl_parser/src",
-		"/home/ubuntu/workspace/catkin/src/tutorials",
-		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description"
+		"/home/ubuntu/workspace/catkin/src/tutorials"
 	],
 	"file_history":
 	[
@@ -125,7 +151,7 @@
 	],
 	"find":
 	{
-		"height": 0.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
@@ -139,6 +165,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"head_"
 		],
 		"highlight": true,
 		"in_selection": false,
@@ -156,7 +183,7 @@
 	"groups":
 	[
 		{
-			"selected": 0,
+			"selected": 1,
 			"sheets":
 			[
 				{
@@ -165,15 +192,75 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 532,
+						"buffer_size": 6172,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								532,
-								532
+								4338,
+								4338
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/XML/XML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 2701.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/mRobot.urdf",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 0,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/XML/XML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 2,
+					"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/oneMesh.urdf",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 594,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								213,
+								213
 							]
 						],
 						"settings":
@@ -184,7 +271,35 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 2,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/ubuntu/workspace/catkin/src/atwork_launch/launch/stage_gmapping.launch",
+					"semi_transient": true,
+					"settings":
+					{
+						"buffer_size": 1885,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								560,
+								560
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/XML/XML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -192,7 +307,7 @@
 	],
 	"incremental_find":
 	{
-		"height": 0.0
+		"height": 25.0
 	},
 	"input":
 	{
@@ -229,7 +344,7 @@
 	"project": "atwork.sublime-project",
 	"replace":
 	{
-		"height": 0.0
+		"height": 46.0
 	},
 	"save_all_on_build": true,
 	"select_file":
