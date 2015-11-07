@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot name="aRobot" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+	<xacro:property name="width" value="0.2" />
+	<xacro:property name="bodylen" value="0.4" />
+
+	<xacro:macro name="c_cylinder" params="r_radius r_length">
+		<geometry>
+			<cylinder radius="${r_radius}" length="${r_length}" />
+		</geometry>
+	</xacro:macro>
+
+	<link name="base_link">
+		<visual>
+			<xacro:c_cylinder r_radius="0.1" r_length="0.4" />
+			<material name="blue">
+				<color rgba="0 0 .8 1" />
+			</material>
+		</visual>
+		<collision>
+			<geomtery>
+				<cylinder radius="${width}" length="${bodylen}" />
+			</geomtery>
+		</collision>
+	</link>
+
+</robot>

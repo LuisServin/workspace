@@ -4,6 +4,10 @@
 		"selected_items":
 		[
 			[
+				"x",
+				"xacro"
+			],
+			[
 				"mes",
 				"meshes"
 			],
@@ -60,37 +64,34 @@
 	"buffers":
 	[
 		{
-			"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/myfirst.urdf",
-			"settings":
-			{
-				"buffer_size": 6172,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"contents": "",
 			"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/mRobot.urdf",
-			"file_size": 6428,
-			"file_write_time": 130912492990693507,
 			"settings":
 			{
-				"buffer_size": 0,
+				"buffer_size": 6428,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/oneMesh.urdf",
+			"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/mRobotCollision.urdf",
 			"settings":
 			{
-				"buffer_size": 594,
+				"buffer_size": 11008,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/ubuntu/workspace/catkin/src/atwork_launch/launch/stage_gmapping.launch",
+			"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/macroed.urdf.xacro",
 			"settings":
 			{
-				"buffer_size": 1885,
+				"buffer_size": 6970,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/aRobot.urdf.xacro",
+			"settings":
+			{
+				"buffer_size": 666,
 				"line_ending": "Unix"
 			}
 		}
@@ -102,12 +103,12 @@
 	"build_varint": "",
 	"command_palette":
 	{
-		"height": 0.0,
+		"height": 96.0,
 		"last_filter": "",
 		"selected_items":
 		[
 		],
-		"width": 0.0
+		"width": 392.0
 	},
 	"console":
 	{
@@ -130,13 +131,16 @@
 		"/home/ubuntu/workspace/catkin/src",
 		"/home/ubuntu/workspace/catkin/src/atwork_launch",
 		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch",
-		"/home/ubuntu/workspace/catkin/src/robot_model/kdl_parser",
-		"/home/ubuntu/workspace/catkin/src/robot_model/kdl_parser/src",
 		"/home/ubuntu/workspace/catkin/src/tutorials"
 	],
 	"file_history":
 	[
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/aRobot.urdf",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/macroed.urdf",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/robot.xacro",
 		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/robot.urdf",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/oneMesh.urdf",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/myfirst.urdf",
 		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/package.xml",
 		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/CMakeLists.txt",
 		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/src/parser.cpp",
@@ -165,6 +169,8 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"pr2_description",
+			"testbot_description",
 			"head_"
 		],
 		"highlight": true,
@@ -183,54 +189,32 @@
 	"groups":
 	[
 		{
-			"selected": 1,
+			"selected": 3,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/myfirst.urdf",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6172,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								4338,
-								4338
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/XML/XML.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 2701.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
 					"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/mRobot.urdf",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 0,
+						"buffer_size": 6428,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								4870,
+								4870
+							],
+							[
+								5382,
+								5382
+							],
+							[
+								5750,
+								5750
 							]
 						],
 						"settings":
@@ -240,55 +224,87 @@
 							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 2898.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
 					"type": "text"
 				},
 				{
-					"buffer": 2,
-					"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/oneMesh.urdf",
+					"buffer": 1,
+					"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/mRobotCollision.urdf",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 594,
+						"buffer_size": 11008,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								213,
-								213
+								10821,
+								10821
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/XML/XML.tmLanguage"
+							"syntax": "Packages/XML/XML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 6424.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 2,
 					"type": "text"
 				},
 				{
-					"buffer": 3,
-					"file": "/home/ubuntu/workspace/catkin/src/atwork_launch/launch/stage_gmapping.launch",
-					"semi_transient": true,
+					"buffer": 2,
+					"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/macroed.urdf.xacro",
+					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1885,
+						"buffer_size": 6970,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								560,
-								560
+								6970,
+								6970
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/XML/XML.tmLanguage",
+							"tab_size": 2,
+							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 3876.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				},
+				{
+					"buffer": 3,
+					"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/aRobot.urdf.xacro",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 666,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								410,
+								410
 							]
 						],
 						"settings":
@@ -299,7 +315,7 @@
 						"translation.y": 0.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 3,
+					"stack_index": 0,
 					"type": "text"
 				}
 			]
