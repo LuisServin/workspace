@@ -3,9 +3,9 @@
 <robot name="one_mesh">
 	<link name="base_link">
 		<visual>
-			<origin rpy="0 0 0" xyz="0.15 0 0.35" />
+			<origin rpy="1 1 0" xyz="0 0 0" />
 			<geometry>
-				<mesh filename="package://testbot_description/urdf/head_pan.stl"/>
+				<mesh filename="package://testbot_description/meshes/mecanum.dae" />
 			</geometry>
 		</visual>
 	</link>

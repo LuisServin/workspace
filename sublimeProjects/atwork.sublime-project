@@ -2,15 +2,18 @@
 	"folders":
 	[
 		{
-			"path": "/home/ubuntu/catkin_ws/src",
-			"name": "catkin_ws_src"
+			"name": "catkin_ws_src",
+			"path": "/home/ubuntu/catkin_ws/src"
 		},
 		{
-			"path": "/home/ubuntu/workspace/catkin/src",
-			"name": "workspace_catkin_src"
+			"name": "workspace_catkin_src",
+			"path": "/home/ubuntu/workspace/catkin/src"
 		},
 		{
 			"path": "/home/ubuntu/workspace/catkin/src/atwork_launch"
+		},
+		{
+			"path": "/home/ubuntu/workspace"
 		}
 	]
 }
