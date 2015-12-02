@@ -1,0 +1,68 @@
+IMPROVED TECHNIQUES FOR GRID MAPPING WITH RAO-BLACKWELLIZED PARTICLE FILTERS
+Titulo: Técnicas de optimización para mapeo basdao en rejillas utilizado un filtro de partículas de tipo Rao-Blackwell
+
+ABSTRACT -> RESUMEN
+
+Los filtros del partículas tipo Rao-Blackwell han sido usados recientemente como una manera de resolver el problema de "Localización y Mapeo Simultáneos (SLAM)". Esta estrategía hace uso de un filtro de partículas en el cual cada partícula contiene su propio mapa del ambiente. Nosotros proponemos una solución para calcular una propuesta de distribución mas precisa que las comunes tomando en cuenta no solo el movimiento del robot si no que también la observación mas reciente. Los resultados experimentales fueron llevados a cabo con robot móviles reales en grandes espacios cerrados asi como ambientes abiertos para poder demostrar las ventajas de nuestro método sobre otras estrategias.
+
+INTRODUCTION -> INTRODUCCIÓN
+
+Construir mapas es una de las tareas fundamentales que debe poder realizar un robot móvil. Dentro de la literatura, el problema de mapeo a través de un robot móvil es usualmente conocida como el problema de "Localización y Mapeo Simultáneos" SLAM (Simultaneous Localization and Mapping).
+
+El principal problema de usar la solución por Rao-Blackwell es su complejidad medida en terminos del número de partículas requeridas para construir un mapa preciso. El paso de remuestreo (resampling) puede suceder que sean eliminadas partículas útiles o correctas. Este problema es conocido como "particle depletion".
+
+En el presente trabajo se presentan dos estrategias para mejorar el rendimiento del filtro tipo Rao-Blackwell:
+	- Una propuesta de distribución que considere la precisión obtenida por los sensores del robot y por lo tanto nos permita dibujar partículas de manera mas precisa.
+	- Una técnica de remuestro (resampling) adaptativa.
+
+La distribución propuesta es calculada al evaluar la probabilidad alrededor de la posición mas probable en la cual se encuentre una partícula a partir de un proceso de emparejamiento de escaneos combinado con la información obtenida por la odometría. Esto trae consigo dos efectos:
+	- El mapa es mas preciso ya que la observación actual obtenida por el laser es incorporada a los mapas de manera individual después de considerar su efecto en la posición del robot.
+	- La estrategia de remuestreo adaptativo nos permite realizar el paso de resampleo solamente cuando sea necesario.
+
+MAPPING WITH RAO-BLACKWELLIZED PARTICLE FILTER -> MAPEO A TRAVÉS DE UN FILTRO DE PARTÍCULAS TIPO RAO-BLACKWELL
+
+La idea central de aplicar un filtro de partículas de tipo Rao-Blackwell al problema de SLAM es la de estimar la posición posterior /// P(X,M|Z,U) /// sobre el mapa /// M /// y la trayectoria del robot /// X_1:T = X1 ... X_T ///. Dadas las observaciones /// Z_1:T = Z1 ... Z_T /// y los medidas de la odometría /// U_1:T-1 = U_1 ... U_T-1 /// El filtro de partículas tipo Rao-Blackwell utilizado entonces queda de la forma:
+
+/// FILTRO DE PARTICULAS /// 
+
+Como primer paso se estima solamente la trayectoria para después calcular el mapa dada la trayectoria calculada.
+
+/// P(M) /// puede ser calculada de manera analítica usando "mapeo con posiciones conocidas" [Ref] ya que /// X_1:T /// y /// Z_1:T /// son conocidas
+
+Para calcular la probabilidad posterior /// P(X|Z,U) /// sobre las trayectorias potenciales se puede aplicar un filtro de partículas. Donde cada partícula representa una trayectoria potencial del robot. Un mapa individual es asociado con cada partícula.
+
+Uno de los algoritmos de filtrado de partículas mas importantes es el "Remuestreo basado en la importancia de la muestra" o SIR por sus siglas en ingles (Sampling Importance Resampling). Un filto SIR de tipo Rao-Blackwell para mapeo incremental procesa las lecturas del laser y los datos de odometría as pronto esten disponibles.
+
+El proceso se puede resumir en los siguientes cuatro pasos
+
+	- MUESTREO (Sampling): La siguiente generación de partículas {/// x_it  ///} es obtenida de la generación {/// x_i_t-1 ///} a través de muestrear de la distribución propuesta /// pi ///
+
+	- PONDERACIÓN DE IMPORTANCIA (Importance Weighting): Se asigna una ponderación de importancia a cada partícula basada en el principio de la importancia del muestreo.
+
+	/// ECUACIÓN DE PESO ///
+
+	- REMUESTREO : Las partículas son reemplazadas de manera proporcional a su ponderación de importancia. Esto nos permite aplicar el filtro de partículas en situaciones en las cuales la distribución objetivo difiere de la propuesta. Después de aplicar este paso, todas las partículas tienen la misma importancia.
+
+	- ESTIMACIÓN DEL MAPA : Para cada partícula el mapa estimado /// p(m_i|x,z) /// es calculado con base en la trayectoria /// x_ti /// y las observaciones /// z_ti ///.
+
+Para que este proceso pueda ser llevado a cabo se requiere que las ponderaciones de importancia de las trayectorias desde cero cada que una nueva lectura este disponible.
+
+Podemos obtener una formula para calcular de manera recursiva la ponderación de importancia si restringimos la distribución propuesta para que cumpla con la siguiente suposición:
+
+	/// ECUACION_FUNCION_PROPUESTA ///
+
+	/// ECUACIOND_DE_PESO_RECURSIVA /// 
+
+Donde: /// FACTOR DE NORMALIZACIÓN /// es un factor de normalización
+
+RBPF WITH IMPROVED PROPOSALS AND ADAPTIVE RESAMPLING -> RBPF (FILTRO DE PARTÍCULAS TIPO RAO-BLACKWELL) CON MEJORAMIENTO EN LA DISTRIBUCIÓN PRPOPUESTA Y UN PROCESO DE REMUESTREO ADAPTATIVO.
+
+ON THE IMPROVED PROPOSAL DISTRIBUTION -> MEJORAMIENTO DE LA DISTRIBUCIÓN PROPUESTA
+
+Durante el paso de predicción se tienen que tomar muestras de una distribución propuesta /// pi /// con el objetivo de obtener la siguiente generación de partículas.
+
+En las aplicaciones típicas de los filtros de partículas [3, 9] se usa el modelo de odometría como la distribución propuesta. Por lo tanto la ponderación de importancia es calculada de acuerdo al modelo de lecturas (observation model) /// p(z|m,x) ///. Si reemplazamos /// pi /// por el modelo de movimiento (motion model) /// p(x|x,u) /// en la ecuación de peso recursiva:
+
+	/// ECUACIÓN DE PESO SIMPLIFICADA ///
+
+La distribución propuesta es suboptima especialmente si se toma en cuenta que la información del sensor es significativamente mas precisa que 

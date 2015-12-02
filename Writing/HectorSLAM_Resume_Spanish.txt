@@ -1,0 +1,167 @@
+"A Flexible and Scalable SLAM System with Full 3D Motion Estimation"
+Título: Sistema de SLAM flexible y escalable con estimación completa de movimiento en 3D
+
+Resumen:
+	- Sistema de rápido aprendizaje en linea (online learning) de un mapa de ocupación de cuadrículas (occupacy grid map) que requiere de un bajo costo computacional.
+	- Este algoritmo combina un método robusto de emparejamiento de puntos (scan matching) usando las lecturas de un sistema laser (LIDAR) con un sistema de estimación de la posición en 3D basado en las lecturas de sensores inerciales.
+	- Mostramos que el sistema es suficientemente preciso ya que no requiere de una técnica explícita de ciclos cerrados (loop closing techniques) dados los escenarios que fueron considerados.
+
+INTRODUCCION
+
+La habilidad de aprender el modelo de un ambiente y localizarse a si mismo dentro de él es uno de los requerimientos indispensables para que un robot autónomo sea capaz de operar dentro de ambientes reales.
+
+SLAM (Simultaneous Localization and Mapping) -> Localización y Mapeo Simultáneos.
+
+Nuestra solución se apega a los lineamientos de la API del sistema de navegación (navigation stack) de ROS (Robot Operating System) y por lo tanto puede ser facilmente intercambiable por otras soluciones de SLAM que cumplan con dichos criterios.
+
+El sistema introducido en este artículo tiene como objetivo obtener tanto un representación del ambiente lo mas precisa posible como la localización del robot dentro de la misma mientras se mantienen unos requerimientos computacionales bajos.
+
+El sistema puede ser usado para realizar SLAM en escenarios pequeños donde grandes circuitos (loops) no tenga que ser cerrados y en los cuales se aprovechen las altas frecuencias de muestreo de los sistemas modernos de medición por laser (LIDAR).
+
+En esta solución se combina un sistema de SLAM 2D basado en la integración de las lecturas de un sensor laser (LIDAR) en un mapa 2D (plano) y la integración de un sistema de navegación 3D basados en un sensor de medidas inerciales (IMU).
+
+RELATED WORK -> TRABAJO RELACIONADO -> ESTADO DE LA TÉCNICA
+
+Existe una basta cantidad de soluciones aceptables para escenarios interios tipo oficina usando el filtro de partículas de tipo Rao-Blackwell como "g-mapping". Estas soluciones trabajan mejor en ambientes planos, además dependen de que exista un sistema de odometría suficientemente preciso.
+
+El SLAM se puede categorizar en dos tipos principales:
+	- SLAM frontend: Usado para estimar el movimiento y posición sobre la marcha en tiempo real.
+	- SLAM backend: Usado para realizar optimizaciones soibre una representación de gráfica de la posición dadas ciertas restricciones entre las posiciones que han sido generadas antes de usar el sistema "frontend".
+La solución planteada en este artículo es de tipo "frontend".
+
+SYSTEM OVERVIEW -> RESUMEN DEL SISTEMA
+
+Nuestro sistema debe estimar el estado completo de los seis grados de libertad que consiste en la traslación y rotación de la plataforma. Para lograrlo se divide en dos componente principales:
+	- Filtro de navegación (Navigation Filter) : Combina información de la unidad de medidas inerciales (IMU) junto con otros sensores que se encuentren disponibles para lograr una estimación 3D consistente.
+	- Sistema de SLAM 2D : Usado para obtener la información de posición y orientación dentro del plano de tierra del sistema.
+
+Se define el sistema de coordenado de navegación como un sistema de mano derecha, que tiene su origen en el punto inicial con el eje z en dirección positiva hacia arriba y el eje x apuntado en la dirección del ángulo yaw (ángulos de euler) de la plataforma al inicio.
+
+El estado completo de posición y orientación es representado por:
+
+/// ECUACIÓN ESTADOS ///
+
+Donde :
+
+/// ÁNGULOS DE EULER ///
+/// ECUACIONES DE POSICIÓN ///
+/// ECUACIÓNES DE VELOCIDAD ///
+
+Los datos obtenidos del sistema de medición inercial representan el vector de entrada 
+
+/// ECUACIÓN DE VECTOR DE ENTRADA ///
+
+Donde :
+
+/// ECUACIÓNES DE VELOCIDADES ÁNGULARES DEL CUERPO ///
+/// ECUACIÓNES DE ACELERACIÓN ///
+
+Ademas /// R_OMEGA /// representa la matriz de cosenos que mapea un vector del sistema coordenado en el cuerpo al sisteam de coordenado de la navegación. /// E_OMEGA /// mapea los cambios de ángulo del sistema coordenado del cuerpo a las derivadas de los ángulos de euler. /// G /// vector de gravedad.
+
+Debido al ruido dentro del sensor la posición y velocidades integradas muestran una significante deriva.
+
+2D SLAM -> SLAM 2D
+
+Se utiliza un mapa de ocupación por cuadrículas para ser capaz de representar ambientes arbitrários. Esto se logra utilizando sensores laser (LIDAR) en entornos reales. Ya que el sensor laser puede tener 6 grados de libertad de movimiento, las lecturas que se obtienen deben ser transformadas a un sistema de coordenadas local en el plano estabilizado usando una estimación de la posición real del sensor. A través del uso de la orientación estimada de la plataforma y los valores de las juntas, las lecturas son convertidas a una nube de puntos de distancia final.
+
+A.- MAP ACCESS -> ACCESO AL MAPA
+
+La naturaleza discreta de los mapas de ocupación de cuadrículas no permite el calculo directo de valores interpolados o derivadas. Para realizar su calculo se utiliza el método siguiente:
+
+Dado un mapa coordenado continuo /// P_M ///, el valor de ocupación (occupancy value) /// M(P_M) /// asi como el gradiente /// DM(P_M) /// puede ser aproximado usando los cuatro puntos mas cercanos a través de una interpolación
+
+/// ECUACIÓN VALOR DE INTERPOLACIÓN ///
+
+Mientras que las derivadas pueden ser aproximadas por:
+
+/// ECUACIÓN DEL VALOR DE LAS DERIVADAS ///
+
+Se debe hacer notar que las regillas del mapa estan distribuidas de tal manera que todas se encuentran separas a una distancia regular de 1 unidada, lo cual simplifica la aproximación del gradiente
+
+SCAN MATCHING -> Emparejamiento de puntos
+
+Scan matching es el proceso de comparar y alinear un conjunto de lecturas obtenidas por el sensor laser con otras tomadas anteriormente o contra un mapa ya existente. Para muchos sistemas robóticos la exactitud y precisión de las lecturas obtenidas por un sensor laser es mucho mas grande que los datos de odometría, si es que estos llegan a estar disponibles.
+
+Nuestra solución esta basada en la optimización del emparejamiento de los puntos obtenidos por el laser con el mapa aprendido hasta el momento. La idea básica utiliza el método de optimización Gauss-Newton. Ya que las lecturas del laser se encuentren alineadas con el mapa existente esto provoca que implícitamente lo esten con todas las lecturas anteriores.
+
+Buscamos encontrar la transformación /// DEFINICIÓN_TRANSFORMACIÓN /// tal que minimice 
+
+/// ECUACIÓN DE OPTIMIZACIÓN GAUSS-NEWTON ///
+
+Por lo tanto queremos encontrar la transformación que produzca el mejor emparejamiento (scan matching) de las lecturas obtenidas con el mapa ya existente. /// Si_E /// representa las coordenadas de las lecturas obtenidas en las coordenadas globales /// Si_DEFINICIÓN ///. Mientras que /// E /// representa la posición del robot en el sistemas coordenado global.
+
+/// ECUACIÓN DE Si ///
+
+/// M(Si(E)) /// calcula el valor de las celdas del mapa dado /// Si_E ///. Dada una estimación inicial de /// E /// nosotros queremos encontrar un cierto /// D_E /// que optimice el error:
+
+/// ECUACION_CALCULO_ERROR ///
+
+Realizando la expansión por series de taylor obtenemos
+
+/// ECUACIÓN_ERROR_EXPANDIDA ///
+
+y estableciendo la derivada parcial con respecto a /// D_E /// como cero obtenemos:
+
+/// ECUACIÓN IGUALADA A CERO /// 
+
+Resolviendo para /// D_E ///:
+
+/// ECUACION_PARA_D_E ///
+
+con:
+
+/// ECUACIÓN_H ///
+
+Una aproximación del gradiente del mapa se puede obtener a partir de la ecuación /// ECUACIÓN DE Si /// dando:
+
+/// ECUACIÓN_GRADIENTE ///
+
+MULTI-RESOLUTION MAP REPRESENTATION -> REPRESENTACIÓN DE MAPAS DE MULTIPLE RESOLUCIÓN
+
+Ya que el presente artículo esta basado en un gradiente ascendente, esto posible que el algoritmo quede estancado en un mínimo local. 
+
+En nuestra solución nosotros usamos opcionalmente multiples mapas de ocupación, donde cada mapa menos detallado tiene la mitad de la resolución de su precedente. Diferentes mapas se mantienen en la memoria y son simultáneamente actualizados usandos la posición generada por el proceso de alineación. El proceso de alineación comienza con el mapa menos detallado, el resultado de posición obtenido es usado como posición inicial para la estimación del siguiente nivel y asi sucesivamente.
+
+3D STATE ESTIMATION -> ESTIMACIÓN DEL ESTADO EN 3D
+
+NAVIGATION FILTER -> FILTRO DE NAVEGACIÓN
+
+Para realizar la estimación de las 6 coordenadas (posición orientación) de la plataforma se hace uso de un filtro de kalman extendido (EKF) con el modelo general de la plataforma definido por las ecuaciones /// ECUACIÓN ESTADOS ///
+
+La actualización de la velocidad y posición se obtiene de integrar las información de aceleración obtenida de las medidas inerciales.
+
+La posición y orientación en el plano es actualizada además por el algoritmos de alineamiento de puntos, mientras que para estimar la posición completa en el espacio (3D) se necesita de un sensor adicional de altura como un barómetro o de distancia.
+
+SLAM INTEGRATION -> INTEGRACIÓN DEL SLAM
+
+Para mejorar el rendimiento, la información obtenida a partir del SLAM 2D junto con la estimación de la posición en el espacio a través del filtro de kalman EKF debe ser intercambiada en ambos sentidos.
+
+En este sentido si se quiere mejorar el proceso de alineamiento de puntos (scan matching) se puede tomar como punto de inicio la proyección de la posición estimada por el filtro de kalman. en el plano x-y de las coordenadas globales.
+
+Mientras que en la dirección contraria se usa la intersección de covarianza (covariance intersection CI) para fucionar la posición obtenida a través del algoritmo de SLAM con la estimación del estado de la plataforma en el espacio tridimensional.
+
+Si denotamos la estimación realizada por el filtro de kalman por  /// x /// con covarianza /// P /// y la estimación de posición a través del algoritmo de SLAM /// (E, R) /// la ecuación que integra esta información esta dada por:
+
+/// ECUACIÓN_INTEGRACION_SLAM_KALMAN ///
+
+con /// C /// como la matriz de observador la cual proyecta el espacio completo de estados tridimensional en el subespacio planar (x, y, theta) del sistema de SLAM.
+
+Utilizando una analogía entre el filtro de kalman y el filtro de información dicha ecuación también puede ser representada en su forma de covarianza como:
+
+/// ECUACIONES_INTEGRACION_FORMA_COVARIANZA /// 
+
+Esta es una forma preferida ya que requiere de un menor costo computacional para realizar los cálculos.
+
+RESULTADOS
+
+USAR SCENARIO -> Escenario Urbano de Búsquda y Rescate
+
+La presente solución fue usada en un vehículo de navegación terrestre (UGV) para realizar la exploración autónoma y detección de víctimas en un escenario "Urbano de búsqueda y rescate" como el que se presenta en la competencia "RoboCup Rescue Robot League". El sistema laser es estabilizado alrededor del movimiento de los ejes roll y pitch para mantener el laser alineado con el plano de tierra y con ello maximizar la ganancia de información obtenida a través de las lecturas del laser.
+
+LITTORAL WATER SCENARIOS -> Escenarios de litorales acuáticos
+
+Ya que la presente solución no hace uso de la extracción de características como polilíneas, funciona de manera aceptable en ambientes muy poco estructurados comp puede ser las costas on alta vegetación. Ya que el sensor hokuyo utilizado no regresa una lectura valida cuando el haz golpea el agua, se puede utilizar como ventaja para prevenir lecturas fallidas que provoquen errores en el sistema se SLAM.
+
+EMBEDDED MAPPING SYSTEM -> Mapeo en sistemas embebidos
+
+El sistema es lo suficientemente exacto para cerrar circuitos (close loops) encontrados en escenarios pequeños sin el uso explícito de un método especializado, manteniendo los requerimientos computacionales bajos y previniendo cambios bruscos al mapa estimado hasta el momento durante el tiempo de prueba.
