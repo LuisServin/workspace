@@ -150,7 +150,7 @@ Utilizando una analogía entre el filtro de kalman y el filtro de información d
 
 /// ECUACIONES_INTEGRACION_FORMA_COVARIANZA /// 
 
-Esta es una forma preferida ya que requiere de un menor costo computacional para realizar los cálculos.
+Esta es una forma preferida ya que requiere de un menor costo computacional para realizar los cálculos
 
 RESULTADOS
 
