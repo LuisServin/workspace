@@ -27,7 +27,7 @@ void setup() {
 void loop() {
   // set random values for RGB
   if(bT.available() == 3){
-  	for(int i = 0; i<3; i++) {
+  	for(int i = 0; i<3; i++){
   		valuesRGB[i] = bT.read();
   		Serial.println(valuesRGB[i]);
   	}
