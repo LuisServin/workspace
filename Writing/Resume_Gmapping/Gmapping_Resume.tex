@@ -183,7 +183,11 @@ La propuesta actual toma en cuenta los datos mas recientes obtenidos tanto por e
 
 Cuando se tiene el caso que la función de probabilidad es multi-modal i.e. al momento de cerrar un circuito (close-loop) el proceso de alineación de puntos obtiene para cada partícula la probabilidad máxima, la cual es la suposición inicial.
 
-Se debe hacer notar que aún en situaciones como al momento de cerrar un circuito, la solución planteada sigue teniendo la capacidad de mantener múltiples hipótesis debido a que la 
+Se debe hacer notar que aún en situaciones como cerrar un circuito, la solución planteada sigue teniendo la capacidad de mantener múltiples hipótesis debido a que la suposición inicial de la posición de cada partícula es diferentes al momento de volver a entrar a un circuito que ya se había recorrido.
+
+El proceso de alineamiento de puntos puede llegar a fallar debido a observaciones de muy pobres o que el área de superposición de las partículas de la observación actual y la anterior sea muy pequeña. En este caso se hace uso solamente del modelo cinemático.
+
+\subsection{Remuestreo adaptativo}
 
 \end{document}
 
