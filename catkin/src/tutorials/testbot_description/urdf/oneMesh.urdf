@@ -1,27 +1,45 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <robot name="one_mesh">
-	<link name="base_link">
+	<link name="base_robot">
 		<visual>
-			<origin rpy="1 1 0" xyz="0 0 0" />
+			<origin rpy="0 0 0" xyz="0 0 0" />
+			<geometry>
+				<box size="2 1 0.1" />
+			</geometry>
+		</visual>
+	</link>
+
+	<link name="base_wheel_back_left">
+		<visual>
+			<origin rpy="1.57075 0 0" xyz="0 0 0" />
 			<geometry>
 				<mesh filename="package://testbot_description/meshes/mecanum.dae" />
 			</geometry>
 		</visual>
 	</link>
 
-	<joint name="base_link_to_base_joint" type="fixed" >
-		<parent link="base_link" />
-		<child link="base_laser" />
-		<origin xyz="0 0 1.0" />
-	</joint>
-
-	<link name="base_laser">
+	<link name="base_wheel_front_right">
 		<visual>
-			<origin rpy="0 0 0" xyz="0 0 0" />
+			<origin rpy="-1.57075 0 0" xyz="0 0 0" />
 			<geometry>
-				<cylinder length="0.6" radius="0.2" />
+				<mesh filename="package://testbot_description/meshes/mecanum.dae" />
 			</geometry>
 		</visual>
 	</link>
+	
+	<joint name="base_robot_to_base_wheel" type="continuous" >
+		<parent link="base_robot" />
+		<child link="base_wheel_back_left" />
+		<axis xyz="0 1 0" />
+		<origin xyz="-0.8 1 0" />
+	</joint>
+
+	<joint name="base_robot_to_base_wheel_front_right" type="continuous" >
+		<parent link="base_robot" />
+		<child link="base_wheel_front_right" />
+		<axis xyz="0 1 0" />
+		<origin xyz="0.8 -1 0" />
+	</joint>
+
 </robot>
