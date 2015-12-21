@@ -3,9 +3,12 @@
 
 #include <SoftwareSerial.h>
 
+// pinout used for RGB led
 #define R_LED 9
 #define G_LED 10
 #define B_LED 11
+
+#define STATUS_LED 13 
 
 // using SoftwareSerial library to create a virtual
 // serial port
@@ -32,21 +35,28 @@ void setup() {
 
   // Start bluetooth communication
   bT.begin(BLUETOOTH_BAUD);
-  //analogWrite(R_LED, 255);
+  
+  pinMode(STATUS_LED, OUTPUT);
 }
 
 void loop() {
-  fadeLedRGB(pinOutRGB);
-
-  randomLedRGB(pinOutRGB, 5);
-
-  // set random values for RGB
+  // set random values for RGB by 
+  // a bluetooth command
   if(bT.available() == 3){
     for(int i = 0; i<3; i++){
       valuesRGB[i] = bT.read();
       Serial.println(valuesRGB[i]);
     }
     setLedColor(pinOutRGB, valuesRGB);
+
+    digitalWrite(STATUS_LED, HIGH);
+    delay(8000);
+    digitalWrite(STATUS_LED, LOW);
+  } else {
+    // if there is not a bluetooth command
+    // make another effect
+    fadeLedRGB(pinOutRGB);
+    randomLedRGB(pinOutRGB, 5);
   }
 }
 
@@ -67,6 +77,8 @@ void setLedColor(int pinOut[3], int values[3]) {
  */
 void randomLedRGB(int pinOut[3], int numberTimes) {
   int values[3];
+
+  // set colors
   for(int i=0; i<numberTimes; i++){
       for(int j=0; j<3; j++){
           values[i] = random(0, 255);
@@ -75,6 +87,11 @@ void randomLedRGB(int pinOut[3], int numberTimes) {
         analogWrite(pinOut[i], values[i]);
       }
       delay(DELAY_TIME_RANDOM);
+  }
+
+  // clean RGB led
+  for(int i=0; i<3; i++){
+      analogWrite(pinOut[i], 0);
   }
 }
 
