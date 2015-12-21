@@ -1,6 +1,5 @@
 // Luis Servin
 // Controlling a RGB led with a bluetooth command.
-
 #include <SoftwareSerial.h>
 
 // pinout used for RGB led
@@ -12,51 +11,79 @@
 
 // using SoftwareSerial library to create a virtual
 // serial port
-#define BLUETOOTH_TX 7
+#define BLUETOOTH_TX 14
 #define BLUETOOTH_RX 8
 
 // varibale for controlling delay time inside fade function
 #define DELAY_TIME_FADE 2
-#define DELAY_TIME_RANDOM 500
+#define DELAY_TIME_RANDOM 1000
 
-//Serial speed
+// Serial speed
 #define SERIAL_BAUD 9600
 #define BLUETOOTH_BAUD 9600
 
+// variables for controlling RGB led
 int pinOutRGB[3] = {R_LED, G_LED, B_LED};
 int valuesRGB[3] = {0, 0, 0};
+bool userMode = false;
+char userSelection = ' ';
 
 // create SoftwareSerial object
-SoftwareSerial bT(BLUETOOTH_TX, BLUETOOTH_RX);
+// SoftwareSerial bT(BLUETOOTH_TX, BLUETOOTH_RX);
 
 void setup() {
   // Start serial communication
   Serial.begin(SERIAL_BAUD);  
 
   // Start bluetooth communication
-  bT.begin(BLUETOOTH_BAUD);
+  Serial1.begin(BLUETOOTH_BAUD);
   
   pinMode(STATUS_LED, OUTPUT);
 }
 
 void loop() {
-  // set random values for RGB by 
-  // a bluetooth command
-  if(bT.available() == 3){
-    for(int i = 0; i<3; i++){
-      valuesRGB[i] = bT.read();
-      Serial.println(valuesRGB[i]);
-    }
-    setLedColor(pinOutRGB, valuesRGB);
+  if(Serial1.available()) {
+    userSelection = Serial1.read();
+    Serial.println(userSelection);
+    if(userSelection == 's') {
+      digitalWrite(13, HIGH);
+      userMode = true;
+      
+      while(Serial1.available() < 3) {
+        // wait for three values
+      }
+      for(int i = 0; i<3; i++){
+        valuesRGB[i] = Serial1.read();
+        Serial.println(valuesRGB[i]);
+      }
+      cleanBTSerialPort();
+      setLedColor(pinOutRGB, valuesRGB);
 
-    digitalWrite(STATUS_LED, HIGH);
-    delay(8000);
-    digitalWrite(STATUS_LED, LOW);
-  } else {
+      digitalWrite(13, LOW);
+    } else if(userSelection == 'r' || userSelection == 'f') {
+      analogWrite(pinOutRGB[2], 255);
+      userMode = false;
+    }
+  } else if(!userMode) {
     // if there is not a bluetooth command
     // make another effect
-    fadeLedRGB(pinOutRGB);
-    randomLedRGB(pinOutRGB, 5);
+    for(int i=0; i<3; i++){
+      analogWrite(pinOutRGB[i], 0);
+    }
+    if(userSelection == 'r') {
+      randomLedRGB(pinOutRGB, 1);
+    } else if(userSelection == 'f') {
+      fadeLedRGB(pinOutRGB); 
+    }
+  }
+}
+
+/**
+ * clean bluetooth buffer for remaining values
+ */
+void cleanBTSerialPort() {
+  while(Serial1.available()){
+      Serial1.read();
   }
 }
 
@@ -65,9 +92,9 @@ void loop() {
  * user specification
  */
 void setLedColor(int pinOut[3], int values[3]) {
-	for(int i = 0; i<2; i++){
-		analogWrite(pinOut[i], values[i]);
-	}
+  for(int i = 0; i<3; i++){
+    analogWrite(pinOut[i], values[i]);
+  }
 }
 
 /**
@@ -81,10 +108,10 @@ void randomLedRGB(int pinOut[3], int numberTimes) {
   // set colors
   for(int i=0; i<numberTimes; i++){
       for(int j=0; j<3; j++){
-          values[i] = random(0, 255);
+          values[j] = random(0, 255);
       }
       for(int j=0; j<3; j++){
-        analogWrite(pinOut[i], values[i]);
+        analogWrite(pinOut[j], values[j]);
       }
       delay(DELAY_TIME_RANDOM);
   }
