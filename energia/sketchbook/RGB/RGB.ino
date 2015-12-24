@@ -36,25 +36,25 @@ void setup() {
   Serial.begin(SERIAL_BAUD);  
 
   // Start bluetooth communication
-  Serial1.begin(BLUETOOTH_BAUD);
+  //Serial1.begin(BLUETOOTH_BAUD);
   
   pinMode(STATUS_LED, OUTPUT);
 }
 
 void loop() {
-  if(Serial1.available()) {
-    userSelection = Serial1.read();
-    Serial.println(userSelection);
+  if(Serial.available()) {
+    userSelection = Serial.read();
+    //Serial.println(userSelection);
     if(userSelection == 's') {
       digitalWrite(13, HIGH);
       userMode = true;
       
-      while(Serial1.available() < 3) {
+      while(Serial.available() < 3) {
         // wait for three values
       }
       for(int i = 0; i<3; i++){
-        valuesRGB[i] = Serial1.read();
-        Serial.println(valuesRGB[i]);
+        valuesRGB[i] = Serial.read();
+        //Serial.println(valuesRGB[i]);
       }
       cleanBTSerialPort();
       setLedColor(pinOutRGB, valuesRGB);
