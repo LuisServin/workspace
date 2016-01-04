@@ -5,6 +5,8 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 
+\usepackage[mathscr]{euscript}
+
 \title{Técnicas de optimización para mapeo basado en rejillas utilizando un filtro de partículas de tipo Rao-Blackwell \\ \large{G-mapping}}
 \date{\today}
 \author{Luis Servín\\ Taller TRA, Universidad Nacional Autónoma de México}
@@ -142,7 +144,50 @@ En el contexto de SLAM, el primer paso debería ser tener una muestra de las pos
 
 En la mayoría de los casos la distribución objetivo tiene un número limitado de máximos, mientras que en la mayoría solamente tiene uno. Esto nos permite obtener las posiciones $ x_{j} $ buscando que cubran solamente el área alrededor a este máximo, ignorando las área menos útiles.
 
-En la estrategia actual 
+En la estrategia actual se toman en cuenta ambos componentes; la probabilidad de las observaciones y el modelo de movimiento dentro del intervalo $ L^{(i)} $
+
+Para obtener de manera eficiente la siguiente generación de partículas, se calcula una aproximación gaussiana $ \mathcal{N} $. Como primer paso se hace uso de un proceso de alineación de puntos para determinar el área mas significativa de la función de probabilidad de observación. En seguida se obtiene una muestra en el área seleccionada y se evalúan los puntos muestra con base en la distribución objetivo. Por lo tanto los parámetros gaussianos se obtienen como:
+
+	\begin{align}
+		\begin{aligned}
+			\mu_{t}^{(i)} = 
+				& \frac{1}{\eta^{(i)}} \cdot \sum^{K}_{j=1}  x_{j} \cdot p(z_{t}|m_{t-1}^{(i)},x_{j}) \\ 
+				& \cdot p(x_{j} | x_{t-1}^{(i)}, u_{t-1})
+		\end{aligned} \\
+		\begin{aligned}
+			\Sigma^{(i)}_{t} =
+				& \frac{1}{\eta^{(i)}} \cdot \sum^{K}_{j=1} p(z_{t} | m_{t-1}^{(i)},x_{j}) \\
+				& \cdot p(x_{j} | x_{t-1}^{(i)}, u_{t-1}) \\
+				& \cdot (x_{j} - \mu^{(i)})(x_{j} - \mu^{(i)})^{T} 
+		\end{aligned}
+	\end{align}
+
+con el siguiente factor de normalización:
+
+	\begin{equation}
+		\eta^{(i)} = \sum^{K}_{j=1} p(z_{t} | m_{t-1}^{(i)},x_{j}) \cdot
+			p(x_{j} | x_{t-1}^{(i)}, u_{t-1})
+	\end{equation}
+
+Utilizando la distribución propuesta se obtiene que el cálculo de la ponderación de importancia es:
+
+	\begin{equation}
+		w_{t}^{(i)} = w_{t-1}^{(i)} \cdot \eta^{(i)}
+	\end{equation}
+
+Donde $ \eta^{(i)} $ es el mismo factor de normalización obtenido en el cálculo de la distribución gaussiana propuesta.
+
+\subsection{Discusión sobre la distribución mejorada}
+
+La propuesta actual toma en cuenta los datos mas recientes obtenidos tanto por el láser como el sistema de odometría mientras que al mismo tiempo permite realizar un muestreo eficiente. La densidad de las muestras resultantes tiene por lo tanto una incertidumbre mucho mas pequeña comparada con aquellas situaciones en las cuales solamente el modelo de odometría fue utilizado.
+
+Cuando se tiene el caso que la función de probabilidad es multi-modal i.e. al momento de cerrar un circuito (close-loop) el proceso de alineación de puntos obtiene para cada partícula la probabilidad máxima, la cual es la suposición inicial.
+
+Se debe hacer notar que aún en situaciones como cerrar un circuito, la solución planteada sigue teniendo la capacidad de mantener múltiples hipótesis debido a que la suposición inicial de la posición de cada partícula es diferentes al momento de volver a entrar a un circuito que ya se había recorrido.
+
+El proceso de alineamiento de puntos puede llegar a fallar debido a observaciones de muy pobres o que el área de superposición de las partículas de la observación actual y la anterior sea muy pequeña. En este caso se hace uso solamente del modelo cinemático.
+
+\subsection{Remuestreo adaptativo}
 
 \end{document}
 

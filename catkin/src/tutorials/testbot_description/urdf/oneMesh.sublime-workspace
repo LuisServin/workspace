@@ -1,0 +1,347 @@
+{
+	"auto_complete":
+	{
+		"selected_items":
+		[
+			[
+				"whe",
+				"wheel_kinematic_type"
+			],
+			[
+				"r_",
+				"right_wheel_mesh"
+			],
+			[
+				"x",
+				"xyz"
+			],
+			[
+				"te",
+				"testbot_description"
+			],
+			[
+				"base_wheel_",
+				"base_wheel_back_left"
+			],
+			[
+				"bas",
+				"base_wheel_front_right"
+			],
+			[
+				"mes",
+				"mesh"
+			],
+			[
+				"ROS_",
+				"ROS_ERROR"
+			],
+			[
+				"k",
+				"kdl_parser"
+			],
+			[
+				"run",
+				"run_depend"
+			],
+			[
+				"buil",
+				"build_depend"
+			],
+			[
+				"bu",
+				"build_depend"
+			],
+			[
+				"re",
+				"return"
+			],
+			[
+				"urd",
+				"urdf_file"
+			],
+			[
+				"ur",
+				"urdf_file"
+			],
+			[
+				"ar",
+				"argv"
+			],
+			[
+				"arg",
+				"argc"
+			],
+			[
+				"ma",
+				"main	main()"
+			],
+			[
+				"lin",
+				"link2"
+			]
+		]
+	},
+	"buffers":
+	[
+		{
+			"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/launch/display.launch",
+			"settings":
+			{
+				"buffer_size": 619,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "robot_model.urdf.xacro",
+			"settings":
+			{
+				"buffer_size": 1431,
+				"line_ending": "Unix"
+			}
+		}
+	],
+	"build_system": "",
+	"build_system_choices":
+	[
+	],
+	"build_varint": "",
+	"command_palette":
+	{
+		"height": 96.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 392.0
+	},
+	"console":
+	{
+		"height": 0.0,
+		"history":
+		[
+		]
+	},
+	"distraction_free":
+	{
+		"menu_visible": true,
+		"show_minimap": false,
+		"show_open_files": false,
+		"show_tabs": false,
+		"side_bar_visible": false,
+		"status_bar_visible": false
+	},
+	"file_history":
+	[
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/aRobot.urdf.xacro",
+		"/opt/ros/indigo/share/urdf_tutorial/launch/xacrodisplay.launch",
+		"/opt/ros/indigo/share/urdf_tutorial/launch/display.launch",
+		"/home/ubuntu/workspace/sublimeProjects/atwork.sublime-project",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/oneMesh.urdf",
+		"/home/ubuntu/catkin_ws/src/navigation/amcl/CMakeLists.txt",
+		"/home/ubuntu/catkin_ws/src/navigation/amcl/package.xml",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/CMakeLists.txt",
+		"/home/ubuntu/workspace/catkin/src/tmp/cy-ros-pkg/gige_camera/CMakeLists.txt",
+		"/home/ubuntu/workspace/catkin/src/tmp/cy-ros-pkg/gige_camera/include/gige/gige.h",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/mRobot.urdf",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/mRobotCollision.urdf",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/macroed.urdf.xacro",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/aRobot.urdf",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/macroed.urdf",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/robot.xacro",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/robot.urdf",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/myfirst.urdf",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/package.xml",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/src/parser.cpp",
+		"/home/ubuntu/workspace/catkin/src/tutorials/my_robot.urdf",
+		"/home/ubuntu/workspace/catkin/src/robot_model/kdl_parser/CMakeLists.txt",
+		"/home/ubuntu/workspace/catkin/src/simple_layers/src/simple_layer.cpp",
+		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch/move_base.launch",
+		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch/startup_system.launch",
+		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch/exploration.launch",
+		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch/stage_gmapping.launch"
+	],
+	"find":
+	{
+		"height": 25.0
+	},
+	"find_in_files":
+	{
+		"height": 0.0,
+		"where_history":
+		[
+		]
+	},
+	"find_state":
+	{
+		"case_sensitive": false,
+		"find_history":
+		[
+			"pr2_description",
+			"testbot_description",
+			"head_"
+		],
+		"highlight": true,
+		"in_selection": false,
+		"preserve_case": false,
+		"regex": false,
+		"replace_history":
+		[
+		],
+		"reverse": false,
+		"show_context": true,
+		"use_buffer2": true,
+		"whole_word": false,
+		"wrap": true
+	},
+	"groups":
+	[
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 0,
+					"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/launch/display.launch",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 619,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								250,
+								250
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/XML/XML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "robot_model.urdf.xacro",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1431,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								384,
+								384
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/XML/XML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
+			]
+		}
+	],
+	"incremental_find":
+	{
+		"height": 25.0
+	},
+	"input":
+	{
+		"height": 0.0
+	},
+	"layout":
+	{
+		"cells":
+		[
+			[
+				0,
+				0,
+				1,
+				1
+			]
+		],
+		"cols":
+		[
+			0.0,
+			1.0
+		],
+		"rows":
+		[
+			0.0,
+			1.0
+		]
+	},
+	"menu_visible": true,
+	"output.find_results":
+	{
+		"height": 0.0
+	},
+	"pinned_build_system": "",
+	"project": "oneMesh.sublime-project",
+	"replace":
+	{
+		"height": 46.0
+	},
+	"save_all_on_build": true,
+	"select_file":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"select_project":
+	{
+		"height": 500.0,
+		"last_filter": "",
+		"selected_items":
+		[
+			[
+				"",
+				"~/workspace/sublimeProjects/atwork.sublime-project"
+			]
+		],
+		"width": 380.0
+	},
+	"select_symbol":
+	{
+		"height": 0.0,
+		"last_filter": "",
+		"selected_items":
+		[
+		],
+		"width": 0.0
+	},
+	"selected_group": 0,
+	"settings":
+	{
+	},
+	"show_minimap": true,
+	"show_open_files": false,
+	"show_tabs": true,
+	"side_bar_visible": true,
+	"side_bar_width": 227.0,
+	"status_bar_visible": true,
+	"template_settings":
+	{
+	}
+}

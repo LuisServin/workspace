@@ -4,6 +4,50 @@
 		"selected_items":
 		[
 			[
+				"digit",
+				"digitalWrite	Arduino digitalWrite"
+			],
+			[
+				"clean",
+				"cleanBTSerialPort"
+			],
+			[
+				"pinout",
+				"pinOut"
+			],
+			[
+				"digi",
+				"digitalWrite	Arduino digitalWrite"
+			],
+			[
+				"DELAT_",
+				"DELAY_TIME_RANDOM"
+			],
+			[
+				"value",
+				"values"
+			],
+			[
+				"bluet",
+				"BLUETOOTH_BAUD"
+			],
+			[
+				"de",
+				"define	Arduino Macro define"
+			],
+			[
+				"I",
+				"IDLE"
+			],
+			[
+				"anal",
+				"analogWrite	Arduino analogWrite"
+			],
+			[
+				"ana",
+				"analogWrite	Arduino analogWrite"
+			],
+			[
 				"x",
 				"xacro"
 			],
@@ -63,54 +107,6 @@
 	},
 	"buffers":
 	[
-		{
-			"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/oneMesh.urdf",
-			"settings":
-			{
-				"buffer_size": 590,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ubuntu/catkin_ws/src/navigation/amcl/package.xml",
-			"settings":
-			{
-				"buffer_size": 1429,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/CMakeLists.txt",
-			"settings":
-			{
-				"buffer_size": 2168,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ubuntu/workspace/catkin/src/tmp/cy-ros-pkg/gige_camera/CMakeLists.txt",
-			"settings":
-			{
-				"buffer_size": 4172,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ubuntu/workspace/catkin/src/tmp/cy-ros-pkg/gige_camera/include/gige/gige.h",
-			"settings":
-			{
-				"buffer_size": 3434,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ubuntu/catkin_ws/src/navigation/amcl/CMakeLists.txt",
-			"settings":
-			{
-				"buffer_size": 5087,
-				"line_ending": "Unix"
-			}
-		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -144,24 +140,32 @@
 	},
 	"expanded_folders":
 	[
-		"/home/ubuntu/catkin_ws/src",
-		"/home/ubuntu/catkin_ws/src/navigation",
 		"/home/ubuntu/catkin_ws/src/navigation/amcl",
-		"/home/ubuntu/workspace/catkin/src",
-		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch",
-		"/home/ubuntu/workspace/catkin/src/atwork_launch/rviz_cfg",
-		"/home/ubuntu/workspace/catkin/src/tmp",
-		"/home/ubuntu/workspace/catkin/src/tmp/cy-ros-pkg",
-		"/home/ubuntu/workspace/catkin/src/tmp/cy-ros-pkg/gige_camera",
-		"/home/ubuntu/workspace/catkin/src/tmp/cy-ros-pkg/gige_camera/include",
-		"/home/ubuntu/workspace/catkin/src/tmp/cy-ros-pkg/gige_camera/include/gige",
 		"/home/ubuntu/workspace/catkin/src/tutorials",
 		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description",
 		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/src",
-		"/home/ubuntu/workspace"
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf",
+		"/home/ubuntu/workspace",
+		"/home/ubuntu/workspace/Writing",
+		"/home/ubuntu/workspace/energia",
+		"/home/ubuntu/workspace/energia/sketchbook",
+		"/home/ubuntu/workspace/energia/sketchbook/RGB",
+		"/home/ubuntu/workspace/energia/sketchbook/libraries"
 	],
 	"file_history":
 	[
+		"/home/ubuntu/workspace/energia/sketchbook/RGB/RGB.ino",
+		"/opt/arduino-1.6.7/hardware/arduino/avr/cores/arduino/HardwareSerial.h",
+		"/tmp/Stino_build/RGB/RGB.ino.cpp.o:/home/ubuntu/workspace/energia/sketchbook/RGB/RGB.ino",
+		"/home/ubuntu/workspace/Writing/GmappingSLAM_Resume_Spanish.txt",
+		"/home/ubuntu/workspace/Writing/.gitignore",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/launch/display.launch",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/oneMesh.urdf",
+		"/home/ubuntu/catkin_ws/src/navigation/amcl/CMakeLists.txt",
+		"/home/ubuntu/catkin_ws/src/navigation/amcl/package.xml",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/CMakeLists.txt",
+		"/home/ubuntu/workspace/catkin/src/tmp/cy-ros-pkg/gige_camera/CMakeLists.txt",
+		"/home/ubuntu/workspace/catkin/src/tmp/cy-ros-pkg/gige_camera/include/gige/gige.h",
 		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/mRobot.urdf",
 		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/mRobotCollision.urdf",
 		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/aRobot.urdf.xacro",
@@ -170,10 +174,8 @@
 		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/macroed.urdf",
 		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/robot.xacro",
 		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/robot.urdf",
-		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/oneMesh.urdf",
 		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/myfirst.urdf",
 		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/package.xml",
-		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/CMakeLists.txt",
 		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/src/parser.cpp",
 		"/home/ubuntu/workspace/catkin/src/tutorials/my_robot.urdf",
 		"/home/ubuntu/workspace/catkin/src/robot_model/kdl_parser/CMakeLists.txt",
@@ -186,11 +188,11 @@
 	],
 	"find":
 	{
-		"height": 25.0
+		"height": 35.0
 	},
 	"find_in_files":
 	{
-		"height": 0.0,
+		"height": 93.0,
 		"where_history":
 		[
 		]
@@ -200,6 +202,9 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"bT",
+			"bluetoothrx",
+			"bluetoothTx",
 			"pr2_description",
 			"testbot_description",
 			"head_"
@@ -220,191 +225,14 @@
 	"groups":
 	[
 		{
-			"selected": 4,
 			"sheets":
 			[
-				{
-					"buffer": 0,
-					"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/oneMesh.urdf",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 590,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								581,
-								581
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/XML/XML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 48.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/home/ubuntu/catkin_ws/src/navigation/amcl/package.xml",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1429,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1124,
-								1124
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/XML/XML.tmLanguage",
-							"tab_size": 4,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 153.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/CMakeLists.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 2168,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								179,
-								179
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 2,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/home/ubuntu/workspace/catkin/src/tmp/cy-ros-pkg/gige_camera/CMakeLists.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 4172,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								677,
-								677
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 1,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "/home/ubuntu/workspace/catkin/src/tmp/cy-ros-pkg/gige_camera/include/gige/gige.h",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3434,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								2646,
-								2646
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/C++/C++.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 1326.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 0,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "/home/ubuntu/catkin_ws/src/navigation/amcl/CMakeLists.txt",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 5087,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Text/Plain text.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				}
 			]
 		}
 	],
 	"incremental_find":
 	{
-		"height": 25.0
+		"height": 34.0
 	},
 	"input":
 	{
@@ -433,9 +261,421 @@
 		]
 	},
 	"menu_visible": true,
+	"output.build|/home/ubuntu/workspace/energia/sketchbook/RGB|1450667818.7266214":
+	{
+		"height": 112.0
+	},
+	"output.build|/home/ubuntu/workspace/energia/sketchbook/RGB|1450667834.2625484":
+	{
+		"height": 112.0
+	},
+	"output.build|/home/ubuntu/workspace/energia/sketchbook/RGB|1450668016.965167":
+	{
+		"height": 112.0
+	},
+	"output.build|/home/ubuntu/workspace/energia/sketchbook/RGB|1450668026.21517":
+	{
+		"height": 112.0
+	},
+	"output.build|/home/ubuntu/workspace/energia/sketchbook/RGB|1450671839.5007143":
+	{
+		"height": 112.0
+	},
 	"output.find_results":
 	{
 		"height": 0.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450654375.5138195":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450654416.5206497":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450654794.033414":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450654806.0306485":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450654816.6127698":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450654952.537368":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450655035.0290086":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450655057.6582022":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450655075.7127633":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450655097.4672432":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450655272.422649":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450655371.83371":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450655387.476429":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450655475.9992948":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450655484.4146223":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450655564.9988253":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450655571.879032":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450655665.015256":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450655691.8914707":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450655747.0564518":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450655775.2485406":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450655931.9205954":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450656279.23312":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450656643.4674625":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450657078.477219":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450657093.4740767":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450657243.0869713":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450657344.2940662":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450657375.4979486":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450657436.3607721":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450657535.0253851":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450668052.7217999":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450668068.8095949":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450668336.1891408":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450668342.9412985":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450668361.7015483":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450668415.9091666":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450668434.045173":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450668577.449516":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450668584.27355":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450668710.7686412":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450668716.9294496":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450668754.1984098":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450668791.8292441":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450668797.825485":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450668843.7663815":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669009.2572103":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669028.2052622":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669085.449154":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669090.7612426":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669168.3211865":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669387.2141905":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669392.0733206":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669425.9260762":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669579.6010468":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669626.5972667":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669652.069365":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669666.022354":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669820.4537737":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669821.4219747":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669822.0060816":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669822.9759247":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669823.1616545":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669823.3485944":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669823.524176":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669823.7077022":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669823.885969":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669824.0832055":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669824.2825222":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669824.4780662":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669824.6738617":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669824.8540466":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669825.0500886":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669825.250012":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669825.4380877":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669825.618218":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669825.788815":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669825.9903324":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450669826.1818383":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450670297.6379359":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450670409.5931084":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450670417.2004414":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450670525.3924842":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450670736.9363322":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450670752.4700828":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450670871.7081478":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450670943.1362078":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450670975.1573339":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450671014.5019994":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450671027.6161666":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450671383.117935":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450671638.1381896":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450671655.2501767":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450671709.4442482":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450671726.4021714":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450671743.985988":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450671751.7617013":
+	{
+		"height": 112.0
+	},
+	"output.upload|/home/ubuntu/workspace/energia/sketchbook/RGB|1450671871.3253":
+	{
+		"height": 112.0
 	},
 	"pinned_build_system": "",
 	"project": "atwork.sublime-project",
@@ -483,7 +723,7 @@
 	"show_open_files": false,
 	"show_tabs": true,
 	"side_bar_visible": true,
-	"side_bar_width": 241.0,
+	"side_bar_width": 227.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{
