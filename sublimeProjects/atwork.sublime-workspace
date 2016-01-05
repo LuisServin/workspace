@@ -4,6 +4,38 @@
 		"selected_items":
 		[
 			[
+				"wh",
+				"wheel_kinematic_type"
+			],
+			[
+				"whe",
+				"wheel_distance_x"
+			],
+			[
+				"hok",
+				"hokuyo_laser"
+			],
+			[
+				"ho",
+				"hokuyo"
+			],
+			[
+				"fi",
+				"fixed"
+			],
+			[
+				"base",
+				"base_robot"
+			],
+			[
+				"me",
+				"meshes"
+			],
+			[
+				"geomet",
+				"geometry"
+			],
+			[
 				"digit",
 				"digitalWrite	Arduino digitalWrite"
 			],
@@ -111,7 +143,7 @@
 			"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/robot_model.urdf.xacro",
 			"settings":
 			{
-				"buffer_size": 1441,
+				"buffer_size": 3097,
 				"line_ending": "Unix"
 			}
 		},
@@ -250,15 +282,15 @@
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1441,
+						"buffer_size": 3097,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								219,
-								219
+								1858,
+								1858
 							]
 						],
 						"settings":

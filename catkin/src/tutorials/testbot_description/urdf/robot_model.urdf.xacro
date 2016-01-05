@@ -7,6 +7,9 @@
 	<xacro:property name="wheel_distance_y" value="1" />
 	<xacro:property name="wheel_kinematic_type" value="fixed" />
 
+	<xacro:property name="hokuyo_mesh_path" value="package://testbot_description/meshes/hokuyo.dae" />
+	<xacro:property name="hokuyo_kinematic_type" value="fixed" />
+
 	<link name="base_robot">
 		<visual>
 			<origin rpy="0 0 0" xyz="0 0 0" />
@@ -54,6 +57,15 @@
 			</geometry>
 		</visual>
 	</link>
+
+	<link name="hokuyo_laser">
+		<visual>
+			<origin rpy="0 0 0" xyz="0 0 0" />
+			<geometry>
+				<mesh filename="${hokuyo_mesh_path}" />
+			</geometry>
+		</visual>
+	</link>
 	
 	<joint name="base_robot_to_base_wheel" type="${wheel_kinematic_type}" >
 		<parent link="base_robot" />
@@ -81,6 +93,13 @@
 		<child link="base_wheel_back_right" />
 		<axis xyz="0 1 0" />
 		<origin xyz="-${wheel_distance_x} -${wheel_distance_y} 0" />
+	</joint>
+
+	<joint name="base_robot_to_hokuyo" type="${wheel_kinematic_type}" >
+		<parent link="base_robot" />
+		<child link="hokuyo_laser" />
+		<axis xyz="0 1 0" />
+		<origin xyz="${wheel_distance_x} 0 0" />
 	</joint>
 
 </robot>
