@@ -107,6 +107,22 @@
 	},
 	"buffers":
 	[
+		{
+			"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/robot_model.urdf.xacro",
+			"settings":
+			{
+				"buffer_size": 1441,
+				"line_ending": "Unix"
+			}
+		},
+		{
+			"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/launch/display.launch",
+			"settings":
+			{
+				"buffer_size": 619,
+				"line_ending": "Unix"
+			}
+		}
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -140,10 +156,10 @@
 	},
 	"expanded_folders":
 	[
-		"/home/ubuntu/catkin_ws/src/navigation/amcl",
+		"/home/ubuntu/workspace/catkin/src",
 		"/home/ubuntu/workspace/catkin/src/tutorials",
 		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description",
-		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/src",
+		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/launch",
 		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf",
 		"/home/ubuntu/workspace",
 		"/home/ubuntu/workspace/Writing",
@@ -225,8 +241,66 @@
 	"groups":
 	[
 		{
+			"selected": 0,
 			"sheets":
 			[
+				{
+					"buffer": 0,
+					"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/robot_model.urdf.xacro",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1441,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								219,
+								219
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/XML/XML.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/launch/display.launch",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 619,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								0,
+								0
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/XML/XML.tmLanguage"
+						},
+						"translation.x": 0.0,
+						"translation.y": 0.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 1,
+					"type": "text"
+				}
 			]
 		}
 	],
@@ -722,7 +796,7 @@
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": true,
+	"side_bar_visible": false,
 	"side_bar_width": 227.0,
 	"status_bar_visible": true,
 	"template_settings":
