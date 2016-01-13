@@ -58,12 +58,27 @@ Visualization Manager:
         Expand Link Details: false
         Expand Tree: false
         Link Tree Style: Links in Alphabetic Order
-        base_robot:
+        base_footprint:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_laser_link:
           Alpha: 1
           Show Axes: false
           Show Trail: false
           Value: true
         base_wheel_back_left:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_wheel_back_right:
+          Alpha: 1
+          Show Axes: false
+          Show Trail: false
+          Value: true
+        base_wheel_front_left:
           Alpha: 1
           Show Axes: false
           Show Trail: false
@@ -84,9 +99,15 @@ Visualization Manager:
       Frame Timeout: 15
       Frames:
         All Enabled: true
-        base_robot:
+        base_footprint:
+          Value: true
+        base_laser_link:
           Value: true
         base_wheel_back_left:
+          Value: true
+        base_wheel_back_right:
+          Value: true
+        base_wheel_front_left:
           Value: true
         base_wheel_front_right:
           Value: true
@@ -96,11 +117,7 @@ Visualization Manager:
       Show Axes: true
       Show Names: true
       Tree:
-        base_robot:
-          base_wheel_back_left:
-            {}
-          base_wheel_front_right:
-            {}
+        {}
       Update Interval: 0
       Value: true
   Enabled: true
@@ -160,5 +177,5 @@ Window Geometry:
   Views:
     collapsed: false
   Width: 1216
-  X: 44
-  Y: 52
+  X: 35
+  Y: 44
