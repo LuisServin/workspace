@@ -22,13 +22,20 @@ if __name__ == '__main__':
 
 	turtle_vel = rospy.Publisher('turtle2/cmd_vel', geometry_msgs.msg.Twist, queue_size=1)
 
+	# line code added later to show a new feature
+	# last argument is the maximun waiting time
+	listener.waitForTransform("/turtle2", "/carrot1", rospy.Time(), rospy.Duration(4.0))
+
 	rate = rospy.Rate(10.0)
 	while not rospy.is_shutdown():
 		try:
+			now = rospy.Time.now() - rospy.Duration(5.0)
+			listener.waitForTransform("/turtle2", "/carrot1", now, rospy.Duration(6.0))
+
 			# assign transformation listener object to a specific transformation
 			# from frame /turtle2 to frame /turtle1 and the time we want the transform
 			# rospy.Time(0) will return the last transform.
-			(trans,rot) = listener.lookupTransform('/turtle2', '/carrot1', rospy.Time(0))
+			(trans,rot) = listener.lookupTransform('/turtle2', '/carrot1', now)
 		except (tf.LookupException, tf.ConnectivityException, tf.ExtrapolationException) :
 			continue
 
