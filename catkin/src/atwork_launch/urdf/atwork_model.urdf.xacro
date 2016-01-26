@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot name="robot_model" xmlns:xacro="http://www.ros.org/wiki/xacro" >
+
+	<xacro:property name="right_wheel_mesh_path" value="package://testbot_description/meshes/mecanumFrontRight.dae" />
+	<xacro:property name="left_wheel_mesh_path" value="package://testbot_description/meshes/mecanumFrontLeft.dae" />
+	<xacro:property name="wheel_distance_x" value="0.8"/>
+	<xacro:property name="wheel_distance_y" value="1" />
+	<xacro:property name="wheel_kinematic_type" value="continuous" />
+
+	<xacro:property name="hokuyo_mesh_path" value="package://testbot_description/meshes/hokuyo.dae" />
+	<xacro:property name="hokuyo_kinematic_type" value="fixed" />
+
+	<link name="base_footprint">
+		<visual>
+			<origin rpy="0 0 0" xyz="0 0 0" />
+			<geometry>
+				<box size="2 1 0.4" />
+			</geometry>
+			<material name="my_white">
+				<color rgba="1 1 1 0.8"/>
+			</material>
+		</visual>5
+	</link>
+
+	<link name="base_wheel_back_left">
+		<visual>
+			<origin rpy="1.57075 0 0" xyz="0 0 0" />
+			<geometry>
+				<mesh filename="${right_wheel_mesh_path}" />
+			</geometry>
+		</visual>
+	</link>
+
+	<link name="base_wheel_front_right">
+		<visual>
+			<origin rpy="-1.57075 0 0" xyz="0 0 0" />
+			<geometry>
+				<mesh filename="${right_wheel_mesh_path}" />
+			</geometry>
+		</visual>
+	</link>
+
+	<link name="base_wheel_front_left">
+		<visual>
+			<origin rpy="1.57075 0 0" xyz="0 0 0" />
+			<geometry>
+				<mesh filename="${left_wheel_mesh_path}" scale="10 10 10" />
+			</geometry>
+		</visual>
+	</link>
+
+	<link name="base_wheel_back_right">
+		<visual>
+			<origin rpy="-1.57075 0 0" xyz="0 0 0" />
+			<geometry>
+				<mesh filename="${left_wheel_mesh_path}" scale="10 10 10" />
+			</geometry>
+		</visual>
+	</link>
+
+	<!-- <link name="base_laser_link">
+		<visual>
+			<origin rpy="0 0 0" xyz="0 0 0" />
+			<geometry>
+				<mesh filename="${hokuyo_mesh_path}" />
+			</geometry>
+		</visual>
+	</link> -->
+	
+	<joint name="base_footprint_to_base_wheel" type="${wheel_kinematic_type}" >
+		<parent link="base_footprint" />
+		<child link="base_wheel_back_left" />
+		<axis xyz="0 1 0" />
+		<origin xyz="-${wheel_distance_x} ${wheel_distance_y} 0" />
+	</joint>
+
+	<joint name="base_footprint_to_base_wheel_front_right" type="${wheel_kinematic_type}" >
+		<parent link="base_footprint" />
+		<child link="base_wheel_front_right" />
+		<axis xyz="0 1 0" />
+		<origin xyz="${wheel_distance_x} -${wheel_distance_y} 0" />
+	</joint>
+
+	<joint name="base_footprint_to_base_wheel_front_left" type="${wheel_kinematic_type}" >
+		<parent link="base_footprint" />
+		<child link="base_wheel_front_left" />
+		<axis xyz="0 1 0" />
+		<origin xyz="${wheel_distance_x} ${wheel_distance_y} 0" />
+	</joint>
+
+	<joint name="base_footprint_to_base_wheel_back_right" type="${wheel_kinematic_type}" >
+		<parent link="base_footprint" />
+		<child link="base_wheel_back_right" />
+		<axis xyz="0 1 0" />
+		<origin xyz="-${wheel_distance_x} -${wheel_distance_y} 0" />
+	</joint>
+
+	<!-- <joint name="base_footprint_to_base_laser_link" type="${wheel_kinematic_type}" >
+		<parent link="base_footprint" />
+		<child link="base_laser_link" />
+		<axis xyz="0 1 0" />
+		<origin xyz="${wheel_distance_x} 0 0" />
+	</joint> -->
+
+</robot>
