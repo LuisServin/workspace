@@ -11,12 +11,12 @@
 		<param name="~turtle" value="turtle1" type="string"/>
 	</node>
 	
-	<node pkg="learning_tf" type="turtle_tf_broadcaster.py" name="turtle2_tf_broadcaster" respawn="false" output="screen">
+	<!-- <node pkg="learning_tf" type="turtle_tf_broadcaster.py" name="turtle2_tf_broadcaster" respawn="false" output="screen">
 		<param name="~turtle" value="turtle2" type="string"/>
 	</node>
 	
 	<node pkg="learning_tf" type="turtle_tf_listener.py" name="listener" />
 	
 	<node pkg="learning_tf" type="fixed_tf_broadcaster.py" name="broadcaster_fixed" />
-
+ -->
 </launch>

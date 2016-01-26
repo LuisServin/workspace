@@ -12,7 +12,7 @@ def handle_turtle_pose(msg, turtlename):
 	br.sendTransform((msg.x, msg.y, 0),
 					  tf.transformations.quaternion_from_euler(0, 0, msg.theta),
 					  rospy.Time.now(),
-					  turtlename,
+					  "base_footprint",
 					  "world")
 
 if __name__ == '__main__':

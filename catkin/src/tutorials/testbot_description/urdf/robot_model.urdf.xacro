@@ -58,14 +58,14 @@
 		</visual>
 	</link>
 
-	<link name="base_laser_link">
+	<!-- <link name="base_laser_link">
 		<visual>
 			<origin rpy="0 0 0" xyz="0 0 0" />
 			<geometry>
 				<mesh filename="${hokuyo_mesh_path}" />
 			</geometry>
 		</visual>
-	</link>
+	</link> -->
 	
 	<joint name="base_footprint_to_base_wheel" type="${wheel_kinematic_type}" >
 		<parent link="base_footprint" />
@@ -95,11 +95,11 @@
 		<origin xyz="-${wheel_distance_x} -${wheel_distance_y} 0" />
 	</joint>
 
-	<joint name="base_footprint_to_base_laser_link" type="${wheel_kinematic_type}" >
+	<!-- <joint name="base_footprint_to_base_laser_link" type="${wheel_kinematic_type}" >
 		<parent link="base_footprint" />
 		<child link="base_laser_link" />
 		<axis xyz="0 1 0" />
 		<origin xyz="${wheel_distance_x} 0 0" />
-	</joint>
+	</joint> -->
 
 </robot>
