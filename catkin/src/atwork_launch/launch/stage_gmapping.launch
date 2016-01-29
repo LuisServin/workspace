@@ -5,6 +5,13 @@
 
 	<param name="/use_sim_time" value="true" />
 
+	<!-- Parameters used to display robot model inside rviz -->
+	<arg name="model" default="$(find atwork_launch)/urdf/atwork_model.urdf.xacro" />
+	<arg name="gui" default="False" />
+	<param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
+	<param name="use_gui" value="$(arg gui)"/>
+
+	<!-- Node to read a joystick and transform message into a /cmd_vel command -->
 	<node pkg="joy" type="joy_node" name="joy_node">
    		<param name="dev" value="$(arg joy_dev)" />
    		<param name="deadzone" value="0.3" />
@@ -15,10 +22,12 @@
    		<rosparam command="load" file="$(find teleop_twist_joy)/config/$(arg joy_config).config.yaml" />
 	</node>
 
+	<!-- Node for stage simulator -->
 	<node pkg="stage_ros" type="stageros" name="stageros_node" args="-g $(arg wordfile_path)">
 		<remap from="/base_scan" to="/scan" />
 	</node>
 
+	<!-- Rviz node to display result -->
 	<node pkg="rviz" type="rviz" name="rviz" args="-d $(find atwork_launch)/rviz_cfg/Stage.rviz" />
 
 	<!-- SLAM G-Mapping
@@ -34,7 +43,8 @@
 		<param name="~maxUrange" value="25.0" />
 	</node>
 
-	<node pkg="using_markers" type="basic_shapes" name="basic_shapes" />
+	<!-- This node was used to show a marker in rviz -->
+	<!-- <node pkg="using_markers" type="basic_shapes" name="basic_shapes" /> -->
 
 	<!-- SLAM Hector-Mapping
 		Parameters for Hector-Mapping
@@ -49,5 +59,16 @@
     	<param name="~map_resolution" value="0.1" />
     	<param name="~laser_max_dist" value="9.9" />
 	</node> -->
+
+	<!-- 
+	Node used to display a robot model in rviz together with
+	the possibility to show internal frames
+	 -->
+	<node name="joint_state_publisher" pkg="joint_state_publisher" type="joint_state_publisher" />
+	<node name="robot_state_publisher" pkg="robot_state_publisher" type="state_publisher" />
+
+	<node pkg="atwork_launch" type="inverse_kinematics_display.py" name="inverse_kinematics_display" >
+		<!-- content -->
+	</node>
 
 </launch>
