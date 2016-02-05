@@ -8,6 +8,7 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   urdf
+  sensor_msgs
 )
 
 catkin_package(
