@@ -5,8 +5,8 @@ from sensor_msgs.msg import JointState
 from std_msgs.msg import Header
 
 def talker():
-	rospy.init_node('robot_state_publisher')
-	
+	rospy.init_node('joint_state_publisher')
+
 	pub = rospy.Publisher('joint_states', JointState, queue_size=10)
 	rate = rospy.Rate(10)
 
@@ -20,6 +20,7 @@ def talker():
 	state_str.effort = []
 
 	while not rospy.is_shutdown():
+		state_str.position = [1 * rospy.get_time(), 2 * rospy.get_time(), 3 * rospy.get_time(), 4 * rospy.get_time()] 
 		state_str.header.stamp = rospy.Time.now()
 		pub.publish(state_str)
 		rate.sleep()
