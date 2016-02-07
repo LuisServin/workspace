@@ -27,7 +27,7 @@
 	</node>
 
 	<!-- Node for stage simulator -->
-	<node pkg="stage_ros" type="stageros" name="stageros_node" args="$(arg wordfile_path)">
+	<node pkg="stage_ros" type="stageros" name="stageros_node" args="-g $(arg wordfile_path)">
 		<remap from="/base_scan" to="/scan" />
 	</node>
 
