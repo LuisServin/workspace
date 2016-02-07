@@ -11,12 +11,12 @@ from inverse_kinematic import *
 # 	state_str.header.stamp = rospy.Time.now()
 # 	pub.publish(state_str)
 
-def foo():
-	# init node
-	# rospy.init_node('inverse_kinematic_node')
+def used():
+	# # init node
+	# rospy.init_node('joint_state_publisher')
 
-	# create an instance of JoinState message and fill with
-	# neccesary initial information
+	# # create an instance of JoinState message and fill with
+	# # neccesary initial information
 	# state_str = JointState()
 	# state_str.header = Header()
 	# state_str.header.stamp = rospy.Time.now()
@@ -26,26 +26,24 @@ def foo():
 	# state_str.velocity = []
 	# state_str.effort = []
 
-	# create a topic to publish joint states
+	# # create a topic to publish joint states
 	# pub = rospy.Publisher('joint_states', JointState, queue_size=10)
 
-	# create a subscriber to read cmd_vel messages
-	# rospy.Subscriber('cmd_vel', Twist, cmd_vel_cb)
-
-	# rospy.spin()
-
-	# this case is not needed a rate because it is going to be 
-	# the same rate of received messages
+	# # this case is not needed a rate because it is going to be 
+	# # the same rate of received messages
 	# rate = rospy.Rate(10)
 
 	# while not rospy.is_shutdown():
-	#	state_str.position = [1 * rospy.get_time(), 2 * rospy.get_time(), 3 * rospy.get_time(), 4 * rospy.get_time()] 
-	robot_vel = inverse_kinematic()
-	robot_vel.spin()
+	# 	state_str.position = [1 * rospy.get_time(), 2 * rospy.get_time(), 3 * rospy.get_time(), 4 * rospy.get_time()] 
+	# 	state_str.header.stamp = rospy.Time.now()
+	# 	pub.publish(state_str)
+	# 	rate.sleep()
+	ina = inverse_kinematic()
+	ina.spin()
 
 
 if __name__ == '__main__':
 	try:
-		foo()
+		used()
 	except rospy.ROSInterruptException:
 		pass
