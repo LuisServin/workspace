@@ -63,8 +63,8 @@ class inverse_kinematic:
 		self.state_str.header.stamp = rospy.Time.now()
 	
 		# wheels start in home position
-		self.state_str.name = ['base_to_wheel_front_left', 'base_to_wheel_front_right', 'base_to_wheel_back_left', 'base_to_wheel_back_right']
-		self.state_str.position = [0.0, 0.0, 0.0, 0.0]
+		self.state_str.name = ['base_to_wheel_front_left', 'base_to_wheel_front_right', 'base_to_wheel_back_left', 'base_to_wheel_back_right', 'base_to_laser_link']
+		self.state_str.position = [0.0, 0.0, 0.0, 0.0, 0.0]
 		self.state_str.velocity = []
 		self.state_str.effort = []
 
@@ -111,7 +111,7 @@ class inverse_kinematic:
 		self.w_4_p = self.w_4_p + self.w_4 * (self.time_now - self.time_last)
 
 		self.state_str.header.stamp = rospy.Time.now()
-		self.state_str.position = [self.w_1_p, self.w_2_p, self.w_3_p, self.w_4_p]
+		self.state_str.position = [self.w_1_p, self.w_2_p, self.w_3_p, self.w_4_p, 0.0]
 
 	# function to start pushlising actual message
 	def spin(self):

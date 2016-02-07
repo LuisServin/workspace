@@ -1,4 +1,6 @@
 <launch>
+	<!-- ############################################################### -->
+
 	<arg name="wordfile_path" value="$(find atwork_launch)/world/p1.world" />
 	<arg name="joy_dev" default="/dev/input/js1" />
 	<arg name="joy_config" default="xbox_omni" />
@@ -10,6 +12,8 @@
 	<arg name="gui" default="False" />
 	<param name="robot_description" command="$(find xacro)/xacro.py $(arg model)" />
 	<param name="use_gui" value="$(arg gui)"/>
+
+	<!-- ############################################################### -->
 
 	<!-- Node to read a joystick and transform message into a /cmd_vel command -->
 	<node pkg="joy" type="joy_node" name="joy_node">
@@ -29,6 +33,8 @@
 
 	<!-- Rviz node to display result -->
 	<node pkg="rviz" type="rviz" name="rviz" args="-d $(find atwork_launch)/rviz_cfg/Stage.rviz" />
+
+	<!-- ############################################################### -->
 
 	<!-- SLAM G-Mapping
 		Parameters for G-Mapping
@@ -59,6 +65,8 @@
     	<param name="~map_resolution" value="0.1" />
     	<param name="~laser_max_dist" value="9.9" />
 	</node> -->
+
+	<!-- ############################################################### -->
 
 	<!-- 
 	Node used to display a robot model in rviz together with
