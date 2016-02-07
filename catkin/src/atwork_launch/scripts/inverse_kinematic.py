@@ -84,6 +84,8 @@ class inverse_kinematic:
 		self.time_last = self.time_now
 		self.time_now = rospy.get_time()
 
+		# calculation is made at this time to always
+		# publish completed interval calculations
 		self.update()
 
 		rospy.loginfo("Current time %f", self.time_now)
