@@ -51,6 +51,10 @@ class inverse_kinematic:
 		self.w_3_p = 0.0
 		self.w_4_p = 0.0
 
+		# variables to store time
+		self.time_now = 0.0
+		self.time_last = 0.0
+
 		# create an instance of JoinState message and fill with
 		# neccesary initial information
 		self.state_str = JointState()
