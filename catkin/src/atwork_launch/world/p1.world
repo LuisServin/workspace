@@ -8,6 +8,7 @@ define topurg ranger
 (
 	sensor(
     # 10 is the maximum range in meters
+    # pose [0.0 0.0 0.0 0.0]
     range [ 0.0  20.0 ]
     # field of view for the sensor
     # modified by LASG

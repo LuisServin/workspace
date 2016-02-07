@@ -58,7 +58,7 @@
 		</visual>
 	</link>
 
-	<link name="base_laser_link">
+	<link name="base_laser_link_node">
 		<visual>
 			<origin rpy="0 0 0" xyz="0 0 0" />
 			<geometry>
@@ -95,9 +95,9 @@
 		<origin xyz="-${wheel_distance_x} -${wheel_distance_y} 0" />
 	</joint>
 
-	<joint name="base_to_laser_link" type="${wheel_kinematic_type}" >
+	<joint name="base_to_laser_link_node" type="${wheel_kinematic_type}" >
 		<parent link="base_footprint" />
-		<child link="base_laser_link" />
+		<child link="base_laser_link_node" />
 		<axis xyz="0 1 0" />
 		<origin xyz="${wheel_distance_x} 0 0" />
 	</joint>

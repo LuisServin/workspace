@@ -63,7 +63,7 @@ class inverse_kinematic:
 		self.state_str.header.stamp = rospy.Time.now()
 	
 		# wheels start in home position
-		self.state_str.name = ['base_to_wheel_front_left', 'base_to_wheel_front_right', 'base_to_wheel_back_left', 'base_to_wheel_back_right', 'base_to_laser_link']
+		self.state_str.name = ['base_to_wheel_front_left', 'base_to_wheel_front_right', 'base_to_wheel_back_left', 'base_to_wheel_back_right', 'base_to_laser_link_node']
 		self.state_str.position = [0.0, 0.0, 0.0, 0.0, 0.0]
 		self.state_str.velocity = []
 		self.state_str.effort = []
