@@ -45,6 +45,12 @@ class inverse_kinematic:
 		self.w_3 = 0.0 # back left
 		self.w_4 = 0.0 # back right
 
+		# variables to store wheel positions
+		self.w_1_p = 0.0
+		self.w_2_p = 0.0
+		self.w_3_p = 0.0
+		self.w_4_p = 0.0
+
 		# create an instance of JoinState message and fill with
 		# neccesary initial information
 		self.state_str = JointState()
@@ -64,7 +70,7 @@ class inverse_kinematic:
 		rospy.Subscriber('cmd_vel', Twist, self.cmd_vel_cb)
 
 	def cmd_vel_cb(self, cmd_msg):
-		rospy.loginfo("I'm hearing %s", cmd_msg.linear.x)
+		# update calculation values.
 		self.v_x = cmd_msg.linear.x
 		self.v_y = cmd_msg.linear.z
 		self.w_z = cmd_msg.angular.z
@@ -73,9 +79,21 @@ class inverse_kinematic:
 		# Writting equations for wheel speed rotation calculation
 		self.w_1 = 1 / self.r * (self.v_x - self.v_y - \
 			(self.l_x + self.l_y) * self.w_z)
-		# self.w_1 = self.v_x
+		
+		self.w_2 = 1 / self.r * (self.v_x + self.v_y + \
+			(self.l_x + self.l_y) * self.w_z)
+
+		self.w_1 = 1 / self.r * (self.v_x + self.v_y - \
+			(self.l_x + self.l_y) * self.w_z)
+
+		self.w_1 = 1 / self.r * (self.v_x - self.v_y + \
+			(self.l_x + self.l_y) * self.w_z)
+
+		# calculate new wheel position
+		self.w_1_p = self.w_1_p + self.w_1 * self.r
+
 		self.state_str.header.stamp = rospy.Time.now()
-		self.state_str.position = [self.w_1, 0.0, 0.0, 0.0]
+		self.state_str.position = [self.w_1_p, 0.0, 0.0, 0.0]
 
 	# function to start pushlising actual message
 	def spin(self):
