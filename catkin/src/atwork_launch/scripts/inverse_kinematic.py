@@ -52,7 +52,8 @@ class inverse_kinematic:
 		self.w_4_p = 0.0
 
 		# variables to store time
-		self.time_now = 0.0
+		# get_time() returns time in a float variable
+		self.time_now = rospy.get_time()
 		self.time_last = 0.0
 
 		# create an instance of JoinState message and fill with
@@ -62,7 +63,7 @@ class inverse_kinematic:
 		self.state_str.header.stamp = rospy.Time.now()
 	
 		# wheels start in home position
-		self.state_str.name = ['base_footprint_to_base_wheel', 'base_footprint_to_base_wheel_front_right', 'base_footprint_to_base_wheel_front_left', 'base_footprint_to_base_wheel_back_right']
+		self.state_str.name = ['base_to_wheel_front_left', 'base_to_wheel_front_right', 'base_to_wheel_back_left', 'base_to_wheel_back_right']
 		self.state_str.position = [0.0, 0.0, 0.0, 0.0]
 		self.state_str.velocity = []
 		self.state_str.effort = []
@@ -76,8 +77,16 @@ class inverse_kinematic:
 	def cmd_vel_cb(self, cmd_msg):
 		# update calculation values.
 		self.v_x = cmd_msg.linear.x
-		self.v_y = cmd_msg.linear.z
+		self.v_y = cmd_msg.linear.y
 		self.w_z = cmd_msg.angular.z
+
+		# time interval calculation
+		self.time_last = self.time_now
+		self.time_now = rospy.get_time()
+
+		self.update()
+
+		rospy.loginfo("Current time %f", self.time_now)
 	
 	def update(self):
 		# Writting equations for wheel speed rotation calculation
@@ -87,24 +96,27 @@ class inverse_kinematic:
 		self.w_2 = 1 / self.r * (self.v_x + self.v_y + \
 			(self.l_x + self.l_y) * self.w_z)
 
-		self.w_1 = 1 / self.r * (self.v_x + self.v_y - \
+		self.w_3 = 1 / self.r * (self.v_x + self.v_y - \
 			(self.l_x + self.l_y) * self.w_z)
 
-		self.w_1 = 1 / self.r * (self.v_x - self.v_y + \
+		self.w_4 = 1 / self.r * (self.v_x - self.v_y + \
 			(self.l_x + self.l_y) * self.w_z)
 
 		# calculate new wheel position
-		self.w_1_p = self.w_1_p + self.w_1 * self.r
+		self.w_1_p = self.w_1_p + self.w_1 * (self.time_now - self.time_last)
+		self.w_2_p = self.w_2_p + self.w_2 * (self.time_now - self.time_last)
+		self.w_3_p = self.w_3_p + self.w_3 * (self.time_now - self.time_last)
+		self.w_4_p = self.w_4_p + self.w_4 * (self.time_now - self.time_last)
 
 		self.state_str.header.stamp = rospy.Time.now()
-		self.state_str.position = [self.w_1_p, 0.0, 0.0, 0.0]
+		self.state_str.position = [self.w_1_p, self.w_2_p, self.w_3_p, self.w_4_p]
 
 	# function to start pushlising actual message
 	def spin(self):
 		# rate publication
 		r = rospy.Rate(10)
 		while not rospy.is_shutdown():
-			self.update()
+			# self.update()
 			self.pub.publish(self.state_str)
 			r.sleep()
 
