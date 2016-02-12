@@ -74,6 +74,9 @@ class inverse_kinematic:
 		# subscribe to cmd_vel topic
 		rospy.Subscriber('cmd_vel', Twist, self.cmd_vel_cb)
 
+		# publish initial position
+		
+
 	def cmd_vel_cb(self, cmd_msg):
 		# update calculation values.
 		self.v_x = cmd_msg.linear.x
