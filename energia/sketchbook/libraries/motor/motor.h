@@ -29,7 +29,7 @@ public:
 	void doEncoderA();
 	void doEncoderB();
 
-	int stepPosition();
+	int stepIncrement();
 	float calculateAngularPosition();
 	float calculateAngularSpeed();
 	float calculateAbsoluteAngularPosition();

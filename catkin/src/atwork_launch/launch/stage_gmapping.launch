@@ -2,7 +2,7 @@
 	<!-- ############################################################### -->
 
 	<arg name="wordfile_path" value="$(find atwork_launch)/world/p1.world" />
-	<arg name="joy_dev" default="/dev/input/js1" />
+	<arg name="joy_dev" default="/dev/input/js0" />
 	<arg name="joy_config" default="xbox_omni" />
 
 	<param name="/use_sim_time" value="true" />
