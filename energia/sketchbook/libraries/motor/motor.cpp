@@ -73,15 +73,15 @@ void motor::doEncoderA()
 {
 	if(digitalRead(_pinEncoderA) == HIGH) {
 		if(digitalRead(_pinEncoderB) == HIGH) {
-			_encoderSteps += 1;
+			this->_encoderSteps += 1;
 		} else {
-			_encoderSteps -= 1;
+			this->_encoderSteps -= 1;
 		} 
 	} else {
 		if(digitalRead(_pinEncoderB) == LOW) {
-			_encoderSteps += 1;
+			this->_encoderSteps += 1;
 		} else {
-			_encoderSteps -= 1;
+			this->_encoderSteps -= 1;
 		}
 	}
 }
@@ -90,15 +90,15 @@ void motor::doEncoderB()
 {
 	if(digitalRead(_pinEncoderB) == HIGH) {
 		if(digitalRead(_pinEncoderA) == LOW) {
-			_encoderSteps += 1;
+			this->_encoderSteps += 1;
 		} else {
-			_encoderSteps -= 1;
+			this->_encoderSteps -= 1;
 		}
 	} else {
 		if(digitalRead(_pinEncoderA) == HIGH) {
-			_encoderSteps += 1;
+			this->_encoderSteps += 1;
 		} else {
-			_encoderSteps -= 1;
+			this->_encoderSteps -= 1;
 		}
 	}
 }
@@ -133,7 +133,7 @@ float motor::calculateAngularSpeed()
 	return angularSpeed;
 }
 
-int motor::stepPosition()
+int motor::stepIncrement()
 {
 	int steps = this->_encoderSteps;
 	this->_encoderSteps = 0;
@@ -145,7 +145,7 @@ int motor::stepPosition()
 
 float motor::calculateAngularPosition()
 {
-	int absoluteSteps = stepPosition();
+	int absoluteSteps = stepIncrement();
 	float angularPosition = 
 		float(absoluteSteps) * 2.0 * PI / this->countsPerRevolution;
 	this->_lastSteps = absoluteSteps;
