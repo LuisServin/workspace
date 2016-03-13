@@ -29,23 +29,36 @@ V.		Índice
 		2.2.2. Objetivos particulares
 	2.3. Metas
 	2.4. Justificación
-	2.5. Hipótesis  % La hipótesis puede llegar a ser eliminada de la 
-					% tesis y ser sustituida por el objetivo.
+	2.5. Hipótesis  % La hipótesis puede llegar a ser eliminada de la  tesis y ser sustituida por el objetivo.
 
 3. Algoritmo.
 	3.1. Algoritmos de SLAM
 	3.2. Algoritmos de exploración
 	3.3. Algoritmos de planeación y seguimiento de trayectoria
-	3.4. Sistemas de locomoción y control de velocidad
 	3.4. Descripción global de algoritmo
 
 4. Diseño y Construcción del prototipo
-	4.1. Diseño mecánico y manufactura
-	4.2. Componentes electrónicos
-	4.3. Arquitectura de procesamiento
+	4.1. Sistema de locomoción.	% aún estoy pensando si poner esta parte en otro lugar porque no estoy muy convencido
+	4.2. Diseño mecánico y manufactura
+		4.2.1. Base principal.
+		4.2.2. Acoplamiento.
+	4.3. Componentes electrónicos
+		4.3.1. CPU
+		4.3.2. LIDAR
+		4.3.3. Motores
+		4.3.4. Suministro de energía
+		4.3.5. Etapa de potencia
+		4.3.6. Comunicación
+	4.4. Arquitectura de procesamiento
 
 5. Implementación de los algoritmos
-	
+	5.1. Descripción de las etapas de pruebas
+	5.1. Simulación
+	5.2. Control de velocidad de los motores
+	5.3. Seguimiento de una trayectoria recta
+	5.4. SLAM
+	5.5. Prueba completa
+	5.6. Resultados
 
 % Evitar que las conclusiones sean el resumen de cada capítulo.
 6. Conclusiones y trabajo a futuro
