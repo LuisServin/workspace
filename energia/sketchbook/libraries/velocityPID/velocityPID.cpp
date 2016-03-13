@@ -9,32 +9,32 @@
 
 velocityPID::velocityPID()
 {
-	this->kFeedForward = 0.0f;
-	this->kProportional = 0.0f;
-	this->kDifferential = 0.0f;
-	this->kIntegral = 0.0f;
+	this->_kFeedForward = 0.0f;
+	this->_kProportional = 0.0f;
+	this->_kDifferential = 0.0f;
+	this->_kIntegral = 0.0f;
 
-	this->windUpSuperior = 0;
-	this->windUpInferior = 0;
-	this->maximumPWMOutput = 0;
+	this->_windUpSuperior = 0;
+	this->_windUpInferior = 0;
+	this->_maximumPWMOutput = 0;
 }
 
 velocityPID::setControlGains(float kFeedForward, float kProportional,
 	float kDifferential, float kIntegral)
 {
-	this->kFeedForward = kFeedForward;
-	this->kProportional = kProportional;
-	this->kDifferential = kDifferential;
-	this->kIntegral = kIntegral;
+	this->_kFeedForward = kFeedForward;
+	this->_kProportional = kProportional;
+	this->_kDifferential = kDifferential;
+	this->_kIntegral = kIntegral;
 }
 
 velocityPID::setWindUpLimits(int superiorLimit, int inferiorLimit)
 {
-	this->windUpSuperior = superiorLimit;
-	this->windUpInferior = inferiorLimit;
+	this->_windUpSuperior = superiorLimit;
+	this->_windUpInferior = inferiorLimit;
 }
 
 velocityPID::setMaximumOutput(int maximumPWMValue)
 {
-	this->maximumPWMOutput = maximumPWMValue;
+	this->_maximumPWMOutput = maximumPWMValue;
 }

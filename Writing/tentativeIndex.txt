@@ -1,0 +1,66 @@
+Indice tenatativo para el trabajo de tesis.
+% En el índice se debe incluir una lista de tablas
+% y una de figuras.
+
+TÍTULO: 
+NAVEGACIÓN Y EXPLORACIÓN AUTÓNOMA DE UN ENTORNO INDUSTRIAL
+
+%%%%%%%%%%% ------- Parte protocolaria --------- %%%%%%%%%%%%%%%
+
+I. 		Portada
+II. 	Contraportada
+III.	Dedicatoria
+IV. 	Agradecimientos
+V.		Índice
+
+1. Introducción
+	1.1. Antecedentes
+	1.2. Estado de la técnica
+	1.3. Metodología utilizada
+	1.4. Resumen 	% Creo que en mi caso en particular evitaré dividir 
+					% cada capítulo en un subtema específico.
+
+%%%%%%%%%%% ------- Parte expositiva --------- %%%%%%%%%%%%%%%
+	
+2. Análisis del problema
+	2.1. Planteamiento del problema
+	2.2. Objetivos
+		2.2.1. Objetivo general
+		2.2.2. Objetivos particulares
+	2.3. Metas
+	2.4. Justificación
+	2.5. Hipótesis  % La hipótesis puede llegar a ser eliminada de la 
+					% tesis y ser sustituida por el objetivo.
+
+3. Algoritmo.
+	3.1. Algoritmos de SLAM
+	3.2. Algoritmos de exploración
+	3.3. Algoritmos de planeación y seguimiento de trayectoria
+	3.4. Sistemas de locomoción y control de velocidad
+	3.4. Descripción global de algoritmo
+
+4. Diseño y Construcción del prototipo
+	4.1. Diseño mecánico y manufactura
+	4.2. Componentes electrónicos
+	4.3. Arquitectura de procesamiento
+
+5. Implementación de los algoritmos
+	
+
+% Evitar que las conclusiones sean el resumen de cada capítulo.
+6. Conclusiones y trabajo a futuro
+	6.1. Conclusiones
+	6.2. Trabajo a futuro
+
+	Bibliografía
+
+%%%%%%%%%%% ------- Parte complementaria --------- %%%%%%%%%%%%%%%
+
+	[Anexos] 	% Contenido que ayude a complementar los temas tratados durante 
+				% el desarrollo de la tesis.
+   	Apéndices
+   	
+   	[Glosario de términos] 	% Explicación de los términos técnicos 
+   							% utilizados en el cuerpo de la tésis.
+   	[Cuadros y gráficas] 	% Contenido gráfico que conveniene que no vaya
+   							% en el cuerpo de la tesis pero que sirve de apoyo.

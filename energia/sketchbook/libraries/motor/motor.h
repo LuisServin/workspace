@@ -12,32 +12,83 @@
 class motor
 {
 public:
-	/*Signal for controlling the motor*/
+
+	/**
+	 * Signal for controlling the motor
+	 */
 	int pwm;
 	bool direction;
-	/*Physical properties*/
+
+	/** 
+	 * Physical properties
+	 */
 	int countsPerRevolution;
 
+	/**
+	 * Constructor. As arguments it only need physical pins.
+	 */
 	motor(int pinDirection, int pinPWM, int pinEncoderA, int pinEncoderB);
+
+	/** 
+	 * Set pwm value for motor.
+	 */
 	void setPwm(int Pwm);
+
+	/**
+	 * Get pwm description
+	 * @return [int] pwm actual value
+	 */
 	int getPwm();
-	void setSpeed(int Speed);	// [m/s]
-	int getSpeed();
+
+	/**
+	 * Set roation direction
+	 * @param Direction 1 for forward
+	 */
 	void setDirection(bool Direction);
+
+	/** 
+	 * Changes actual electronic values
+	 */
 	void runMotor();
+
+	/**
+	 * Get differential encoder steps since last reset. 
+	 * @return [long] encoder steps since last call.
+	 */
 	long getEncoderSteps();
+
+	/**
+	 * Function for calculating quadatrure increments for encoder A.
+	 */
 	void doEncoderA();
+
+	/**
+	 * Function for calculating quadatrure increments for encoder B.
+	 */
 	void doEncoderB();
 
-	int stepIncrement();
+	/**
+	 * Function for calculating differential encoder.
+	 * @return [int] Increment in encoder since last call
+	 */
+	int stepsIncrement();
+
 	float calculateAngularPosition();
 	float calculateAngularSpeed();
 	float calculateAbsoluteAngularPosition();
-
-private:
+	
+private:  
+	/**
+	 * Variables for saving encoder position
+	 */
 	volatile long _encoderSteps;
+	long _lastEncoderPosition;
+	long _actualEncoderPosition;
 	int _lastSteps;
-	/*Pins for physical connection*/
+
+	/**
+	 * Pins for physical connection
+	 */
 	int _pinDirection;
 	int _pinPWM;
 	int _pinEncoderA;

@@ -12,22 +12,21 @@
 class velocityPID
 {
 public:
-	float kFeedForward; // Gain for feedforward the variable
-	float kProportional;
-	float kDifferential;
-	float kIntegral;
-
-	int windUpSuperior;	//This is compared to the error
-	int windUpInferior;
-	int maximumPWMOutput;
-
 	velocityPID();
 	void setControlGains(float kFeedForward, float kProportional, float kDifferential, float kIntegral);
 	void setWindUpLimits(int superiorLimit, int inferiorLimit);
 	void setMaximumOutput(int maximumPWMValue);
 	~pid();
+
 private:
+	float _kFeedForward; // Gain for feedforward the variable
+	float _kProportional;
+	float _kDifferential;
+	float _kIntegral;
 	
+	int _windUpSuperior;	//This is compared to the error
+	int _windUpInferior;
+	int _maximumPWMOutput;
 };
 
 #endif // pid_h

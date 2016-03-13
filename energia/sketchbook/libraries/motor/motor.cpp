@@ -13,23 +13,27 @@
 
 motor::motor(int pinDirection, int pinPWM, int pinEncoderA, int pinEncoderB)
 {
+	// pins for physical connection
 	_pinDirection = pinDirection;
 	_pinPWM = pinPWM;
 	_pinEncoderA = pinEncoderA;
 	_pinEncoderB = pinEncoderB;	
 
+	// initialize pins in uC
 	pinMode(_pinDirection, OUTPUT);
-
 	pinMode(_pinEncoderA, INPUT);
 	pinMode(_pinEncoderB, INPUT);
 
 
 	// Initialization of variables
+	this->_encoderSteps = 0;
+	this->_lastEncoderPosition = 0;
+	this->_actualEncoderPosition = 0;
+
 	this->_angularSpeed = 0.0f;
 	this->_currentAngularPosition = 0.0f;
 	this->_currentTime = millis();
 	this->_lastTime = 0;
-	this->_encoderSteps = 0;
 	this->countsPerRevolution = 3500;
 }
 
@@ -39,16 +43,6 @@ void motor::setPwm(int Pwm)
 }
 
 int motor::getPwm()
-{
-	return pwm;
-}
-
-void motor::setSpeed(int Pwm)
-{
-	pwm = Pwm;
-}
-
-int motor::getSpeed()
 {
 	return pwm;
 }
@@ -103,6 +97,15 @@ void motor::doEncoderB()
 	}
 }
 
+int motor::stepsIncrement()
+{
+	// save increment and restore variable to avoid overloading
+	int steps = this->_encoderSteps;
+	//this->_encoderSteps = 0;
+
+	return steps;
+}
+
 float motor::calculateAngularSpeed()
 {
 	float angularSpeed, dt;
@@ -133,19 +136,9 @@ float motor::calculateAngularSpeed()
 	return angularSpeed;
 }
 
-int motor::stepIncrement()
-{
-	int steps = this->_encoderSteps;
-	this->_encoderSteps = 0;
-
-	int absoluteSteps = (steps + this->_lastSteps) 
-		% this->countsPerRevolution;
-	return absoluteSteps;
-}
-
 float motor::calculateAngularPosition()
 {
-	int absoluteSteps = stepIncrement();
+	int absoluteSteps = stepsIncrement();
 	float angularPosition = 
 		float(absoluteSteps) * 2.0 * PI / this->countsPerRevolution;
 	this->_lastSteps = absoluteSteps;
