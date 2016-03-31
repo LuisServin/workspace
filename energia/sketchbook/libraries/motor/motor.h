@@ -41,13 +41,6 @@ public:
 	 */
 	long getEncoderSteps();
 
-	/**
-	 * Function for calculating differential encoder. this function reset
-	 * actual values and calculate angular speeds
-	 * @return [int] Increment in encoder since last call
-	 */
-	int stepsIncremented();
-
 	void calculateKinematicVariables();
 
 	int getAngularSpeedSteps();
@@ -87,6 +80,13 @@ private:
 	 * Function for calculating quadatrure increments for encoder B.
 	 */
 	void doEncoderB();
+
+	/**
+	 * Function for calculating differential encoder. this function reset
+	 * actual values.
+	 * @return [int] Increment in encoder since last call
+	 */
+	int stepsIncremented();
 
 	float calculateAngularSpeedSteps(int steps);
 
