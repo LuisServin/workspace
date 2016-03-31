@@ -35,16 +35,6 @@ public:
 	void runMotor();
 
 	/**
-	 * Function for calculating quadatrure increments for encoder A.
-	 */
-	void doEncoderA();
-
-	/**
-	 * Function for calculating quadatrure increments for encoder B.
-	 */
-	void doEncoderB();
-
-	/**
 	 * Get differential encoder steps since last reset, without reseting
 	 * actual value 
 	 * @return [long] encoder steps since last call.
@@ -87,6 +77,16 @@ private:
 	int _pinPWM;
 	int _pinEncoderA;
 	int _pinEncoderB;
+
+	/**
+	 * Function for calculating quadatrure increments for encoder A.
+	 */
+	void doEncoderA();
+
+	/**
+	 * Function for calculating quadatrure increments for encoder B.
+	 */
+	void doEncoderB();
 
 	float calculateAngularSpeedSteps(int steps);
 
