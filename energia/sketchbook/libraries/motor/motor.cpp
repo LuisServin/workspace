@@ -7,11 +7,12 @@
 #include "Arduino.h"
 #include "motor.h"
 
+#define PI 	3.14159
+
 /**
  * Constructor
  */
-
-motor::motor(int pinDirection, int pinPWM, int pinEncoderA, int pinEncoderB)
+Motor::Motor(int pinDirection, int pinPWM, int pinEncoderA, int pinEncoderB)
 {
 	// pins for physical connection
 	_pinDirection = pinDirection;
@@ -26,132 +27,117 @@ motor::motor(int pinDirection, int pinPWM, int pinEncoderA, int pinEncoderB)
 
 
 	// Initialization of variables
-	this->_encoderSteps = 0;
-	this->_lastEncoderPosition = 0;
-	this->_actualEncoderPosition = 0;
-
-	this->_angularSpeed = 0.0f;
-	this->_currentAngularPosition = 0.0f;
-	this->_currentTime = millis();
-	this->_lastTime = 0;
-	this->countsPerRevolution = 3500;
+	_countsPerRevolution = 3500;
+	_encoderSteps = 0;
+	
+	_angularSpeed_steps = 0.0f;
+	_angularSpeed_rad = 0.0f;
+	_currentTime = 0;
+	_lastTime = 0;
 }
 
-void motor::setPwm(int Pwm)
+void Motor::setPwm(int pwm)
 {
-	pwm = Pwm;
+	_pwm = pwm;
 }
 
-int motor::getPwm()
+void Motor::setDirection(bool direction)
 {
-	return pwm;
+	_direction = direction;
 }
 
-void motor::setDirection(bool Direction)
+void Motor::runMotor()
 {
-	direction = Direction;
+	digitalWrite(_pinDirection, _direction);
+	analogWrite(_pinPWM, _pwm);
 }
 
-void motor::runMotor()
+void Motor::doEncoderA()
 {
-	digitalWrite(_pinDirection, direction);
-	analogWrite(_pinPWM, pwm);
+	if(digitalRead(_pinEncoderA) == HIGH) {
+		if(digitalRead(_pinEncoderB) == HIGH) {
+			_encoderSteps += 1;
+		} else {
+			_encoderSteps -= 1;
+		} 
+	} else {
+		if(digitalRead(_pinEncoderB) == LOW) {
+			_encoderSteps += 1;
+		} else {
+			_encoderSteps -= 1;
+		}
+	}
 }
 
-long motor::getEncoderSteps()
+void Motor::doEncoderB()
+{
+	if(digitalRead(_pinEncoderB) == HIGH) {
+		if(digitalRead(_pinEncoderA) == LOW) {
+			_encoderSteps += 1;
+		} else {
+			_encoderSteps -= 1;
+		}
+	} else {
+		if(digitalRead(_pinEncoderA) == HIGH) {
+			_encoderSteps += 1;
+		} else {
+			_encoderSteps -= 1;
+		}
+	}
+}
+
+long Motor::getEncoderSteps()
 {
 	return _encoderSteps;
 }
 
-void motor::doEncoderA()
-{
-	if(digitalRead(_pinEncoderA) == HIGH) {
-		if(digitalRead(_pinEncoderB) == HIGH) {
-			this->_encoderSteps += 1;
-		} else {
-			this->_encoderSteps -= 1;
-		} 
-	} else {
-		if(digitalRead(_pinEncoderB) == LOW) {
-			this->_encoderSteps += 1;
-		} else {
-			this->_encoderSteps -= 1;
-		}
-	}
-}
-
-void motor::doEncoderB()
-{
-	if(digitalRead(_pinEncoderB) == HIGH) {
-		if(digitalRead(_pinEncoderA) == LOW) {
-			this->_encoderSteps += 1;
-		} else {
-			this->_encoderSteps -= 1;
-		}
-	} else {
-		if(digitalRead(_pinEncoderA) == HIGH) {
-			this->_encoderSteps += 1;
-		} else {
-			this->_encoderSteps -= 1;
-		}
-	}
-}
-
-int motor::stepsIncrement()
+int Motor::stepsIncremented()
 {
 	// save increment and restore variable to avoid overloading
-	int steps = this->_encoderSteps;
-	//this->_encoderSteps = 0;
-
+	int steps = abs(_encoderSteps);
+	_encoderSteps = 0;
 	return steps;
 }
 
-float motor::calculateAngularSpeed()
+void Motor::calculateKinematicVariables()
+{
+	_actualSteps = stepsIncremented();
+	_angularSpeed_steps = calculateAngularSpeedSteps(_actualSteps);
+	_angularSpeed_rad = calculateAngularSpeedRad(_angularSpeed_steps);
+}
+
+int Motor::getAngularSpeedSteps()
+{
+	return _angularSpeed_steps;
+}
+
+float Motor::getAngularSpeedRad()
+{
+	return _angularSpeed_rad;
+}
+
+float Motor::calculateAngularSpeedSteps(int steps)
 {
 	float angularSpeed, dt;
 
-	float lastAngularPosition = this->_currentAngularPosition;
-	this->_lastTime = this->_currentTime;
-
-	this->_currentAngularPosition = calculateAngularPosition();
-	this->_currentTime = millis();
-
-	dt = float(this->_currentTime - this->_lastTime) / 1000;
-
-	// Calculate angular speed
-	if(this->direction && 
-		(this->_currentAngularPosition < lastAngularPosition)) {
-		angularSpeed = (((2 * PI) - lastAngularPosition) + 
-			this->_currentAngularPosition) / dt;		
+	_lastTime = _currentTime;
+	_currentTime = millis();
+	dt = _currentTime - _lastTime; // [ms]
+	if (dt != 0) {
+		angularSpeed = steps / dt; // [steps / ms]
+		// convert actual speed to [steps / s]
+		angularSpeed *= 1000;
 	} else {
-		if(!this->direction && 
-			(this->_currentAngularPosition > lastAngularPosition)){
-			angularSpeed = (this->_currentAngularPosition - 
-				(2 * PI + lastAngularPosition)) / dt;					
-		} else {
-			angularSpeed = (this->_currentAngularPosition - lastAngularPosition) / dt;
-		}
+		angularSpeed = -1;
 	}
 
 	return angularSpeed;
 }
 
-float motor::calculateAngularPosition()
+float Motor::calculateAngularSpeedRad(float steps_s)
 {
-	int absoluteSteps = stepsIncrement();
-	float angularPosition = 
-		float(absoluteSteps) * 2.0 * PI / this->countsPerRevolution;
-	this->_lastSteps = absoluteSteps;
-	return angularPosition;
-}
+	float angularSpeed_rad;
+	angularSpeed_rad = steps_s * 2 * PI / _countsPerRevolution;
 
-float motor::calculateAbsoluteAngularPosition()
-{
-	float angularPosition;
-	angularPosition = calculateAngularPosition();
-	if(angularPosition < 0){
-		angularPosition = 2 * PI + angularPosition;
-		return angularPosition;
-	}
-	return angularPosition;
+	return angularSpeed_rad;
 }

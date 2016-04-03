@@ -4,47 +4,30 @@
  * Released into public domain
  */
 
-#ifndef motor_h
-#define motor_h
+#ifndef MOTOR_H_
+#define MOTOR_H_
 
 #include "Arduino.h"
 
-class motor
+class Motor
 {
 public:
-
-	/**
-	 * Signal for controlling the motor
-	 */
-	int pwm;
-	bool direction;
-
-	/** 
-	 * Physical properties
-	 */
-	int countsPerRevolution;
-
 	/**
 	 * Constructor. As arguments it only need physical pins.
 	 */
-	motor(int pinDirection, int pinPWM, int pinEncoderA, int pinEncoderB);
+	Motor(int pinDirection, int pinPWM, int pinEncoderA, int pinEncoderB);
 
 	/** 
-	 * Set pwm value for motor.
+	 * Set pwm value for motor. Value will change until run motor
+	 * function be called
 	 */
-	void setPwm(int Pwm);
-
-	/**
-	 * Get pwm description
-	 * @return [int] pwm actual value
-	 */
-	int getPwm();
+	void setPwm(int pwm);
 
 	/**
 	 * Set roation direction
 	 * @param Direction 1 for forward
 	 */
-	void setDirection(bool Direction);
+	void setDirection(bool direction);
 
 	/** 
 	 * Changes actual electronic values
@@ -52,10 +35,41 @@ public:
 	void runMotor();
 
 	/**
-	 * Get differential encoder steps since last reset. 
+	 * Get differential encoder steps since last reset, without reseting
+	 * actual value 
 	 * @return [long] encoder steps since last call.
 	 */
 	long getEncoderSteps();
+
+	void calculateKinematicVariables();
+
+	int getAngularSpeedSteps();
+
+	float getAngularSpeedRad();
+
+	
+private:	
+	//Signal for controlling the motor
+	int 	_pwm;
+	bool 	_direction;
+
+	//Physical properties
+	int 	_countsPerRevolution;
+	float 	_angularSpeed_steps;
+	float 	_angularSpeed_rad;
+	long 	_actualSteps;
+	float 	_currentAngularPosition;
+	unsigned long 	_currentTime;
+	unsigned long 	_lastTime;
+
+	//Variables for saving encoder position
+	volatile long _encoderSteps;
+
+	//Pins for physical connection
+	int _pinDirection;
+	int _pinPWM;
+	int _pinEncoderA;
+	int _pinEncoderB;
 
 	/**
 	 * Function for calculating quadatrure increments for encoder A.
@@ -68,36 +82,15 @@ public:
 	void doEncoderB();
 
 	/**
-	 * Function for calculating differential encoder.
+	 * Function for calculating differential encoder. this function reset
+	 * actual values.
 	 * @return [int] Increment in encoder since last call
 	 */
-	int stepsIncrement();
+	int stepsIncremented();
 
-	float calculateAngularPosition();
-	float calculateAngularSpeed();
-	float calculateAbsoluteAngularPosition();
-	
-private:  
-	/**
-	 * Variables for saving encoder position
-	 */
-	volatile long _encoderSteps;
-	long _lastEncoderPosition;
-	long _actualEncoderPosition;
-	int _lastSteps;
+	float calculateAngularSpeedSteps(int steps);
 
-	/**
-	 * Pins for physical connection
-	 */
-	int _pinDirection;
-	int _pinPWM;
-	int _pinEncoderA;
-	int _pinEncoderB;
-
-	float _angularSpeed;
-	float _currentAngularPosition;
-	int _currentTime;
-	int _lastTime;
+	float calculateAngularSpeedRad(float steps_s);
 };
 
-#endif // motor_h
+#endif // MOTOR_H_
