@@ -2,8 +2,11 @@ Indice tenatativo para el trabajo de tesis.
 % En el índice se debe incluir una lista de tablas
 % y una de figuras.
 
-TÍTULO: 
+Título: 
 NAVEGACIÓN Y EXPLORACIÓN AUTÓNOMA DE UN ENTORNO INDUSTRIAL
+
+Objetivo general:
+Desarrollar e implementar un algoritmo de navegación y exploración autónoma a través de una base omnidireccional tipo @Work el cual tenga la capacidad de interactuar dentro de ambientes controlados de trabajo.
 
 %%%%%%%%%%% ------- Parte protocolaria --------- %%%%%%%%%%%%%%%
 
