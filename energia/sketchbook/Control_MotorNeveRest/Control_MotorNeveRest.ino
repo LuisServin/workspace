@@ -3,7 +3,8 @@
  * classes
  */
 
-#include <motor.h>
+#include "motor.h"
+#include "velocityPID.h"
 
 #define BAUD_RATE 9600
 
@@ -12,15 +13,20 @@
 #define M1_ENC2  25
 #define M1_ENC1  26
 
+float TARGET_SPEED = 1.0;
+
 volatile long pos1 = 0;
 
 // Create the first motor object.
 // here the pinmode in made inside instance creation
-Motor Mot1(M1_DIR, M1_PWM, M1_ENC1, M1_ENC2);
+Motor         Mot1(M1_DIR, M1_PWM, M1_ENC1, M1_ENC2);
+
+// Create an object for pid control
+VelocityPID   Mot1_pid;
 
 // local variables
 long steps = 0;
-float as_steps;
+float as;
 
 /**************** SETUP *******************/
 
@@ -34,21 +40,33 @@ void setup()
   attachInterrupt(M1_ENC2, iM1E2, CHANGE);
 
   // set pwm and direction for motor
-  Mot1.setPwm(100);
+  Mot1.setPwm(0);
   Mot1.setDirection(HIGH);
   // write electronic values
   Mot1.runMotor();
+
+  // configutring pid control.
+  Mot1_pid.setControlGains(0.0, 1.90, 0.1, 0.0);
 }
 
 /**************** LOOP *******************/
 
 void loop()
 {
-  delay(50);
+  if(Serial.available()){
+    TARGET_SPEED = Serial.read() - 48;
+    //Serial.println(TARGET_SPEED);
+    while(Serial.available()){
+      Serial.read();
+    }
+  }
 
+  delay(10);
   Mot1.calculateKinematicVariables();
-  as_steps = Mot1.getAngularSpeedRad();
-  Serial.println(as_steps);
+  as = Mot1.getAngularSpeedRad();
+  Serial.println(as);
+  Mot1.setPwm(Mot1_pid.updatePID(Mot1.getPwm(), TARGET_SPEED, as));
+  Mot1.runMotor();
 }
 
 // assign interruption function for every encoder respectively

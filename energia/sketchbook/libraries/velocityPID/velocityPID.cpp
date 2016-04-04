@@ -6,8 +6,7 @@
 
 #include "Arduino.h"
 #include "velocityPID.h"
-
-velocityPID::velocityPID()
+VelocityPID::VelocityPID()
 {
 	_kFeedForward = 0.0f;
 	_kProportional = 0.0f;
@@ -19,7 +18,7 @@ velocityPID::velocityPID()
 	_maximumPWMOutput = 0;
 }
 
-velocityPID::setControlGains(float kFeedForward, float kProportional,
+void VelocityPID::setControlGains(float kFeedForward, float kProportional,
 	float kDifferential, float kIntegral)
 {
 	_kFeedForward = kFeedForward;
@@ -28,13 +27,30 @@ velocityPID::setControlGains(float kFeedForward, float kProportional,
 	_kIntegral = kIntegral;
 }
 
-velocityPID::setWindUpLimits(int superiorLimit, int inferiorLimit)
+void VelocityPID::setWindUpLimits(int superiorLimit, int inferiorLimit)
 {
 	_windUpSuperior = superiorLimit;
 	_windUpInferior = inferiorLimit;
 }
 
-velocityPID::setMaximumOutput(int maximumPWMValue)
+void VelocityPID::setMaximumOutput(int maximumPWMValue)
 {
 	_maximumPWMOutput = maximumPWMValue;
+}
+
+int VelocityPID::updatePID(float actOutput, float targetValue, 
+	float actualValue)
+{
+	float pid = 0;
+	float error = 0;
+	static float last_error = 0;
+
+	error = abs(targetValue) - abs(actualValue);
+	pid = (_kProportional * error) + 
+		(_kDifferential * (error - last_error));
+	//store last error
+	last_error = error;
+
+	//return actOutput + pid;
+	return constrain(actOutput + int(pid), 0, 255);
 }

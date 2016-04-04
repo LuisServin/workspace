@@ -41,6 +41,11 @@ void Motor::setPwm(int pwm)
 	_pwm = pwm;
 }
 
+int Motor::getPwm()
+{
+	return _pwm;
+}
+
 void Motor::setDirection(bool direction)
 {
 	_direction = direction;

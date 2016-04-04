@@ -23,6 +23,9 @@ public:
 	 */
 	void setPwm(int pwm);
 
+	
+	int getPwm();
+
 	/**
 	 * Set roation direction
 	 * @param Direction 1 for forward
@@ -47,6 +50,16 @@ public:
 
 	float getAngularSpeedRad();
 
+	/**
+	 * Function for calculating quadatrure increments for encoder A.
+	 */
+	void doEncoderA();
+
+	/**
+	 * Function for calculating quadatrure increments for encoder B.
+	 */
+	void doEncoderB();
+
 	
 private:	
 	//Signal for controlling the motor
@@ -70,16 +83,6 @@ private:
 	int _pinPWM;
 	int _pinEncoderA;
 	int _pinEncoderB;
-
-	/**
-	 * Function for calculating quadatrure increments for encoder A.
-	 */
-	void doEncoderA();
-
-	/**
-	 * Function for calculating quadatrure increments for encoder B.
-	 */
-	void doEncoderB();
 
 	/**
 	 * Function for calculating differential encoder. this function reset

@@ -4,6 +4,54 @@
 		"selected_items":
 		[
 			[
+				"las",
+				"last_error"
+			],
+			[
+				"_k",
+				"_kDifferential"
+			],
+			[
+				"a",
+				"actualValue"
+			],
+			[
+				"ste",
+				"stepsIncremented"
+			],
+			[
+				"calc",
+				"calculate"
+			],
+			[
+				"_an",
+				"_angularSpeed_rad"
+			],
+			[
+				"get",
+				"getAngularSpeedSteps"
+			],
+			[
+				"and",
+				"angularSpeed_rad"
+			],
+			[
+				"an",
+				"angularSpeed_rad"
+			],
+			[
+				"_angu",
+				"_angularSpeed_rad"
+			],
+			[
+				"st",
+				"steps"
+			],
+			[
+				"cala",
+				"calculateAngularSpeedRad"
+			],
+			[
 				"sta",
 				"state_str"
 			],
@@ -196,74 +244,42 @@
 	"buffers":
 	[
 		{
-			"file": "/home/ubuntu/workspace/catkin/src/atwork_launch/scripts/foo.py",
+			"file": "/home/ubuntu/workspace/energia/sketchbook/Control_MotorNeveRest/Control_MotorNeveRest.ino",
 			"settings":
 			{
-				"buffer_size": 1492,
+				"buffer_size": 1597,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/ubuntu/workspace/catkin/src/atwork_launch/launch/stage_gmapping.launch",
+			"file": "/home/ubuntu/workspace/energia/sketchbook/libraries/velocityPID/velocityPID.h",
 			"settings":
 			{
-				"buffer_size": 3161,
+				"buffer_size": 840,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/ubuntu/workspace/catkin/src/atwork_launch/launch/move_base.launch",
+			"file": "/home/ubuntu/workspace/energia/sketchbook/libraries/motor/motor.h",
 			"settings":
 			{
-				"buffer_size": 1487,
+				"buffer_size": 1897,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/ubuntu/workspace/catkin/src/atwork_launch/launch/exploration.launch",
+			"file": "/home/ubuntu/workspace/energia/sketchbook/libraries/velocityPID/velocityPID.cpp",
 			"settings":
 			{
-				"buffer_size": 269,
+				"buffer_size": 1238,
 				"line_ending": "Unix"
 			}
 		},
 		{
-			"file": "/home/ubuntu/workspace/catkin/src/atwork_launch/urdf/atwork_model.urdf.xacro",
+			"file": "/home/ubuntu/workspace/energia/sketchbook/libraries/motor/motor.cpp",
 			"settings":
 			{
-				"buffer_size": 3111,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ubuntu/workspace/catkin/src/atwork_launch/scripts/move_base_controller.py",
-			"settings":
-			{
-				"buffer_size": 1113,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ubuntu/workspace/energia/sketchbook/InterfaceFourOmniWheels/InterfaceFourOmniWheels.ino",
-			"settings":
-			{
-				"buffer_size": 6858,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ubuntu/workspace/energia/sketchbook/Interface_PID_Motor/Interface_PID_Motor.ino",
-			"settings":
-			{
-				"buffer_size": 7675,
-				"line_ending": "Unix"
-			}
-		},
-		{
-			"file": "/home/ubuntu/workspace/energia/sketchbook/Interfaz_Motores/Interfaz_Motores.ino",
-			"settings":
-			{
-				"buffer_size": 4831,
+				"buffer_size": 2665,
 				"line_ending": "Unix"
 			}
 		}
@@ -304,18 +320,30 @@
 	},
 	"expanded_folders":
 	[
-		"/home/ubuntu/workspace/catkin/src/tutorials",
-		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description",
-		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/launch",
-		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/media",
+		"/home/ubuntu/workspace/catkin/src",
+		"/home/ubuntu/workspace/catkin/src/atwork_launch",
+		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch",
 		"/home/ubuntu/workspace",
-		"/home/ubuntu/workspace/catkin/build/tutorials",
-		"/home/ubuntu/workspace/catkin/build/tutorials/testbot_description",
 		"/home/ubuntu/workspace/energia",
-		"/home/ubuntu/workspace/energia/sketchbook"
+		"/home/ubuntu/workspace/energia/sketchbook",
+		"/home/ubuntu/workspace/energia/sketchbook/libraries",
+		"/home/ubuntu/workspace/energia/sketchbook/libraries/velocityPID"
 	],
 	"file_history":
 	[
+		"/home/ubuntu/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
+		"/home/ubuntu/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
+		"/home/ubuntu/workspace/energia/sketchbook/libraries/velocityPID/velocityPID.cpp",
+		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch/stage_gmapping.launch",
+		"/home/ubuntu/workspace/energia/sketchbook/Interface_PID_Motor/Interface_PID_Motor.ino",
+		"/home/ubuntu/workspace/energia/sketchbook/Interfaz_Motores/Interfaz_Motores.ino",
+		"/home/ubuntu/workspace/catkin/src/atwork_launch/scripts/foo.py",
+		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch/move_base.launch",
+		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch/exploration.launch",
+		"/home/ubuntu/workspace/catkin/src/atwork_launch/urdf/atwork_model.urdf.xacro",
+		"/home/ubuntu/workspace/catkin/src/atwork_launch/scripts/move_base_controller.py",
+		"/home/ubuntu/workspace/energia/sketchbook/InterfaceFourOmniWheels/InterfaceFourOmniWheels.ino",
+		"/home/ubuntu/workspace/.gitignore",
 		"/home/ubuntu/workspace/energia/sketchbook/EjemploInterrupcion/EjemploInterrupcion.ino",
 		"/home/ubuntu/workspace/catkin/src/atwork_launch/scripts/inverse_kinematics_display.py",
 		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/launch/display.launch",
@@ -326,9 +354,6 @@
 		"/home/ubuntu/workspace/catkin/src/tutorials/learning_tf/start_demo.launch",
 		"/home/ubuntu/workspace/catkin/src/tutorials/learning_tf/src/turtle_tf_broadcaster.cpp",
 		"/home/ubuntu/workspace/catkin/src/tutorials/testbot_description/urdf/robot_model.urdf.xacro",
-		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch/stage_gmapping.launch",
-		"/home/ubuntu/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
-		"/home/ubuntu/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
 		"/home/ubuntu/workspace/energia/sketchbook/RGB/RGB.ino",
 		"/opt/arduino-1.6.7/hardware/arduino/avr/cores/arduino/HardwareSerial.h",
 		"/tmp/Stino_build/RGB/RGB.ino.cpp.o:/home/ubuntu/workspace/energia/sketchbook/RGB/RGB.ino",
@@ -354,9 +379,7 @@
 		"/home/ubuntu/workspace/catkin/src/tutorials/my_robot.urdf",
 		"/home/ubuntu/workspace/catkin/src/robot_model/kdl_parser/CMakeLists.txt",
 		"/home/ubuntu/workspace/catkin/src/simple_layers/src/simple_layer.cpp",
-		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch/move_base.launch",
 		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch/startup_system.launch",
-		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch/exploration.launch",
 		"/home/ubuntu/workspace/sublimeProjects/atwork.sublime-project"
 	],
 	"find":
@@ -375,6 +398,7 @@
 		"case_sensitive": false,
 		"find_history":
 		[
+			"}*/",
 			"joint_state_publisher",
 			"comment",
 			"base_robot",
@@ -401,196 +425,24 @@
 	"groups":
 	[
 		{
-			"selected": 8,
+			"selected": 0,
 			"sheets":
 			[
 				{
 					"buffer": 0,
-					"file": "/home/ubuntu/workspace/catkin/src/atwork_launch/scripts/foo.py",
+					"file": "/home/ubuntu/workspace/energia/sketchbook/Control_MotorNeveRest/Control_MotorNeveRest.ino",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 1492,
+						"buffer_size": 1597,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 8,
-					"type": "text"
-				},
-				{
-					"buffer": 1,
-					"file": "/home/ubuntu/workspace/catkin/src/atwork_launch/launch/stage_gmapping.launch",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3161,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								1098,
-								1098
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/XML/XML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 408.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 7,
-					"type": "text"
-				},
-				{
-					"buffer": 2,
-					"file": "/home/ubuntu/workspace/catkin/src/atwork_launch/launch/move_base.launch",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1487,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/XML/XML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 5,
-					"type": "text"
-				},
-				{
-					"buffer": 3,
-					"file": "/home/ubuntu/workspace/catkin/src/atwork_launch/launch/exploration.launch",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 269,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/XML/XML.tmLanguage"
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 6,
-					"type": "text"
-				},
-				{
-					"buffer": 4,
-					"file": "/home/ubuntu/workspace/catkin/src/atwork_launch/urdf/atwork_model.urdf.xacro",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 3111,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/XML/XML.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 1326.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 4,
-					"type": "text"
-				},
-				{
-					"buffer": 5,
-					"file": "/home/ubuntu/workspace/catkin/src/atwork_launch/scripts/move_base_controller.py",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 1113,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								780,
-								780
-							]
-						],
-						"settings":
-						{
-							"syntax": "Packages/Python/Python.tmLanguage",
-							"translate_tabs_to_spaces": false
-						},
-						"translation.x": 0.0,
-						"translation.y": 0.0,
-						"zoom_level": 1.0
-					},
-					"stack_index": 3,
-					"type": "text"
-				},
-				{
-					"buffer": 6,
-					"file": "/home/ubuntu/workspace/energia/sketchbook/InterfaceFourOmniWheels/InterfaceFourOmniWheels.ino",
-					"semi_transient": false,
-					"settings":
-					{
-						"buffer_size": 6858,
-						"regions":
-						{
-						},
-						"selection":
-						[
-							[
-								0,
-								0
+								1008,
+								1008
 							]
 						],
 						"settings":
@@ -598,6 +450,35 @@
 							"syntax": "Packages/User/Stino/Arduino.tmLanguage",
 							"tab_size": 2,
 							"translate_tabs_to_spaces": true
+						},
+						"translation.x": 0.0,
+						"translation.y": 510.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 0,
+					"type": "text"
+				},
+				{
+					"buffer": 1,
+					"file": "/home/ubuntu/workspace/energia/sketchbook/libraries/velocityPID/velocityPID.h",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 840,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								524,
+								524
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
 						"translation.y": 0.0,
@@ -607,63 +488,96 @@
 					"type": "text"
 				},
 				{
-					"buffer": 7,
-					"file": "/home/ubuntu/workspace/energia/sketchbook/Interface_PID_Motor/Interface_PID_Motor.ino",
+					"buffer": 2,
+					"file": "/home/ubuntu/workspace/energia/sketchbook/libraries/motor/motor.h",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 7675,
+						"buffer_size": 1897,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								464,
+								464
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/User/Stino/Arduino.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
-						"translation.x": -0.0,
-						"translation.y": 0.0,
+						"translation.x": 0.0,
+						"translation.y": 102.0,
+						"zoom_level": 1.0
+					},
+					"stack_index": 4,
+					"type": "text"
+				}
+			]
+		},
+		{
+			"selected": 0,
+			"sheets":
+			[
+				{
+					"buffer": 3,
+					"file": "/home/ubuntu/workspace/energia/sketchbook/libraries/velocityPID/velocityPID.cpp",
+					"semi_transient": false,
+					"settings":
+					{
+						"buffer_size": 1238,
+						"regions":
+						{
+						},
+						"selection":
+						[
+							[
+								1189,
+								1189
+							]
+						],
+						"settings":
+						{
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
+						},
+						"translation.x": 0.0,
+						"translation.y": 357.0,
 						"zoom_level": 1.0
 					},
 					"stack_index": 1,
 					"type": "text"
 				},
 				{
-					"buffer": 8,
-					"file": "/home/ubuntu/workspace/energia/sketchbook/Interfaz_Motores/Interfaz_Motores.ino",
+					"buffer": 4,
+					"file": "/home/ubuntu/workspace/energia/sketchbook/libraries/motor/motor.cpp",
 					"semi_transient": false,
 					"settings":
 					{
-						"buffer_size": 4831,
+						"buffer_size": 2665,
 						"regions":
 						{
 						},
 						"selection":
 						[
 							[
-								0,
-								0
+								813,
+								813
 							]
 						],
 						"settings":
 						{
-							"syntax": "Packages/User/Stino/Arduino.tmLanguage",
-							"tab_size": 2,
-							"translate_tabs_to_spaces": true
+							"syntax": "Packages/C++/C++.tmLanguage",
+							"translate_tabs_to_spaces": false
 						},
 						"translation.x": 0.0,
-						"translation.y": 0.0,
+						"translation.y": 255.0,
 						"zoom_level": 1.0
 					},
-					"stack_index": 0,
+					"stack_index": 3,
 					"type": "text"
 				}
 			]
@@ -686,11 +600,18 @@
 				0,
 				1,
 				1
+			],
+			[
+				1,
+				0,
+				2,
+				1
 			]
 		],
 		"cols":
 		[
 			0.0,
+			0.5,
 			1.0
 		],
 		"rows":
@@ -1177,7 +1098,7 @@
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": true,
+	"side_bar_visible": false,
 	"side_bar_width": 227.0,
 	"status_bar_visible": true,
 	"template_settings":

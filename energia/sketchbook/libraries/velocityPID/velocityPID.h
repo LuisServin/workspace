@@ -2,21 +2,23 @@
  * pid.h - library for representing a pid control
  * Created by Luis A. Servin
  * Released into public domain
+ * based on: http://forum.arduino.cc/index.php?topic=8652.0
  */
 
-#ifndef velocityPID_h
-#define velocityPID_h
+#ifndef VELOCITY_PID_H_
+#define VELOCITY_PID_H_
 
 #include "Arduino.h"
 
-class velocityPID
+class VelocityPID
 {
 public:
-	velocityPID();
-	void setControlGains(float kFeedForward, float kProportional, float kDifferential, float kIntegral);
+	VelocityPID();
+	void setControlGains(float kFeedForward, float kProportional,
+		float kDifferential, float kIntegral);
 	void setWindUpLimits(int superiorLimit, int inferiorLimit);
 	void setMaximumOutput(int maximumPWMValue);
-	~pid();
+	int updatePID(float actOutput, float targetValue, float actualValue);
 
 private:
 	float _kFeedForward; // Gain for feedforward the variable
@@ -29,4 +31,4 @@ private:
 	int _maximumPWMOutput;
 };
 
-#endif // pid_h
+#endif // VELOCITY_PID_H_
