@@ -15,7 +15,7 @@ class VelocityPID
 public:
 	VelocityPID();
 	void setControlGains(float kFeedForward, float kProportional,
-		float kDifferential, float kIntegral);
+		float kIntegral, float kDifferential);
 	void setWindUpLimits(int superiorLimit, int inferiorLimit);
 	void setMaximumOutput(int maximumPWMValue);
 	int updatePID(float actOutput, float targetValue, float actualValue);
