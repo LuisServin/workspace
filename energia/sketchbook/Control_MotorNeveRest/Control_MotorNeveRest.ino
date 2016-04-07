@@ -1,5 +1,7 @@
 /**
- * Program for controlling a NeveRest motor using
+ * Created by Luis A. Servin
+ * Released into public domain
+ * Program for controlling a NeveRest 40 motor using
  * classes
  */
 
@@ -7,8 +9,10 @@
 #include "velocityPID.h"
 #include <Thread.h>
 
+// Baud rate for serial communication
 #define BAUD_RATE 9600
 
+// define for motors physical connections
 #define M1_PWM   23
 #define M1_DIR   24
 #define M1_ENC1  26
@@ -118,12 +122,12 @@ void setup()
   MotorFrontRight.runMotor();
 
   // configutring pid control.
-  MotorFrontLeft_pid.setControlGains(
-    MOTOR_FRONT_LEFT_KF, MOTOR_FRONT_LEFT_KP, 
-    MOTOR_FRONT_LEFT_KI, MOTOR_FRONT_LEFT_KD);
-  MotorFrontRight_pid.setControlGains(
-    MOTOR_FRONT_RIGHT_KF, MOTOR_FRONT_RIGHT_KP, 
-    MOTOR_FRONT_RIGHT_KI, MOTOR_FRONT_RIGHT_KD);
+  MotorFrontLeft_pid.setControlGains(MOTOR_FRONT_LEFT_KP, 
+    MOTOR_FRONT_LEFT_KI, MOTOR_FRONT_LEFT_KD
+  );
+  MotorFrontRight_pid.setControlGains(MOTOR_FRONT_RIGHT_KP, 
+    MOTOR_FRONT_RIGHT_KI, MOTOR_FRONT_RIGHT_KD
+  );
 
   // configuring serialcb thread
   serialThread.onRun(serialCb);

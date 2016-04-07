@@ -23,7 +23,10 @@ public:
 	 */
 	void setPwm(int pwm);
 
-	
+	/**
+	 * Get pwm applied to moroe
+	 * @return [int] actual pwm
+	 */
 	int getPwm();
 
 	/**
@@ -33,7 +36,7 @@ public:
 	void setDirection(bool direction);
 
 	/** 
-	 * Changes actual electronic values
+	 * Apply buffered values
 	 */
 	void runMotor();
 
@@ -44,10 +47,22 @@ public:
 	 */
 	long getEncoderSteps();
 
+	/**
+	 * calculate actual kinematics like speed needed  for a control loop
+	 * values are reset everytime this function is called
+	 */
 	void calculateKinematicVariables();
 
+	/**
+	 * Return speed in [steps/s]
+	 * @return [int] angular speed
+	 */
 	int getAngularSpeedSteps();
 
+	/**
+	 * Return speed in [rad/s]
+	 * @return [description]
+	 */
 	float getAngularSpeedRad();
 
 	/**
