@@ -1,0 +1,88 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+% this is to make it look like a word document.
+\usepackage[tmargin=1in,bmargin=1in,lmargin=1.25in,rmargin=1.25in]{geometry}
+
+\title{\vspace{-2ex}Enfoque basado en fronteras para exploración autónoma\vspace{-2ex}}
+\date{\today}
+\author{Luis Servín\\ Taller TRA, Universidad Nacional Autónoma de México}
+
+\begin{document}
+
+\maketitle
+
+\section*{Resumen}
+
+Se presenta un nuevo enfoque basado en el concepto de fronteras, las cuales se pueden definir como el límite entre una región conocida abierta y un espacio aún sin explorar. Al moverse a las distintas fronteras dentro de su mapa un robot puede expandir su conocimiento del ambiente que lo rodea. 
+
+El método presentado se basa en los mapas de cuadrícula (evidence grid) y la navegación hacia estas fronteras. Una de las principales ventajas de este método es su capacidad de explorar tanto amplios sitios abiertos como espacios estrechos desordenados.
+
+\section{Introducción}
+
+Usualmente un mapa para uso humano debe proveer ya sea la localización exacta de los obstáculos (mapas métricos) o de una manera gráfica las formas de conexión entre reqiones abiertas (mapas topológicos). 
+
+Se define el término \textbf{exploración} como la acción de moverse a través de un ambiente desconocido mientras se construye un mapa que puede ser utilizado como base de un sistema de navegación. Por lo tanto una buena estrategia de exploración generará un mapa completo o casi completo de una zona en una cantidad de tiempo razonable.
+
+Aunque durante las simulaciones frecuentemente se ve al mundo como un conjunto de planos. Un robot móvil real tendrá que navegar a través de espacios desordenados, donde las paredes pueden estar escondidas detrás de escritorios o libreros.
+
+Solo unas pocas investigaciones de sistemas de navegación usados en ámbitos reales han sido hechos. Algunos ejemplos son sistemas de exploración limitados a ambientes que pueden ser explorados usando seguimiento de paredes, mientras que otros requieren que las paredes se intersecten en ángulos rectos o que dichas paredes no se encuentren obstruidas y sean visibles para el robot.
+
+Por lo tanto nuestro objetivo es desarrollar una estrategia de exploración para ambientes complejos como los que se encuentran típicamente en ambientes de oficina. Esta estrategia se basa en la detección de fronteras, regiones sobre el límite entre espacios abiertos conocidos y regiones sin explorar.
+
+\section{Exploración Basada en Fronteras}
+
+La pregunta central dentro de la exploración es: Dado lo que conoces acerca del mundo \textbf{¿Hacia que dirección deberías moverte para obtener la mayor cantidad de información posible?} Dado que en un inicio no se tiene conocimiento previo del ambiente mas allá de la información que se puede obtener del punto en el que te encuentras.
+
+La idea central detrás de la exploración basada en fronteras es: Obtener la mayor cantidad de información nueva acerca del mundo como consecuencia de desplazarse hacia una de las fronteras conocidas.
+
+\textbf{Frontera}: Región en el límite entre un territorio conocido abierto y un espacio aún sin explorar. Por lo tanto al moverse hacia una frontera un robot obtiene nueva información acerca del ambiente. Realizando esta acción de manera repetitiva le permite incrementar su conocimiento del ambiente que lo rodea.
+
+Un robot que cuenta con un mapa perfecto podría navegar a cualquier punto en dentro del espacio, y por lo tanto ese punto se considera accesible. Todos lo puntos accesibles son continuos ya que debe existir una ruta entre ellos debe existir. 
+
+De esta manera, un robot que hace uso de la exploración basada en fronteras habrá de explorar todas las regiones accesibles dentro de su mundo, asumiendo el uso de sensores y sistemas de odometría perfectos.
+
+Pero la pregunta real sería ¿Cuál sería el desempeño de la estrategia de navegación basada en fronteras al trabajar con sensores que son afectados por ruido y un control imperfecto de los motores en un mundo real?
+
+\section{Detección de fronteras}
+
+Cada celda dentro de nuestro mapa de cuadrículas puede ser clasificada al comparar la probabilidad de que se encuentre ocupada con la probabilidad inicia asignada (Generalmente se aplica una probabilidad inicial de 0.5). Por lo tanto cada celda se puede encontrar en alguna de estas tres categorías:
+
+\begin{itemize}
+	\item \textbf{abierta}: Probabilidad de ocupación $<$ Probabilidad inicial
+	\item \textbf{desconocida}: Probabilidad de ocupación $=$ Probabilidad inicial
+	\item \textbf{ocupada}: Probabilidad de ocupación $>$ Probabilidad inicial
+\end{itemize}
+
+Cualquier celda abierta conocida adyacente a una celda desconocida es etiquetada como una \emph{celda de borde de frontera}. Celdas de borde de frontera son agrupadas en \emph{regiones de frontera}. Mientras que las regiones de frontera que cumplan con un tamaño mínimo (Cercano al tamaño del robot) son consideradas \textbf{fronteras}.
+
+%\bibliographystyle{ieeetr}
+%\bibliography{bibliography}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
