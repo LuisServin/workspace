@@ -5,7 +5,10 @@
 \usepackage{amssymb}
 
 % this is to make it look like a word document.
-\usepackage[tmargin=1in,bmargin=1in,lmargin=1.25in,rmargin=1.25in]{geometry}
+\usepackage[tmargin=0.98in,bmargin=0.98in,lmargin=1.18in,rmargin=1.18in]{geometry}
+
+% package necessary to add pictures to latex
+\usepackage{graphicx}
 
 \title{\vspace{-2ex}Enfoque basado en fronteras para exploración autónoma\vspace{-2ex}}
 \date{\today}
@@ -57,8 +60,68 @@ Cada celda dentro de nuestro mapa de cuadrículas puede ser clasificada al compa
 	\item \textbf{ocupada}: Probabilidad de ocupación $>$ Probabilidad inicial
 \end{itemize}
 
+\begin{figure}[!h]
+	\includegraphics[scale=1]{images/frontier_detection.PNG}
+	\caption{Detección de la frontera}
+	\label{fig:frontier1}
+\end{figure}
+
 Cualquier celda abierta conocida adyacente a una celda desconocida es etiquetada como una \emph{celda de borde de frontera}. Celdas de borde de frontera son agrupadas en \emph{regiones de frontera}. Mientras que las regiones de frontera que cumplan con un tamaño mínimo (Cercano al tamaño del robot) son consideradas \textbf{fronteras}.
 
+\section{Navegando hacia las fronteras}
+
+Una vez que las fronteras han sido detectadas, el robot intentará navegar hacia la frontera más cercana y accesible que no haya sido visitada aún. Para lograr este objetivo se hace uso de un algoritmo de planeación de ruta, para llegar a la ubicación seleccionada a través de un camino libre de obstáculos.
+
+Durante el recorrido, se hace uso de un comportamiento reactivo de evasión de obstáculos, el cual evite que el robot colisione con algún obstáculo que no fue previsto durante la planeación de ruta. Este comportamiento le permite al robot evadir un obstáculo imprevisto, y regresar a la ruta planeada inicialmente siempre y cuando no hayan ocurrido cambios muy drásticos en su entorno.
+
+Una vez que el robot ha alcanzado el punto objetivo dentro de mapa se marca la zona como conocida dentro del mapa. Enseguida se realiza un giro de 360 grados ya sea solamente del sensor o del sistema completo con el objetivo de añadir mas información acerca del entorno. Con la información obtenida se actualiza el mapa del entorno. Una vez actualizado el mapa se repite el proceso con una nueva frontera como objetivo.
+
+Si se presenta el caso de que el robot no pueda llegar a su destino después de una cierta cantidad de tiempo, se establece dicho objetivo como inaccesible y se procede con a alguna otra frontera que aún quede disponible.
+
+\section{Experimentos}
+
+El experimento se llevo a cabo utilizando una plataforma \emph{Nomad 200} equipada con un sensor laser, dieciseis sonares, y dieciseis sensores infrarrojos. La totalidad de los sensores infrarrojos y sonares fueron utilizados para la evasión de obstáculos. Se cuenta con un sistema de procesamiento \emph{Sparcstation}. Mientras que la comunicación es realizada por medio de un sistema de radio-ethernet.
+
+Se llevaron a cabo dos experimentos en ambientes reales de oficina. El primer ambiente incluía sillas, escritorios, mesas, libreros, gabinetes, muebles, un enfriados de agua y cajas de distintos tamaños y formas.
+
+En la figura \ref{fig:small_office_map} se muestran los resultados después de un intento.
+
+\begin{figure}[ht]
+	\centering
+	\begin{minipage}[b]{0.45\linewidth}
+		\includegraphics{images/small_office.JPG}
+		\caption{Espacio de oficina pequeño}
+		\label{fig:small_office_map}
+	\end{minipage}
+	\quad
+	\begin{minipage}[b]{0.45\linewidth}
+		\includegraphics{images/large_office.JPG}
+		\caption{Espacio de oficina grande}
+		\label{fig:large_office_map}
+	\end{minipage}
+\end{figure}
+
+Aquellas celdas con baja probabilidad se encontrarse ocupadas son representadas con un espacio en blanco, las que no se conoce su probabilidad con puntos pequeños, mientras que las celdas con altas probabilidades de estar ocupadas con puntos mas grandes. La posición del robot se representa a través de un círculo negro con un línea central que muestra la orientación del robot.
+
+El tiempo total requerido para completar este mapa fue de alrededor de media hora. Una versión mejorada de este algoritmo demostró poder realizar la tarea en alrededor de 15 minutos.
+
+El segundo experimento se realizó en un espacio de oficina mucho mas amplio. en la figura \ref{fig:large_office_map} se muestra el mapa obtenido.
+
+Aunque el área total fue mayor, el robot fue capaz de completar el espacio en alrededor de media hora. Esto puede deberse a la gran cantidad de espacios libres que se encuentran.
+
+\section{Conclusiones y Trabajo a Futuro}
+
+Un robot que hace uso de la exploración basada en fronteras presenta las siguientes ventajas:
+
+\begin{itemize}
+	\item Puede explorar una amplía variedad de ambientes, ya sea que tengan amplios espacios abiertos o zonas congestionadas y reducidas.
+	\item Las paredes y los obstáculos dentro del espacio a explorar no tienen que cumplir con alguna orientación específica.
+	\item La eficiencia aumenta al hacer que el robot se mueva hacia los lugares a los cuales tiene mayor probabilidad de obtener nueva información.
+\end{itemize}.
+
+Actualmente se desarrollo un experimento en el cualquier se combina las capacidades del sistema de exploración basado en fronteras con técnicas de localización, logrando obtener obtener resultados muy esperanzadores.
+
+% commands for using bibliography and citations 
 %\bibliographystyle{ieeetr}
 %\bibliography{bibliography}
 
