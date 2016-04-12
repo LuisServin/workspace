@@ -189,6 +189,17 @@ El proceso de alineamiento de puntos puede llegar a fallar debido a observacione
 
 \subsection{Remuestreo adaptativo}
 
+Por un lado el proceso de remuestreo es necesario ya que solamente un número finito de partículas es usado. Mientras que por el otro, al momento de realizar el remuestreo pueden quedar eliminadas buenas partículas del conjunto utilizado, causando la pérdida de información valiosa, efecto conocido como \emph{particle depletion}.
+
+\emph{Liu} introdujo una medida para calcular que tan bien representa el conjunto de partículas actuales la probabilidad posterior. Este número es conocido como \emph{effective number of particles} $ N_{eff} $. Se calcula de la siguiente manera
+
+\begin{equation}
+	N_{eff}	= \frac{1}
+		{\sum^{N}_{i=1} (w^{(i)})^{2}}
+\end{equation}
+
+Se puede deducir que dado que mientras peor sea la aproximación obtenida mayor será la varianza de la importancia de las partículas. Por lo tanto se puede proponer un límite en el valor de $N_{eff}$ en el cual se desarrolle el proceso de remuestreo. Para este trabajo se utilizó $ N/2 $ donde $ N $ es el número de partículas utilizadas.
+
 \end{document}
 
 
