@@ -6,3 +6,6 @@ Resume*/*.bbl
 Resume*/*.blg
 Resume*/*.tex.bak
 Resume*/*.bib.bak
+Resume*/*.bcf
+Resume*/*.run.xml
+Resume*/*.out
