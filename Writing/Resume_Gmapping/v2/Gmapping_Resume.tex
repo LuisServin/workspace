@@ -7,6 +7,12 @@
 
 \usepackage[mathscr]{euscript}
 
+% this is to make it look like a word document.
+\usepackage[tmargin=0.98in,bmargin=0.98in,lmargin=1.18in,rmargin=1.18in]{geometry}
+
+% package needed to draw a frame for a text
+\usepackage[linewidth=1pt]{mdframed}
+
 \title{Técnicas de optimización para mapeo basado en rejillas utilizando un filtro de partículas de tipo Rao-Blackwell \\ \large{G-mapping}}
 \date{\today}
 \author{Luis Servín\\ Taller TRA, Universidad Nacional Autónoma de México}
@@ -15,56 +21,74 @@
 
 \maketitle
 
-\section{Resumen}
+\section*{Resumen}
 
-Los filtros de partículas tipo Rao-Blackwell han sido usados recientemente como una manera de resolver el problema de "Localización y Mapeo Simultáneos", SLAM por sus siglas en ingles. Esta estrategia hace uso de un filtro de partículas en el cual cada partícula contiene su propio mapa del ambiente. En este artículo se propone una solución para calcular una propuesta de distribución mas precisa que las comunes tomando en cuenta no solo el movimiento del robot si no que también las observación mas reciente. Los resultados experimentales fueron llevados a cabo con robot móviles reales en grandes espacios cerrados así como ambientes abiertos para poder demostrar las ventajas de la solución planteada sobre otras estrategias.
+El problema del "Localización y Mapeo Simultáneo", \textbf{SLAM} por sus siglas en inglés, ha sido ámpliamente estudiado en el campo de la robótica móvil, una de las estrategias utilizadas para abordarlo es el \emph{filtro de partículas tipo Rao-Blackwell}. Esta hace uso de un filtro de partículas en el cual cada partícula contiene su propio mapa del ambiente, además propone una distribución de probabilidad mejorada en comparación a las utilizadas comúnmente, tomando en cuenta tanto el movimiento del robot como la observación mas reciente. Los resultados experimentales realizados en ambientes reales, grandes, cerrados y/o abiertos buscan demostrar las ventajas de esta propuesta contra otras opciones.
+
+
+
+%-------------------------------------------
+% SECTION I: INTRODUCCIÓN
+%-------------------------------------------
+
+
 
 \section{Introducción}
 
-Construir mapas es una de las tareas fundamentales que debe poder realizar un robot móvil. En la literatura, el problema de mapeo a través de un robot móvil es usualmente conocido como el problema de "Localización y Mapeo Simultáneos", SLAM por sus siglas en ingles (Simultaneous Localization and Mapping).
+Tener la habilidad de construir una representación del ambiente es una de las tareas fundamentales en un robot móvil real. En la literatura, el problema de mapeo, a través de una plataforma móvil, es usualmente conocido como "Localización y Mapeo Simultáneos", o \textbf{SLAM} por sus siglas en ingles (Simultaneous Localization and Mapping).
 
-El principal problema que tiene la estrategia del filtro Rao-Blackwell es su complejidad medida en términos del número de partículas requeridas para construir un mapa preciso. Mientras que durante el paso de remuestreo (resampling) puede suceder que sean eliminadas partículas útiles o con información valiosa, a este problema se le conoce como "particle depletion".
+Dentro de los principales problemas que presentan las estrategias tipo Rao-Blackwell es su complejidad medida en el número de partículas requeridas para construir un mapa suficientemente preciso. Además puede presentarse el efecto \emph{particle depleton}, durante el paso de remuestreo (resampling), en el cual partículas útiles o con información valiosa son eliminadas de manera aleatoria.
 
-En el presente trabajo se presentan dos estrategias que buscan mejorar el rendimiento del filtro Rao-Blackwell:
+Por lo anterior las dos estrategias implementadas en el enfoque propuesto son:
+
+\begin{enumerate}
+
+	\item Proponer una distribución de probabilidad que considere las precisión obtenida por los sensores del robot, y con ella obtener un mejor conjunto de partículas.
+
+	\item Técnica de remuestreo (resampling) adaptable, que reduzca la cantidad de partículas necesarias, y con ello evitar que se presente el fenómeno de \emph{particle depletion}.
+
+\end{enumerate}
+
+Dicha distribución es obtenida a partir de combinar la información obtenida por medio de la odometría, con la posición de una partícula resultante de un proceso de emparejamiento de puntos (\emph{scan matching}). Con lo cual se logran dos efectos importantes:
 
 \begin{itemize}
 
-\item Una propuesta de distribución que considere las precisión obtenida por los sensores del robot y por lo tanto nos permita obtener partículas de manera mas precisa.
-\item Una técnica de remuestreo (resampling) adaptable, que logre que el algoritmo requiera de una cantidad pequeña de partículas, mientras que reduzca la probabilidad de que ocurra el fenómeno de "particle depletion".
+\item El mapa es mas preciso, gracias a que se incorpora la observación mas reciente obtenida por el láser al mapa de manera individual, después de considerar su efecto en la posición del robot.
+
+\item El paso de remuestreo se realiza solamente cuando es necesario graicas a la estrategia de remuestreo adaptable aplicada.
 
 \end{itemize}
 
-La distribución propuesta es calculada al evaluar la probabilidad alrededor de la posición mas probable que se encuentre una partícula a partir de un proceso de emparejamiento de escaneos (scan-matching) combinado con la información obtenida por la odometría. Con lo cual se logran dos efectos:
 
-\begin{itemize}
 
-\item El mapa es mas preciso ya que la observación actual obtenida por el láser es incorporada a los mapas de manera individual después de considerar su efecto en la posición del robot.
-\item La estrategia de remuestreo adaptable nos permite realizar el paso de remuestreo solamente cuando es necesario.
+%-------------------------------------------
+% SECTION I: DESARROLLO DE LA ESTRATEGIA
+%-------------------------------------------
 
-\end{itemize}
+
 
 \section{Mapeo a través de un filtro de partículas Rao-Blackwell}
 
-La idea central de aplicar un filtro de partículas de tipo Rao-Blackwell al problema de SLAM es estimar la probabilidad conjunta posterior $ p(x_{1:t},m | z_{1:t},u_{1:t-1}) $ sobre el mapa $ m $ y la trayectoria del robot $ x_{1:t} = x_{1},...,x_{t} $. Dadas las observaciones $ z_{1:t} = z_{1},...,z_{t} $ y los datos de odometría $ u_{1:t-1} = u_{1},...,u_{t-1} $. Por lo tanto obtenemos que el filtro de partículas Rao-Blackwell para el problema de SLAM queda de la forma:
+La idea central de aplicar un filtro de partículas de tipo Rao-Blackwell al problema de SLAM es estimar la probabilidad conjunta posterior $ p(x_{1:t},m | z_{1:t},u_{1:t-1}) $ sobre el mapa $ m $ y la trayectoria del robot $ x_{1:t} = x_{1},...,x_{t} $, dadas las observaciones $ z_{1:t} = z_{1},...,z_{t} $ y los datos de odometría $ u_{1:t-1} = u_{1},...,u_{t-1} $. Por lo tanto obtenemos que el filtro de partículas Rao-Blackwell aplicado al problema de SLAM queda de la forma:
 
 \begin{equation}
 	p(x_{1:t},m | z_{1:t},u_{1:t-1}) = 
 		p(m | x_{1:t}, z_{1:t}) \cdot p(x_{1:t} | z_{1:t},u_{1:t-1})
 \end{equation}
 
-Como primer paso se estima solamente la trayectoria para después calcular el mapa, dada la trayectoria calculada.
+Como primer paso se estima solamente la trayectoria, enseguida se calcula el mapa, dada la trayectoria obtenida.
 
-$ p(m | x_{1:t}, z_{1:t}) $ puede ser calculada de manera analítica usando el algoritmo de "Mapeo con Posiciones Conocidas" [ref], que $ x_{1:t} $ y $ z_{1:t} $ sean conocidas.
+$ p(m | x_{1:t}, z_{1:t}) $ puede ser calculada de manera analítica \cite{moravec1988sensor}, dado e conocimiento que se tiene de $ x_{1:t} $ y $ z_{1:t} $. En el caso de $ p(x_{1:t} | z_{1:t},u_{1:t-1} $ se puede aplicar un filtro de partículas. En éste cada partícula representa una trayectoria potencial, además de que se le asocia un mapa individual. Este mapa se construye con base en las observaciones $z_{t:1}$, la trayectoria $x_{t:1}$ representada para cada partícula.
 
-Para calcular la probabilidad conjunta posterior $ p(x_{1:t} | z_{1:t},u_{1:t-1} $ sobre las trayectorias potenciales se puede aplicar un filtro de partículas. En dicho filtro cada partícula representa una trayectoria potencial del robot. Un mapa individual es asociado con cada partícula.
+El algoritmo de \textbf{Remuestreo Basado en la Importancia de la Muestra}, o \textbf{SIR (Sampling Importance Resampling)} por sus siglas en ingles, procesa de manera incremental la información obtenida por las lecturas del láser y los datos de odometría tan pronto como estén disponibles. El algoritmo se puede dividir en los siguientes pasos:
 
-El algoritmo de " Remuestreo basado en la importancia de la muestra" o SIR (Sampling Importance Resampling) por sus siglas en ingles es uno de los filtros de partículas mas utilizados. Este tipo de filtro procesa de manera incremental la información las lecturas del láser y los datos de odometría tan pronto como estén disponibles. El algoritmo se puede dividir en los siguientes pasos:
+\begin{mdframed}
 
 \begin{enumerate}
 
 	\item \textbf{Muestreo} (Sampling): La futura generación de partículas {$ x_{t}^{(i)} $} se obtiene de la generación actual {$ x_{t-1}^{(i)} $} a través de realizar un muestreo sobre una distribución $ \pi $ propuesta
 
-	\item \textbf{Ponderación de importancia} (Importance Weighting): Se asigna una ponderación de importancia a cada partícula basada en el principio de "Importancia de muestreo":
+	\item \textbf{Ponderación de importancia} (Importance Weighting): Se asigna una ponderación de importancia a cada partícula basada en el principio de \emph{Importancia de muestreo}:
 
 	\begin{equation}
 	\label{eq:weigth}
@@ -78,8 +102,9 @@ El algoritmo de " Remuestreo basado en la importancia de la muestra" o SIR (Samp
 	\item \textbf{Estimación del mapa} (Map estimation): Para cada partícula, el  calculo del mapa estimado $ p( m^{(i)} | x_{1:t}^{(i)}, z_{1:t}) $ es realizado con base en la trayectoria $ x_{1:t}^{(i)} $ y las observaciones $ z_{1:t} $ 
 
 \end{enumerate}
+\end{mdframed}
 
-Para que este proceso pueda ser llevado a cabo se requiere que se evalúen las ponderaciones de importancia desde cero sobre la trayectoria, cada vez que una nueva lectura este disponible. Esto provoca que el algoritmo sea muy ineficiente. De acuerdo a [ref] se puede obtener una fórmula para calcular de manera recursiva dicha ponderación si restringimos la distribución propuesta a una que cumpla con la siguiente suposición:
+Para que este proceso pueda ser llevado a cabo se requiere que se evalúen las ponderaciones de importancia desde cero sobre la trayectoria, cada vez que una nueva lectura este disponible, provocando que la eficiencia del algoritmo disminuya. De acuerdo a [ref] se puede obtener una fórmula para calcular de manera recursiva dicha ponderación si restringimos la distribución propuesta a una que cumpla con la siguiente suposición:
 
 	\begin{equation}
 	\label{eq:piRestriction}
@@ -199,6 +224,17 @@ Por un lado el proceso de remuestreo es necesario ya que solamente un número fi
 \end{equation}
 
 Se puede deducir que dado que mientras peor sea la aproximación obtenida mayor será la varianza de la importancia de las partículas. Por lo tanto se puede proponer un límite en el valor de $N_{eff}$ en el cual se desarrolle el proceso de remuestreo. Para este trabajo se utilizó $ N/2 $ donde $ N $ es el número de partículas utilizadas.
+
+
+
+%-------------------------------------------
+% SECCION: REFERENCIAS
+%-------------------------------------------
+
+
+
+\bibliographystyle{ieeetran}
+\bibliography{bibliography}
 
 \end{document}
 
