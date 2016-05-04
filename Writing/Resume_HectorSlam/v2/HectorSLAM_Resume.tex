@@ -7,7 +7,13 @@
 
 \usepackage{breqn}
 
-\title{Sistema de SLAM flexible y escalable con estimación completa de movimiento en 3D \\  \large{(Hector SLAM)}}
+% this is to make it look like a word document.
+\usepackage[tmargin=0.98in,bmargin=0.98in,lmargin=1.18in,rmargin=1.18in]{geometry}
+
+% package needed to draw a frame for a text
+\usepackage[linewidth=1pt]{mdframed}
+
+\title{\vspace{-6ex}Sistema de SLAM flexible y escalable con estimación completa de movimiento en 3D \\  \large{(Hector SLAM)}\vspace{-2ex}}
 \date{\today}
 \author{Luis Servin\\ Taller TRA, Universidad Nacional Autónoma de México}
 
@@ -15,15 +21,10 @@
 
 \maketitle
 
-\section{Resumen}
+\section*{Resumen}
 
-\begin{itemize}
-
-\item Sistema de rápido aprendizaje en línea (online learning) de un mapa de ocupación de cuadrículas (occupacy grid map) que requiere de un bajo costo computacional.
-\item Este algoritmo combina un método robusto de emparejamiento de puntos (scan matching) usando las lecturas de un sistema láser (LIDAR) con un sistema de estimación de la posición en 3D basado en las lecturas de sensores inerciales.
-\item Mostramos que el sistema es suficientemente preciso ya que no requiere de una técnica explicita de ciclos cerrados (loop closing techniques) dados los escenarios que fueron considerados.
-	
-\end{itemize}
+Se presenta un sistema de aprendizaje rápido en línea (\emph{online learning}) de un mapa de ocupación de cuadrículas (\emph{occupacy grid map}) que requiere un bajo costo computacional. Combina un método robusto de emparejamiento de puntos (\emph{scan matching}), a través de un telémetro láser (LIDAR), con la estimación de la posición en el espacio con base en el sensado de las propiedades inerciales. Se obtiene como resultado un sistema lo suficientemente preciso para 
+Mostramos que el sistema es suficientemente preciso ya que no requiere de una técnica explicita de ciclos cerrados (loop closing techniques) dados los escenarios que fueron considerados.
 
 \section{Introducción}
 
