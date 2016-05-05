@@ -1,0 +1,18 @@
+Lista Completa de Insumos (Tésis):
+    - 4x Motores "NeveRest 40 Gearmotor (am-2964-a)"
+    - 4x Mecanum Wheel (am-2626)
+    - 4x Cytron 10[A] DC Motor Driver (md10c)
+    - 1x Hokuyo LIDAR URG-04LX-UG01
+    - 1x Computadora o Unidad de Procesamiento
+    - 2x uC Stellaris.
+    - iX Baterias (Aún por definir)
+    - Aluminio (Estructura central)
+    - Tornilleria
+    - Elementos electrónicos en general
+    - Antena o Modem de Comunicación Inalámbrica (Transmisor - Receptor)
+    
+Insumos aun por comprar:
+    - Aluminio (Estructura central)
+    - Tornilleria
+    - Elementos electrónicos en general
+    - Antena o Modem de Comunicación Inalámbrica (Transmisor - Receptor)
