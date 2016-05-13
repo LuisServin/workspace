@@ -243,6 +243,7 @@
 	},
 	"buffers":
 	[
+<<<<<<< HEAD
 		{
 			"file": "/home/ubuntu/workspace/energia/sketchbook/Control_MotorNeveRest/Control_MotorNeveRest.ino",
 			"settings":
@@ -291,6 +292,8 @@
 				"line_ending": "Unix"
 			}
 		}
+=======
+>>>>>>> 532d76b7f96c04a4ac58600c299775bf011d8494
 	],
 	"build_system": "",
 	"build_system_choices":
@@ -330,16 +333,24 @@
 	[
 		"/home/ubuntu/workspace/catkin/src",
 		"/home/ubuntu/workspace/catkin/src/atwork_launch",
+<<<<<<< HEAD
 		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch",
 		"/home/ubuntu/workspace",
 		"/home/ubuntu/workspace/energia",
 		"/home/ubuntu/workspace/energia/sketchbook"
+=======
+		"/home/ubuntu/workspace"
+>>>>>>> 532d76b7f96c04a4ac58600c299775bf011d8494
 	],
 	"file_history":
 	[
+		"/home/ubuntu/workspace/energia/sketchbook/libraries/motor/motor.h",
+		"/home/ubuntu/workspace/energia/sketchbook/libraries/velocityPID/velocityPID.cpp",
+		"/home/ubuntu/workspace/energia/sketchbook/libraries/motor/motor.cpp",
+		"/home/ubuntu/workspace/energia/sketchbook/libraries/velocityPID/velocityPID.h",
+		"/home/ubuntu/workspace/energia/sketchbook/Control_MotorNeveRest/Control_MotorNeveRest.ino",
 		"/home/ubuntu/.config/sublime-text-3/Packages/Default/Default (Linux).sublime-keymap",
 		"/home/ubuntu/.config/sublime-text-3/Packages/User/Default (Linux).sublime-keymap",
-		"/home/ubuntu/workspace/energia/sketchbook/libraries/velocityPID/velocityPID.cpp",
 		"/home/ubuntu/workspace/catkin/src/atwork_launch/launch/stage_gmapping.launch",
 		"/home/ubuntu/workspace/energia/sketchbook/Interface_PID_Motor/Interface_PID_Motor.ino",
 		"/home/ubuntu/workspace/energia/sketchbook/Interfaz_Motores/Interfaz_Motores.ino",
@@ -431,6 +442,7 @@
 	"groups":
 	[
 		{
+<<<<<<< HEAD
 			"selected": 1,
 			"sheets":
 			[
@@ -550,12 +562,16 @@
 					"stack_index": 5,
 					"type": "text"
 				}
+=======
+			"sheets":
+			[
+>>>>>>> 532d76b7f96c04a4ac58600c299775bf011d8494
 			]
 		},
 		{
-			"selected": 0,
 			"sheets":
 			[
+<<<<<<< HEAD
 				{
 					"buffer": 4,
 					"file": "/home/ubuntu/workspace/energia/sketchbook/libraries/velocityPID/velocityPID.cpp",
@@ -614,6 +630,8 @@
 					"stack_index": 4,
 					"type": "text"
 				}
+=======
+>>>>>>> 532d76b7f96c04a4ac58600c299775bf011d8494
 			]
 		}
 	],
@@ -1132,8 +1150,8 @@
 	"show_minimap": true,
 	"show_open_files": false,
 	"show_tabs": true,
-	"side_bar_visible": false,
-	"side_bar_width": 227.0,
+	"side_bar_visible": true,
+	"side_bar_width": 176.0,
 	"status_bar_visible": true,
 	"template_settings":
 	{

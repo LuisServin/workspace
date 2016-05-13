@@ -1,4 +1,11 @@
-Resume*/*.aux
-Resume*/*.log
-Resume*/*.synctex.gz
-Resume*/*.dvi
+Resume*/v*/*.aux
+Resume*/v*/*.log
+Resume*/v*/*.synctex.gz
+Resume*/v*/*.dvi
+Resume*/v*/*.bbl
+Resume*/v*/*.blg
+Resume*/v*/*.tex.bak
+Resume*/v*/*.bib.bak
+Resume*/v*/*.bcf
+Resume*/v*/*.run.xml
+Resume*/v*/*.out

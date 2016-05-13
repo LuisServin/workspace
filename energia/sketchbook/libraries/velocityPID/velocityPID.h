@@ -13,21 +13,55 @@
 class VelocityPID
 {
 public:
+	/**
+	 * Constructor: Create a velocity PID object
+	 */
 	VelocityPID();
-	void setControlGains(float kFeedForward, float kProportional,
-		float kDifferential, float kIntegral);
-	void setWindUpLimits(int superiorLimit, int inferiorLimit);
+
+	/**
+	 * Set control gains for PID control
+	 * @param kProportional Proportional gain
+	 * @param kIntegral     Integral gain
+	 * @param kDifferential Differential gain
+	 */
+	void setControlGains(float kProportional, float kIntegral,
+		float kDifferential);
+
+	/**
+	 * Set windup limits for integral term. Based on this
+	 * implementation only a windup is need
+	 * @param Limit windup limit, absolute value will be used
+	 *              for both limits
+	 */
+	void setWindUpLimits(int Limit);
+
+	/** Establish limit for PWM value output or 
+	 * 	control output, by default in almost any uC is 255
+	 */
 	void setMaximumOutput(int maximumPWMValue);
-	int updatePID(float actOutput, float targetValue, float actualValue);
+
+	/**
+	 * Calculate pid value
+	 * @param  actualOutput Actual pwm value. needed for velocity pid
+	 * @param  targetValue  Target variable value
+	 * @param  actualValue  Actual variable value
+	 * @return              New pwm value
+	 */
+	int updatePID(float actualOutput, float targetValue, float actualValue);
 
 private:
+	/**
+	 * pid gains
+	 */
 	float _kFeedForward; // Gain for feedforward the variable
 	float _kProportional;
 	float _kDifferential;
 	float _kIntegral;
 	
-	int _windUpSuperior;	//This is compared to the error
-	int _windUpInferior;
+	/**
+	 * limits for calculating pid and output values 
+	 */
+	int _windUpLimit;	//This is compared to the error
 	int _maximumPWMOutput;
 };
 
