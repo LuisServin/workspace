@@ -1,0 +1,364 @@
+\documentclass[10pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+%\usepackage[LGRgreek]{mathastext}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+\usepackage{breqn}
+
+% this is to make it look like a word document.
+\usepackage[tmargin=0.98in,bmargin=0.98in,lmargin=1.18in,rmargin=1.18in]{geometry}
+
+% package needed to draw a frame for a text
+\usepackage[linewidth=1pt]{mdframed}
+
+% package used to enabled option of no-spacing in itemized lists
+\usepackage{enumitem}
+
+\title{\vspace{-6ex}Sistema de SLAM flexible y escalable con estimación completa de movimiento en 3D \\  \large{(Hector SLAM)}\vspace{-2ex}}
+\date{\today}
+\author{Luis Servin\\ Taller TRA, Universidad Nacional Autónoma de México}
+
+\begin{document}
+
+\maketitle
+
+\section*{Resumen}
+
+Se presenta una técnica de mapeo de ocupación cuadriculado (\emph{occupacy grid map}) en línea (\emph{online learning}) que requiere un bajo costo computacional. Este combina un método robusto de emparejamiento de puntos (\emph{scan matching}), a través de un telémetro láser (LIDAR), con la estimación de la posición en el espacio con base en el sensado de las propiedades inerciales. Como resultado se obtiene un sistema lo suficientemente preciso para funcionar dentro de los escenarios considerados, sin la necesidad de contar de manera explícita con una técnica de cerrado de ciclos (\emph{loop closing})
+
+\section{Introducción}
+
+La habilidad de aprender el modelo del ambiente que lo rodea y localizarse a si mismo dentro de él es un requerimiento indispensable para que un robot considerado autónomo sea capaz de operar dentro de escenarios reales.
+
+\subsection*{Localización y Mapeo Simultáneos (SLAM)}
+
+La solución presentada se apega a los lineamientos establecidos en la API del sistema de navegación (\emph{navigation stack}) de ROS (\emph{Robot Operating System}). Gracias a esto puede ser fácilmente intercambiada por otras soluciones (algoritmos de SLAM) que cumplan con dichos criterios. Este sistema puede ser usado para realizar SLAM en escenarios pequeños que no cuenten con grandes circuitos cerrados y que además se aprovechen las altas frecuencias de muestreo de los sistemas modernos de medición por laser (LIDAR).
+
+\subsection*{Estado de la técnica}
+
+Existe una basta cantidad de soluciones aceptables para espacios internos tipo oficina aplicando un filtro de partículas Rao-Blackwell, i.e. \textbf{G-mapping}. Aunque estas soluciones trabajan mejor en ambientes planos, además que dependen altamente de un sistema de odometría suficientemente preciso.
+
+Los sistemas de SLAM actuales se puede categorizar en dos tipos principales:
+
+\begin{itemize}
+
+\item \textbf{SLAM frontend}: Usado para estimar el movimiento y posición sobre la marcha en tiempo real.
+\item \textbf{SLAM backend}: Usado para realizar optimizaciones sobre una representación gráfica de la posición dadas ciertas restricciones entre las posiciones que han sido generadas antes de usar el sistema "frontend"
+
+\end{itemize}
+
+La solución planteada en este artículo es de tipo \emph{frontend}.
+
+
+
+% ---------------------------------------
+% CAPITULO II
+% ---------------------------------------
+
+
+
+\section{Descripción General del Sistema}
+
+La técnica a desarrollar busca estimar el estado completo de los seis grados de libertad de la plataforma, el cual consiste en su vector de traslación y rotación. Para lograrlo se divide en dos componentes principales
+
+\begin{itemize}[noitemsep]
+
+\item \textbf{Filtro de navegación}: Combina información de la unidad de medidas inerciales (IMU) junto con otros sensores que se encuentren disponibles para lograr una estimación 3D consistente.
+
+\item \textbf{SLAM 2D}: Usado para obtener la información de posición y orientación dentro del plano de tierra del sistema.
+
+\end{itemize}
+
+Se define el sistema de coordenadas global como un sistema de mano derecha. Tiene su origen en el punto inicial, el eje z en dirección positiva hacia arriba y el eje x apuntando en la dirección del ángulo yaw (ángulos de euler,) o frente de la plataforma.
+
+El estado completo de posición y orientación en el espacio esta representado por
+$x =
+\begin{pmatrix}
+	\Omega^{T} & p^{T} & v^{T}
+\end{pmatrix}^{T}$
+donde $\Omega = (\phi, \theta, \psi)^{T}$ son los \emph{ángulos de euler}: roll, pitch y yaw. Además $ p = (p_{x}, p_{y}, p_{z})^{T} $ y $ v = (v_{x}, v_{y}, v_{z})^{T} $ representan la posición y velocidad de la plataforma con respecto a sistema coordenado de navegación.
+
+Los datos obtenidos del sistema de medición inercial componen el vector de entrada 
+$u = 
+\begin{pmatrix}
+	\omega^{T} & a^{T}
+\end{pmatrix}^{T}$
+donde $ \omega = (\omega_{x}, \omega_{y}, \omega_{z})^{T} $ y $ a = (a_{x}, a_{y}, a_{z})^{T}  $ representan las velocidades y aceleraciones angulares respectivamente. El estado completo de posición y orientación de un cuerpo rígido es representado por:
+
+\begin{gather}
+\label{ec:epo}
+\dot{\Omega} = E_{\Omega} \cdot \omega \\
+\dot{p} = v \\
+\dot{v} = R_{\Omega} \cdot a + g
+\end{gather}
+
+Donde $ R_{\Omega} $ representa la matriz cosenos que transforma un vector del marco de referencia en el cuerpo al sistema coordenado de navegación. $ E_{\Omega} $ transforma las velocidades angulares del cuerpo a las derivadas de los ángulos de euler. $ g $ es el vector de gravedad.
+
+
+
+% ---------------------------------------
+% CAPITULO SLAM 2D
+% ---------------------------------------
+
+
+
+
+\section{SLAM 2D}
+
+Se hace uso de un mapa de ocupación cuadriculado, debido a su capacidad de representar ambientes arbitrarios. Se trata de un método probado para realizar la localización de un robot móvil utilizando sensores láser (LIDAR) en entornos reales. Ya que el telémetro láser puede estar sujeto a movimientos en sus 6 grados de libertad, las lecturas que se obtienen deben ser transformadas a un marco de coordenadas local estabilizado en el plano usando una estimación de las posición real del sensor.
+
+\subsection{Acceso al mapa}
+
+La naturaleza discreta de los mapas de ocupación de cuadrículas no permite el cálculo directo de valores interpolados o derivadas. Por lo tanto para realizar su cálculo se utiliza el siguiente método:
+
+Dado un mapa coordenado continuo $ P_{m} $, la probabilidad de ocupación $ M(P_{m}) $ así como el gradiente 
+$\nabla M(P_{m}) =  ( 
+\frac{\partial M}{\partial x} (P_{m}),
+\frac{\partial M}{\partial y} (P_{m})
+)$
+pueden ser aproximados usando los cuatro puntos mas cercanos a punto de interés a través de una interpolación lineal en los ejes $ x, y $:
+
+\begin{equation}
+	\begin{aligned}
+	M(P_{m}) \approx
+		&
+		\frac{y - y_{0}}{y_{1} - y_{0}} \left(
+			\frac{x - x_{0}}{x_{1} - x_{0}} M(P_{11}) +
+			\frac{x_{1} - x}{x_{1} - x_{0}} M(P_{01})
+		\right)
+		\\ + &
+		\frac{y_{1} - y}{y_{1} - y_{0}} \left(
+			\frac{x - x_{0}}{x_{1} - x_{0}}	M(P_{10}) +	
+			\frac{x_{1} - x}{x_{1} - x_{0}} M(P_{00})
+		\right)	
+	\end{aligned}
+\end{equation} \\
+
+Donde las derivadas puedes ser aproximadas por:
+
+\begin{align}
+	\begin{aligned}
+		\frac{\partial M}{\partial x} (P_{m}) \approx
+		&
+			\frac{y - y_{0}}{y_{1} - y_{0}} ( M(P_{11}) - M(P_{01}) )
+		\\ + &
+			\frac{y_{1} - y}{y_{1} - y_{0}} ( M(P_{10}) - M(P_{00}) )
+	\end{aligned} \\
+	\begin{aligned}
+		\frac{\partial M}{\partial y} (P_{m}) \approx
+		&
+			\frac{x - x_{0}}{x_{1} - x_{0}} ( M(P_{11}) - M(P_{10}) )
+		\\ + &
+			\frac{x_{1} - x}{x_{1} - x_{0}} ( M(P_{01}) - M(P_{00}) )
+	\end{aligned}
+\end{align}
+
+Se debe hacer notar que la cuadrícula dentro del mapa se encuentra distribuida de tal manera que todas sus unidades se encuentran separadas a una distancia regular de 1 unidad, lo cual simplifica la aproximación del gradiente.
+
+\subsection{Emparejamiento de puntos (Scan matching)}
+
+\textbf{Scan matching} es el proceso de comparar y alinear un conjunto de lecturas obtenidas por un telémetro, con otras tomadas anteriormente o contra un mapa ya existente. Para muchos sistemas robóticos la exactitud y precisión de las lecturas obtenidas por un sensor láser es mucho mas grande que los datos de odometría, si es que este sistema se encuentra disponible.
+
+Esta técnica busca optimizar dicho proceso de \emph{scan matching} de tal manera que se aproveche la información obtenida hasta el momento.  Ya que las lecturas del laser se encuentren alineadas con el mapa existente esto provoca que implícitamente lo estén con todas las lecturas anteriores.
+
+Partiendo del método de Gauss-Newton. Se busca encontrar la transformación  $ \boldsymbol{\xi} = (p_{x}, p_{y}, \psi)^{T} $ tal que minimice:
+
+\begin{equation}
+\label{eq:eAsterisk}
+	\boldsymbol{\xi}^{*} = 
+		\underset{\xi}{\mathrm{argmin}} 
+ 		\sum_{i=1}^{n} [1 - M(S_{i}(\xi))]^{2}
+\end{equation}
+
+Obteniendo aquella transformación que produzca la mejor correlación entre las lecturas obtenidas con el mapa ya existente. $ S_{i}(\xi) $ representa las coordenadas con respecto a un sistema global de las lecturas actuales  $ s_{i} = (s_{i,x}, s_{i,y})^{T} $. Mientras que $ \xi $ es la posición del robot en el sistema coordenado global.
+
+\begin{equation}
+\label{eq:SiE}
+	S_{i}(\xi) = 
+		\begin{pmatrix}
+			cos(\psi) & -sin(\psi) \\
+			sin(\psi) & cos(\psi)	
+		\end{pmatrix}
+		\begin{pmatrix}
+			s_{i,x} \\ s_{i,y}
+		\end{pmatrix} 
+		+
+		\begin{pmatrix}
+			p_{x} \\ p_{y}
+		\end{pmatrix}				
+\end{equation}
+
+$ M(S_{i}(\xi)) $ calcula el valor de las celdas del mapa, dado $ S_{i}(\xi) $. Dada una estimación inicial de $ \xi $ se busca $ \nabla\xi $ que optimice el error.
+
+\begin{equation}
+	\sum_{i=1}^{n} [1 - M(S_{i}(\xi + \Delta\xi))]^{2} \to 0
+\end{equation}
+
+Realizando una expansión por series de Taylor obtenemos:
+
+\begin{equation}
+	\sum_{i=1}^{n} \left[
+		1 - M(S_{i}(\xi)) - 
+			\nabla M(S_{i}(\xi)) \frac{\partial S_{i}(\xi)}{\partial \xi} \Delta\xi
+	\right]^{2} \to 0
+\end{equation}
+
+Y estableciendo la derivada parcial con respecto a $ \Delta \xi $ como cero obtenemos:
+
+\begin{equation}
+	2 \sum_{i=1}^{n} \left[
+		\nabla M(S_{i}(\xi)) \frac{\partial S_{i}(\xi)}{\partial \xi}
+	\right]^{T} 
+	\left[
+		1 - M(S_{i}(\xi)) - 
+			\nabla M(S_{i}(\xi)) \frac{\partial S_{i}(\xi)}{\partial \xi} \Delta\xi
+	 \right] 
+	 = 0
+\end{equation}
+
+Resolviendo para $ \Delta \xi $ se obtiene la ecuación de Gauss-Newton para el problema de minimización:
+
+\begin{equation}
+	\Delta \xi = H^{-1} \sum_{i=1}^{n} \left[
+		\nabla M(S_{i}(\xi)) \frac{\partial S_{i}(\xi)}{\partial \xi}
+	\right]^{T}
+	\left[
+		1 - M(S_{i}(\xi))
+	 \right] 
+\end{equation}
+
+Donde:
+
+\begin{equation}
+	H = \left[
+		\nabla M(S_{i}(\xi)) \frac{\partial S_{i}(\xi)}{\partial \xi}
+	\right]^{T}
+	\left[
+		\nabla M(S_{i}(\xi)) \frac{\partial S_{i}(\xi)}{\partial \xi}
+	\right]
+\end{equation}
+
+Una aproximación para obtener el gradiente del mapa $ \nabla M(S_{i}(\xi)) $ se obtiene con base en la ecuación (\ref{eq:SiE}):
+
+\begin{equation}
+	\frac{\partial S_{i}(\xi)}{\partial \xi} = 
+	\begin{pmatrix}
+		1 & 0 & -sin(\psi) s_{i,x} - cos(\psi)s_{i,y} \\
+		0 & 1 & cos(\psi) s_{i,x} - sin(\psi)s_{i,y}
+	\end{pmatrix}
+\end{equation}
+
+Para muchas aplicaciones una aproximación gaussiana de la incertidumbre de emparejamiento (match uncertainity) es aceptable. Otra solución aceptable es a través de una aproximación de la matriz Hessiana para obtener un estimado de la covarianza. Por lo tanto la matriz de covarianza esta aproximada por:
+
+\begin{equation}
+\label{eq:RbyH}
+	R = Var \left\{ \xi \right\} = \sigma^2 \cdot H^{-1}
+\end{equation}
+
+\subsection{Representación de mapas de múltiple resolución}
+
+Ya que el presente trabajo esta basado en un gradiente ascendente, existe el riesgo que dicho algoritmo quede estancado en un mínimo local.
+
+En la solución presentada se usa opcionalmente  múltiples mapas de ocupación, donde cada mapa menos detallada tiene la mitad de la resolución de su precedente. Diferentes mapas se mantienen en la memoria y son simultáneamente actualizados usando la posición generada por el proceso de alineación. El proceso de alineación comienza con el mapa menos detallado, el resultado de posición obtenido es usado como posición inicial para la estimación del siguiente nivel y así sucesivamente.
+
+
+
+
+% ---------------------------------------
+% CAPITULO SLAM 2D
+% ---------------------------------------
+
+
+
+
+\section{Estimación del estado en el espacio}
+
+\subsection{Filtro de navegación}
+
+Se hace uso de un Filtro Kalman Extendido (EKF) con el modelo general de la plataforma definido por las ecuaciones (\ref{ec:epo}), para realizar la estimación del estado completo en el espacio de la plataforma.
+
+La actualización de posición y velocidad se obtiene de integrar la información de aceleración obtenida de las medidas inerciales. Además la posición y orientación en el plano es actualizada por el algoritmo de alineamiento de puntos "scan matching", mientras que para estimar la posición completa en el espacio (3D) se requiere de un sensor adicional de altura, como puede ser un barómetro o un sensor de distancia.
+
+\subsection{Integración con el SLAM}
+
+Con el objetivo de mejorar el rendimiento, se integra la información obtenida por el sistema de SLAM 2D con la estimación de la posición en el espacio a través del Filtro de Kalman Extendido (EKF). En este sentido si se quiere mejorar el proceso de alineamiento de puntos (scan matching) se puede tomar como punto de inicio la proyección de la posición estimada por el filtro de kalman, en el plano x-y de las coordenadas globales. Mientras que en la dirección contraria se usa la intersección de covarianza para fusionar la posición obtenida a través del algoritmo de SLAM con la estimación del estado de la plataforma en el espacio tridimensional.
+
+Si denotamos la estimación realizada por el filtro de kalman por $ \hat{x} $ con covarianza $ P $ y la estimación de posición a través del algoritmo de SLAM como $ (\xi^{*}, R) $ como esta definido en (\ref{eq:eAsterisk}) y (\ref{eq:RbyH}). Se obtiene como resultado de fusionar esta información:
+
+\begin{align}
+		(P^{+})^{-1} = 
+			& (1-\omega) \cdot P^{-1} + \omega \cdot C^{T}R^{-1}C
+		\\
+		\hat{x}^{+} =
+			& P^{+}\left( (1-\omega) \cdot P^{-1} \hat{x} + 
+				\omega \cdot C^{T}R^{-1} \xi^{*} \right)^{-1}
+\end{align}
+
+siendo $ C $ la matriz de observación, la cual proyecta el espacio completo de estados tridimensional en el subespacio planar (x, y, $ \theta $) del sistema de SLAM.
+
+Utilizando una analogía entre el Filtro de Kalman y el Filtro de Información dicha ecuación también puede ser representada en su forma de covarianza como: 
+
+\begin{align}
+	P^{+} =
+		& P - (\omega - 1)^{-1} \cdot KCP
+	\\
+	\hat{x}^{+} =
+		& \hat{x} + K ( \xi^{*} - C \hat{x} )
+\end{align}
+
+con
+
+\begin{equation}
+	K = P C^{T} \left(
+		\frac{1 - \omega}{\omega} \cdot R + C^{T} P C \right)^{-1}
+\end{equation}
+
+Dicha representación es generalmente preferida, ya que computacionalmente es menos costosa.
+
+\section{Resultados}
+
+\subsection{Escenario urbano de búsqueda y rescate}
+
+La presente solución fue utilizada en un vehículo de navegación terrestre (UGV) para realizar la exploración autónoma y detección de víctimas en un escenario "Urbano de búsqueda y rescate" como el que se presenta en la competencia "RoboCup Rescue League". El telémetro láser es estabilizado con respecto al movimiento en los ejes roll y pitch para mantenerlo alineado con el plano de tierra y con ello maximizar la ganancia de información obtenida a través de las lecturas del láser.
+
+\subsection{Litorales acuáticos}
+
+Ya que la presente solución no hace uso de la extracción de características como polilíneas, funciona de manera aceptable en ambientes muy poco estructurados como pueden ser costas con alta vegetación. El hecho que el sensor Hokuyo utilizado no regrese una lectura válida cuando el haz golpea el agua, se puede utilizar como ventaja para prevenir lecturas fallidas que provoquen errores en el sistema de SLAM.
+
+\subsection{Mapeo con sistemas embebidos}
+
+La solución presentada es lo suficientemente exacta para cerrar circuitos (close loops) encontrados en escenarios pequeños sin el uso explicito de un método especializado, manteniendo los requerimientos computacionales bajos y previniendo cambios bruscos al mapa estimado hasta el momento, durante el tiempo de prueba.
+
+%% End document
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

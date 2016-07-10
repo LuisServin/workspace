@@ -1,0 +1,343 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+% package used to enabled option of no-spacing in itemized lists
+\usepackage{enumitem}
+
+% this is to make it look like a word document.
+\usepackage[tmargin=0.98in,bmargin=0.98in,lmargin=1.18in,rmargin=1.18in]{geometry}
+
+% package necessary to add pictures to latex
+\usepackage{graphicx}
+
+% package needed to draw a frame for a text
+\usepackage[linewidth=1pt]{mdframed}
+
+\title{\vspace{-4ex}\textbf{Enfoque de ventana dinámica para evitar colisiones}\vspace{-2ex}}
+\date{\today}
+\author{Luis Servín\\ Taller TRA, Universidad Nacional Autónoma de México}
+
+\begin{document}
+
+\maketitle
+
+Uno de los objetivos finales de la investigación en sistemas robóticos móviles es construir robots que sean capaces de llevar a cabo una misión en ambientes habitados y/o hostiles. Para lograrlo, éstos deben ser capaces de percibir su ambiente, así como reaccionar a situaciones imprevistas, y planear/replantear sus acciones de manera dinámica con objeto de llevar a termino sus misiones.
+
+El enfoque de ventana dinámica o "\textbf{dynamic windows approach}" por sus siglas en ingles, en adelante referenciado como \textbf{DWA}, busca generar un comportamiento reactivo para evitar colisiones con obstáculos imprevistos, cuenta además con la característica de lidiar restricciones debidas a limitaciones en velocidad y aceleración. Al considerar de manera periódica solo un pequeño intervalo de tiempo durante el cálculo del próximo comando de movimiento, solo serán generadas aquellas velocidades que pueden ser alcanzadas dentro del mismo. Se escoge además una combinación de velocidades de traslación y rotación de tal manera que se maximice una función objetivo, la cual incluye una medida del progreso actual hacia la ubicación seleccionada, la velocidades actuales del robot, y la distancia al siguiente obstáculo encontrado dentro de la trayectoria.
+
+\subsection*{Trabajo relacionado}
+
+Las estrategias para evitar colisiones con obstáculos encontrados dentro de una trayectoria pueden ser clasificadas en dos categorías
+
+\begin{itemize}[noitemsep]
+
+	\item \textbf{Global}: Tales como \emph{road-map, cell-descomposition, potential fields} suelen asumir que un modelo completo del ambiente se encuentra disponible. Su principal ventaja radica en que se puede calcular una trayectoria completa desde el punto inicial hacia el objetivo de manera previa (\emph{offline)}. Pero no son apropiadas para generar una respuesta rápida al momento de evadir un obstáculo imprevisto.
+	
+	\item \textbf{Local o Enfoque Reactivo}: Hace uso solamente de una fracción del ambiente para con ello generar el control del robot. Tiene como desventaja el hecho de no producir una solución óptima, además de que pueden estancarse en mínimos locales. Su principal ventaja radica en que su complejidad de cálculos en pequeña comparada con las estrategias globales, lo cual es importante si el modelo del ambiente se actualiza de manera frecuente. Borestein y Koren \cite{koren1991potential} identificaron que dichos métodos pueden fallar si la trayectoria se encuentran entre obstáculos muy cercanos, además de causar un comportamiento oscilatorio en corredores angostos.
+		
+\end{itemize}
+
+
+
+%---------------------------------------------%
+%%%%%%%%%%% SECTION I %%%%%%%%%%%%%%%%%%%%%%%%%
+%---------------------------------------------%
+
+
+
+\section{Ecuaciones de movimiento para un robot de locomoción síncrona}
+
+Se asume que las velocidades traslacional y rotacional pueden ser controladas de manera independiente. Las trayectorias consisten en un secuencia finita de segmentos de círculos, la cual forma la base principal del enfoque \emph{DWA}.
+
+\subsection*{Ecuaciones de Movimiento Generales}
+
+Sea $<x, y, \theta>$ la tupla que describe la configuración cinemática del robot en el tiempo $t$, con respecto a un sistema de coordenadas global. Además se cumple que el sentido de la velocidad de traslación $v$ sigue el sentido de giro de $\theta$. Sean $x(t_0), x(t_1)$ las coordenadas sobre el eje $x$ en el momento $t_0, t_1$ respectivamente. Podemos definir $v(t)$ y $\omega(t)$, velocidad de traslación y rotación en el tiempo $t$, como:
+
+\begin{align}
+	x(t_n) = 
+		& x(t_0) + \int_{t_0}^{t_n} v(t) \cdot cos\theta(t) dt
+	\\
+	y(t_n) = 
+		& y(t_0) + \int_{t_0}^{t_n} v(t) \cdot sin\theta(t) dt
+\end{align}
+
+$v(t)$ depende de la velocidad inicial $v(t_0)$, y la aceleración $\dot{v}(t)$ en el intervalo $t \in [t_0, t]$. $\theta(t)$ a su vez es función de orientación inicial $\theta(t_0)$ y la aceleración rotacional $\dot{\omega}(t)$ en dicho intervalo. Dadas estas relaciones se obtiene para $x(t_n)$:
+
+\begin{equation}
+\label{eq:kinematicsAcceleration}
+	x(t_n) = x(t_0) 
+		+ \int_{t_0}^{t_n}(v(t_0) + \int_{t_0}^{t} \dot{v}(\hat{t})d\hat{t}
+		\cdot \cos (\theta(t_0) + \int_{t_0}^{t}(\omega(t_0) + \int_{t_0}^{\check{t}}\dot{\omega}(\check{t})d\check{t})d\check{t})dt
+\end{equation}
+
+Se observa por lo tanto que la ecuación que describe la trayectoria del robot depende únicamente de la configuración dinámica inicial y las aceleraciones, las cuales asumimos controlables. 
+
+La Eq. (\ref{eq:kinematicsAcceleration}) puede ser simplificada si se asume que entre dos puntos arbitrarios $t_0, t_n$ el robot puede ser controlado únicamente por un número finito de comandos. Sea $n$ el número de pasos necesarios, así como $\dot{v}$ y $\dot{\omega}$, $i = 1...n$ las aceleraciones que se mantienen constantes en los intervalos $[t_i, t_{i+1}](i=1...n)$. Definiendo $\Delta t$ como $t - t_1$, se obtiene
+
+\begin{equation}
+\label{eq:controlGeneral}
+\begin{aligned}
+	x(t_n) = &
+		x(t_0) + \sum_{i=0}^{n-1} \int_{t_i}^{t_{i+1}} (v(t_i) + \dot{v}_i \cdot \Delta_t^i) \cdot 
+		\\ &
+		\cos (\theta(t_i) + \omega(t_i)\cdot\Delta_t^i + 1/2 \dot{\omega}_i \cdot (\Delta_t^i)^2) dt
+\end{aligned}
+\end{equation}
+
+Esta ecuación describe el caso general de control de un robot móvil.
+
+Ahora aproximaremos las velocidades dentro de un intervalo $[t_i, t_{i+1}]$ por un valor constante. Lo cual nos permitirá aproximar la trayectoria a una serie de arcos circulares. Asumiendo que el intervalo $[t_i, t_{i+1}]$ es suficientemente pequeño, el término $v(t_i) + \dot{v}_i \cdot \Delta_t^i$ puede ser aproximado por una velocidad de traslación $v_i \in [v_{t_i}, v_{t_{i+1}}]$. De la misma manera con el término $\theta(t_i) + \omega(t_i)\cdot\Delta_t^i + 1/2 \dot{\omega}_i \cdot (\Delta_t^i)^2$ puede ser aproximado por $ \theta(t_i) + \omega_i \cdot \Delta_t^i $ donde $\omega_i \in [\omega_{t_i}, \omega_{t+1}]$. Esto nos lleva a lo siguiente
+
+\begin{equation}
+\begin{aligned}
+	x(t_n) = &
+		x(t_0) + \sum_{i=0}^{n-1} \int_{t_i}^{t_{i+1}} \cdot
+		\cos \left( \theta(t_i) + \omega_i \cdot(\hat{t} - t_i) \right) d\hat{t}
+\end{aligned}
+\end{equation}
+
+Resolviendo la integral la ecuación puede ser simplificada a
+
+\begin{equation}
+	x(t_n) = x(t_0) + \sum_{i=0}^{n-1} (F_x^i(t_{i+1}))
+\end{equation}
+
+donde
+
+\begin{equation}
+	F_x^i(t) = 
+	\begin{cases}
+		\frac{v_i}{\omega_i} (
+			\sin \theta(t_i) - sin( \theta(t_i) +  \omega_i \cdot ( 				t - t_i))
+		), \omega \neq 0 \\
+		v_i \cos( \theta(t_i)) \cdot t, \omega = 0
+	\end{cases}
+\end{equation}
+
+Se sigue un proceso análogo para el caso de $y$.
+
+Se observa que si $\omega_i = 0$ el robot seguirá una línea recta, de no ser así describirá una trayectoria circular. Definiendo
+
+\begin{align}
+	M_x^i = 
+		&- \frac{v_i}{\omega_i} \cdot \sin\theta(t_i)
+	\\ 
+	M_y^i = &\frac{v_i}{\omega_i} \cdot \cos\theta(t_i)
+\end{align}
+
+obtenemos la relación
+
+\begin{equation}
+	(F_x^i - M_x^i)^2 + (F_y^i - M_y^i)^2 = \left(\frac{v_i}{\omega_i}\right)^2
+\end{equation}
+
+por tanto la $i-th$ trayectoria será un círculo $M_i$ con centro en $(M_x^i, M_y^i)$ y radio $M_r^i = \frac{v_i}{\omega_i}$.
+
+A pesar de que las ecuaciones obtenidas dependen solamente de la velocidad no es posible asignar un valor arbitrario al momento de realizar el control, debido a las restricciones dinámicas que limitan los valores que se pueden alcanzar en intervalos subsecuentes.
+
+\subsubsection*{Límite Superior de la Aproximación del Error}
+Si consideramos los errores $E_x^i, E_y^i$ para las coordenadas $x, y$ dentro del intervalo $[t_i, t_{i+1}]$. Entonces un límite para los errores en el momento $i$ esta descrito por la relación $E_x^i, E_y^i\leq \mid v(t_{i+1}) - v(t_i) \cdot \Delta t_i \mid$
+
+
+
+%---------------------------------------------%
+%%%%%%%%%%% SECTION II %%%%%%%%%%%%%%%%%%%%%%%%%
+%---------------------------------------------%
+
+
+
+\section{Dynamic Window Approach}
+
+Los comandos de control son obtenidos directamente del espacio de velocidades. Al tomar en cuneta las restricciones dinámicas se reduce el espacio de búsqueda a aquellas alcanzables en el intervalo de tiempo establecido. Durante la primera etapa del algoritmo se toman en cuenta solamente aquellas velocidades que son seguras con respecto a los obstáculos detectados. Como segunda etapa se busca obtener aquella velocidad que maximice una función objetivo establecida.
+
+A continuación se da una breve explicación de los pasos mencionados
+
+
+%---------------------------------------------%
+% DESCRIPCIÓN DEL ALGORITMO DE DYNAMIC WINDOW
+
+\begin{mdframed}
+% PRIMERA ESTAPA DEL ALGORITMO, REDUCCIÓN DEL ESPACIO DE BÚSQUEDA
+
+	\textbf{1. Espacio de búsqueda}: El espacio de búsqueda es reducido a través de tres pasos:
+\begin{enumerate}[label={(\alph*)}]
+
+	\item \textbf{Trayectorias circulares}: Se consideran solamente trayectorias circulares determinadas por el par $v, \omega$. Lo cual lleva a espacio bi-dimensional
+	
+	\item \textbf{Velocidades alcanzables}: El conjunto se reduce a aquellas velocidades $v, \omega$ marcadas como seguras. Un conjunto de velocidades es seguro si el robot es capaz de detenerse antes de alcanzar el obstáculo mas cercano dentro de la trayectoria actual.
+	
+	\item \textbf{Ventana dinámica}: Limitamos las posibles velocidades a aquellas que pueden ser alcanzadas durante el intervalo de tiempo  establecido dada la capacidad de aceleración del sistema.
+	
+\end{enumerate}
+
+% SEGUNDA ETAPA DEL ALGORITMO, OPTIMIZACIÓN
+
+\textbf{2. Optimización}: Se busca maximizar la función objetivo:
+
+	\begin{equation}
+		G(v, \omega) = 
+			\sigma(\alpha \cdot heading(v, \omega) + \beta \cdot dist(v, \omega) + \gamma \cdot vel(v, \omega))
+	\end{equation}
+
+con respecto a la posición y orientación actual se consideran los siguientes aspectos:
+
+\begin{enumerate}[label={(\alph*)}]
+	\item \textbf{Target heading}: \textit{heading} se define como la medida en la cual la trayectoria se dirige mas directamente hacia el objetivo.
+	\item \textbf{Clearance}: \textit{dist}, la distancia hacia el obstáculo mas cercano dentro de la trayectoria. Entre mas cercano se encuentre mas buscará el robot rodearlo.
+	\item \textbf{Velocity}: \textit{vel} se trata de la velocidad de avance del robot y la capacidad de movimientos rápidos
+\end{enumerate}
+$\sigma$ suaviza la suma, obteniendo como resultado mayor o menor espacio con respecto a los objetos
+
+\end{mdframed}
+
+% FINAL DE LA DESCRIPCIÓN DEL ALGORITMO
+%---------------------------------------------%
+
+
+
+\subsection{Trayectorias Circulares}
+
+Se define una \textbf{curvatura} como la secuencia segmentos circulares que aproximan una trayectoria. Cada curvatura queda definida de manera única por un vector de velocidad $(v, \omega)$ al cual nos referiremos simplemente como \emph{velocity}. Por lo tanto para generar una trayectoria a un punto objetivo, dados los $n$ segmentos que la componen se necesitarían definir el mismo número de conjuntos $(v, \omega)$ en el intervalo $[t_0, t_n]$.
+
+\emph{DWA} considera de manera exclusiva el primer intervalo de tiempo y asume que las velocidades restantes son constantes (anulando la aceleración en los intervalos subsecuentes). Una de las principales causas de esto es que la búsqueda de nuevas soluciones se realiza en cada intervalo de tiempo.
+
+\subsection{Velocidades Aceptables}
+
+Si asumimos que para el conjunto $(v, \omega)$, el término $dist(v, \omega)$ representa la distancia hacia el obstáculo mas cercano sobre la curvatura correspondiente. El conjunto $(v, \omega)$ es considerado como aceptable si el robot es capaz de detenerse dentro de la trayectoria antes de chocar con el obstáculo. Considerando $\dot{v_b}, \dot{\omega_b}$ como las velocidades de ruptura, podemos considerar al conjunto $V_a$ como admisible si cumple
+
+\begin{equation}
+	V_a = \{ 
+		v, \omega \mid 
+			v \leq \sqrt{2\cdot dist(v,\omega) \cdot \dot{v_b}} 
+			\wedge
+			\omega \leq \sqrt{2\cdot dist(v,\omega) \cdot \dot{\omega_b}} 
+	\}
+\end{equation}
+
+\subsection{Dynamic Window}
+
+Si además se toma en cuenta la limitante en la aceleración, el espacio de búsqueda se reduce al que contiene solo las velocidades que pueden ser alcanzadas dentro del siguiente intervalo de tiempo. Asumiendo a $t$ como el intervalo de tiempo en el cual las aceleraciones $\dot{v}, \dot{\omega}$ serán aplicadas, y $(v_a, \omega_a)$ las velocidades actuales. Entonces la \emph{ventana dinámica} $V_d$ se define como
+
+\begin{equation}
+	V_d = 
+		\{ (v, \omega) \mid 
+			v \in \left[v_a - \dot{v} \cdot t, v_a + \dot{v} \cdot t\right]
+			\wedge
+			\omega \in \left[\omega - \dot{\omega} \cdot t, \omega + \dot{\omega} \cdot t\right]
+		\}
+\end{equation}
+
+La ventana dinámica se encuentra centrada alrededor de las velocidades actuales y su extensión depende de las aceleraciones que puedan ser ejercidas. Todas las curvaturas que se encuentren fuera no pueden ser alcanzadas.
+
+\subsection{Espacio de Búsqueda Resultante}
+
+Siendo $V_s$ el espacio de todas las posibles velocidades, entonces definimos a $V_r$, espacio de búsqueda resultante, como la intersección de los espacios antes mencionados
+
+\begin{equation}
+	V_r = V_s \cap V_a \cap V_d
+\end{equation}
+
+\subsection{Maximizando la función objetivo}
+
+Después de haber determinado el espacio de búsqueda $V_r$, se selecciona un conjunto \emph{velocity}. A través de realizar una discretización sobre el espacio resultante $V_r$ se busca el máximo de la función de optimización
+
+\begin{equation}
+	G(v, \omega) = 
+			\sigma(\alpha \cdot heading(v, \omega) + \beta \cdot dist(v, 					\omega) + \gamma \cdot vel(v, \omega))
+\end{equation}
+
+\subsubsection*{Target Heading}
+El término $heading(v, \omega)$ es una medida del alineamiento del robot con respecto a la dirección objetivo. Se calcula como $180 - \theta$, donde $\theta$ es el ángulo del punto objetivo con respecto a la dirección actual del robot. $\theta$ se calcula asumiendo que el robot se mueve con el conjunto de velocidades seleccionados durante el próximo intervalo de tiempo. Para una aproximación mas realista se calculará $\theta$ en la posición en la cual el robot haya detenido después de dicho intervalo.
+
+\subsubsection*{Clearance}
+El término $dist(v, \omega)$ representa la distancia hacia el obstáculo mas cercano que intersecta con la curvatura. Si no existe un obstáculo dentro de la curvatura el valor crece a una constante alta.
+
+\subsubsection*{Velocity}
+Mientras que el término $velocity(v, \omega)$ evalua el progreso del robot sobre la trayectoria. Se trata simplemente de una proyección sobre la velocidad de traslación.
+
+\subsubsection*{Smoothing}
+Por último se normaliza la suma de los términos hacia un intervalo $[0,  1]$. El proceso aumenta el espacio libre lateral del robot.
+
+Todos los términos que componen a $G$ son necesarios, ya que al combinarlos, el robot esquiva las posibles colisiones tan rápido como puede tomando el cuentas las restricciones impuestas, además de seguir progresando en su camino hacia la meta. Este comportamiento cambia con respecto a las velocidades actuales. 
+
+El intervalo de tiempo en el cual se calcula la ventana dinámica, durante la etapa de experimentación, esta fijado a 0.25 seg.
+
+\subsubsection*{Dependencia de la aceleración}
+El espacio de búsqueda restringido, la evaluación de la función y la ventana dinámica también dependen de las aceleración disponible. Ya que si se tiene un menos rango de aceleraciones esto provocará que el espacio de velocidades disponibles sea mas pequeño también, por lo tanto el tamaño de la ventana disminuirá.
+
+
+
+%---------------------------------------------%
+%%%%%%%%%%% SECTION III %%%%%%%%%%%%%%%%%%%%%%%%%
+%---------------------------------------------%
+
+
+
+\section{Implementación y Resultados Experimentales}
+
+\subsection{RHINO}
+El enfoque descrito de manera anterior ha sido implementado y probado usando el robot RHINO, una plataforma con sistema de locomoción síncrono. Equipado con un anillo de 24 sensores ultrasónicos Polariod, 56 detectores infrarrojos, y un sistema de cámara estéreo.
+
+\subsection{Campo de Obstáculos Línea}
+Como modelo local del mundo se hace uso de un campo de líneas obstáculos. Este se define como una descripción en dos dimensiones de la información obtenida a través de los sensores del robot con respecto a la posición del robot. El sistema se calibró de manera que las mediciones mas erroneas fueran las que representaran la distancia mas grande. Cada lectura es convertida a una línea obstáculo. 
+
+Esta línea es perpendicular al eje principal del haz del sensor. Mientras que la distancia de dicha línea es determinada por la amplitud calculada del haz en la distancia obtenida. A través de estos datos se calcula la distancia hacia estos obstáculos en las posibles curvaturas calculadas. Si definimos a \boldmath$r$ como el radio de la trayectoria circular  y \boldmath$\gamma$ el ángulo entre la intersección de la línea de obstáculo con la curvatura y la posición del robot a partir del centro de rotación. Por lo tanto la distancia al siguiente obstáculo esta dada por \boldmath$r \cdot \gamma$
+
+Con el objetivo de permitir al robot reaccionar de manera mas rápida a los cambios que se pueden presentar. Limitamos el número de líneas a 72 y aplicamos la estrategia \emph{first-in-first-out} para remover las líneas menos actuales del campo de obstáculos de líneas. 
+
+\subsection{Mayores detalles acerca de la implementación}
+Las siguientes estrategias ayudaron a mejorar la \emph{maneobrabilidad} y la elegancia en el movimiento del robot.
+
+\begin{itemize}
+	\item \textbf{Modo \emph{Rotate Away}}. En caso de que el robot pudiera encontrarse estancado en un mínimo local se aplica esta estrategia. Consiste en rotar lejos del obstáculo hasta que sea capaz de trasladarse de nuevo.
+	\item \textbf{Speed Dependent Side Clearance}. Se trata de adaptar la velocidad del robot con respecto a la distancia que tiene contra las paredes. Viajará a velocidades altas si es que se encuentra en corredores despejados y amplios y a velocidades bajas si tiene trasladar a través de puertas, espacios reducidos o congestionados.
+\end{itemize}
+
+\subsubsection*{Ajustes de los parámetros}
+Sin recurrir a un ajuste de parámetros muy exhaustivo se encontró que los valores de 0.8, 0.1 y 0.1 para $\alpha, \beta, \gamma$ respectivamente han dado buenos resultados.
+
+\subsubsection*{Rol de la Ventana Dinámica}
+Se puede identificar como punto crucial de la trayectoria la zona en la cual se tiene que hacer un cambio de dirección súbito con tal de poder llegar al punto objetivo, esta zona es conocida como \textbf{área de decisión}. Se concluyó que solamente si la velocidad actual del robot y las posibles aceleraciones que este podría sufrir permiten un giro brusco en la dirección requerida, el robot se moverá directamente hacia el objetivo.
+
+\subsubsection*{Movimiento en Corredores Rectos}
+Se observó que después de evadir un obstáculo la plataforma intentó seguir líneas rectas tanto como fuera posible, evitando asimismo movimientos oscilatorios.
+
+\bibliographystyle{ieeetran}
+\bibliography{bibliography}
+
+\end{document}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

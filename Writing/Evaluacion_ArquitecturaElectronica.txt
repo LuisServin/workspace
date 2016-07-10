@@ -1,0 +1,32 @@
+Evaluación de la arquitectura electrónica de control de velocidad de 
+los motores:
+
+Se esta manejando dos opciones:
+
+- OPCIÓN 1: 2x uC Stellaris. En este caso cada uC sería responsable 
+de Manejar 2 motores. Se definiría un maestro que tendría comunicación
+directa con la computadora, y además se encargaría de dar los
+comandos de velocidad al esclavo que solo mandaría de regreso 
+una señald de confirmación.
+
+    VENTAJAS:
+    - Placa de desarrollo lista
+    - Lenguaje de programación sencillo y conocido
+    - Gran cantidad de pines disponibles para aplicaciones futuras
+    - Arquitectura 32 bits y velocidad de 80 Mhz.
+    - Buen soporte 
+    
+    DESVENTAJAS:
+    - Costo elevado (En comparación con uC AVR)
+    - Tamaño fijo
+    - Costo de reemplazo elevado
+    
+- OPCIÓN 2: 4x uC AVR. Se define un uC como maestro que tiene 
+comunicación directa con la computadora central. El maestro es encargado
+de repartir los comandos de velocidad a la red de esclavos, en este caso
+3x, los cuales tendrian que definir una forma de confirmación.
+
+    VENTAJAS:
+    - 
+    
+    DESVENTAJAS:

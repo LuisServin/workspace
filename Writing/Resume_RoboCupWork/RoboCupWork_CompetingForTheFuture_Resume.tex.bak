@@ -1,0 +1,39 @@
+\documentclass[12pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+
+% this is to make it look like a word document.
+\usepackage[tmargin=1in,bmargin=1in,lmargin=1.25in,rmargin=1.25in]{geometry}
+
+\title{\vspace{-2ex}RoboCup@Work:\\Compitiendo por la fábrica del futuro\vspace{-2ex}}
+\date{\today}
+\author{Luis Servín\\ Taller TRA, Universidad Nacional Autónoma de México}
+
+\begin{document}
+
+\maketitle
+
+\section*{Resumen}
+
+RoboCup@Work se enfoca en el uso de manipuladores manipuladores móviles y su integración con equipo de automatización para el desarrollo de tareas relevantes dentro de la industria.
+
+\section{Introducción}
+
+Recientemente, tanto la robótica como la automatización industrial están cambiando su campo de atención hacia escenarios en los cuales se ve envuelta la integración de distintos factores como: movilidad y manipulación, integración a gran escala de robots tanto de servicio como industriales, espacios cohabitados entre humanos y robots, así como la colaboración entre múltiples robots y humanos. Todas estas ideas se pueden considerar parte de \emph{la fábrica del futuro} ó FoF por sus siglas en ingles.
+
+Un componente esencial de la FoF son los \textbf{manipuladores móviles} los cuales son una combinan las cualidades de un robot móvil con las capacidades de uno o más manipuladores. Este campo ha llevado al desarrollo de distintas plataformas de investigación. Algunos ejemplos son youBot \cite{bischoff2011kuka} y omniRob por parte de KUKA y rob@worlk por  Fraunhofer IPA. Aunque a pesar de todos estos recientes esfuerzos las aplicaciones reales siguen siendo aún raras.
+
+En 2012, un grupo de investigadores concluyó que el progreso en las investigación de manipuladores móviles se podría ver muy beneficiada al organizar una competencia que buscara desarrollar el camino hacia la FoF.
+
+La investigación en si misma podría estar diseñada de tal manera que combinara el atractivo hacia el público como lo es la "Robotic Soccer League", la estructura de la competencia RoboCup@Home y el \emph{benchmarking} tecnológico de la competencia "RoboCup Rescue League"
+
+\section{Temas de Investigación y Retos}
+
+RoboCup@Work busca el uso de robots en ambientes de trabajo y aborda retos de investigación aún abiertos dentro del campo de la robótica industrial y de servicio. Algunos ejemplos de escenario que s
+
+\bibliographystyle{ieeetr}
+\bibliography{bibliography}
+
+\end{document}
